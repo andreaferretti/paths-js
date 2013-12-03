@@ -5,5 +5,11 @@
   "dependencies": {
     "requirejs": "*"
   },
+  "ignore": [
+    ".gitignore",
+    "node_modules",
+    "Gruntfile.coffee",
+    "package.json"
+  ],
   "devDependencies": {}
 }
