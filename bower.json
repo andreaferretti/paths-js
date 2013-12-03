@@ -1,14 +1,9 @@
 {
   "name": "Paths.js",
   "version": "0.0.1",
+  "main": "./src/coffee/paths/path.coffee",
   "dependencies": {
-    "requirejs": "*",
+    "requirejs": "*"
   },
-  "devDependencies": {
-    "chai": "~1.7.2",
-    "chai-backbone": "latest",
-    "chai-jquery": "~1.1.1",
-    "sinon-chai": "~2.4.0",
-    "mocha": "~1.12.0"
-  }
+  "devDependencies": {}
 }
