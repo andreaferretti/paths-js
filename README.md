@@ -3,7 +3,7 @@ Paths.js
 
 This library helps generating [SVG paths] [1] with a high level API. These paths can be then used together with a template engine such as [Mustache] [2] or [Handlebars] [3] to display SVG graphics in the browser. If instead of a static template engine, you use a data binding library, such as [Ractive.js] [4] or [Angular] [5], you get animated graphics for free.
 
-Paths.js offers three APIs, of increasing abstraction. The lowest level is a chainable API to generate an arbitrary SVG path. On top of this, paths for simple geometric shapes such as rectangles or circle sectors are defined. At the highest level, there is an API to generate some simple graphs (pie, bar chart, lines...) for a collection of data, assembling the simples shapes.
+Paths.js offers three APIs, of increasing abstraction. The lowest level is a chainable API to generate an arbitrary SVG path. On top of this, paths for simple geometric shapes such as rectangles or circle sectors are defined. At the highest level, there is an API to generate some simple graphs (pie, bar chart, lines...) for a collection of data, assembling the simple shapes.
 
 Installation and usage
 ----------------------
@@ -37,7 +37,7 @@ At the heart of the library there is a very simple API to compose SVG paths by m
       .qcurveto(32, 27)
       .closepath();
       
-When one is satisfied with the path, the `print` method will give the textual representation of the path, that can be used inside an svg figure like
+When one is satisfied with the path, the `print` method will give the textual representation of the path, that can be used inside an SVG figure like
 
     <!-- inside a template -->
     <svg width=300 height=300>
