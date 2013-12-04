@@ -36,7 +36,7 @@ High level API (graphs)
 [1]: http://www.w3.org/TR/SVG/paths.html
 [2]: http://mustache.github.io/
 [3]: http://handlebarsjs.com/
-[4]: http://angularjs.org/
-[5]: http://www.ractivejs.org/
+[4]: http://www.ractivejs.org/
+[5]: http://angularjs.org/
 [6]: http://bower.io/
 [7]: http://requirejs.org/
