@@ -20,12 +20,30 @@ It is distributed as an AMD module. If you use [RequireJS] [7], you can use a co
 
 (the actual path will depend on your bower configuration). Then import the various modules like
 
-    var pie = require('paths/pie');
+    var Pie = require('paths/pie');
 
 In the future, I will provide other ways to leverage Paths.js, either as a CommonJS module for use in node, or as a global.
 
 Low level API
 -------------
+
+At the heart of the library there is a very simple API to compose SVG paths by method chaining. At this level, we do not try to abstract away the specification of SVG paths, and the parameters mimic exactly the ones in the specification. You can produce a path like
+
+    var Path = require('paths/path')
+    var path = Path()
+      .moveto(10, 20)
+      .lineto(30, 50)
+      .lineto(25, 28)
+      .qcurveto(32, 27)
+      .closepath()
+      
+When one is satisfied with the path, the `print` method will give the textual representation of the path, that can be used inside an svg figure like
+
+    <!-- inside a template -->
+    <svg width=300 height=300>
+      <path d="{{ path.print() }}" fill="blue" />
+    </svg>
+      
 
 Mid level API (shapes)
 ----------------------
