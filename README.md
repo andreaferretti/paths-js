@@ -29,13 +29,13 @@ Low level API
 
 At the heart of the library there is a very simple API to compose SVG paths by method chaining. At this level, we do not try to abstract away the specification of SVG paths, and the parameters mimic exactly the ones in the specification. You can produce a path like
 
-    var Path = require('paths/path')
+    var Path = require('paths/path');
     var path = Path()
       .moveto(10, 20)
       .lineto(30, 50)
       .lineto(25, 28)
       .qcurveto(32, 27)
-      .closepath()
+      .closepath();
       
 When one is satisfied with the path, the `print` method will give the textual representation of the path, that can be used inside an svg figure like
 
@@ -43,6 +43,8 @@ When one is satisfied with the path, the `print` method will give the textual re
     <svg width=300 height=300>
       <path d="{{ path.print() }}" fill="blue" />
     </svg>
+
+Path objects can be create with the `Path` function. All methods except `print` produce a new path (paths are immutable). These methods mimic the SVG path specification and are, until now, `moveto`, `lineto`, `curveto`, `qcurveto` and `closepath`. The missing methods - `hlineto`, `vlineto`, `smoothcurveto` and `smoothqcurveto` - will be added soon.
       
 
 Mid level API (shapes)
