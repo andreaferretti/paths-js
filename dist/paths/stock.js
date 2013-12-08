@@ -1,5 +1,5 @@
 (function() {
-  define(['./path', './linear'], function(Path, Linear) {
+  define(['./polygon', './linear'], function(Polygon, Linear) {
     var max, min;
     min = function(xs) {
       return xs.reduce(function(a, b) {
@@ -12,8 +12,8 @@
       });
     };
     return function(_arg) {
-      var close, data, f, head, height, item, l, path, points, scale, sorted, tail, width, xaccessor, xmax, xmin, xscale, yaccessor, ycoords, ymax, ymin, yscale;
-      data = _arg.data, xaccessor = _arg.xaccessor, yaccessor = _arg.yaccessor, width = _arg.width, height = _arg.height, close = _arg.close;
+      var closed, data, f, height, item, l, points, scale, scaled_points, sorted, width, xaccessor, xmax, xmin, xscale, yaccessor, ycoords, ymax, ymin, yscale;
+      data = _arg.data, xaccessor = _arg.xaccessor, yaccessor = _arg.yaccessor, width = _arg.width, height = _arg.height, closed = _arg.closed;
       if (xaccessor == null) {
         xaccessor = function(_arg1) {
           var x, y;
@@ -46,7 +46,6 @@
         c = _arg2[0], d = _arg2[1];
         return a - c;
       });
-      console.log(points, sorted);
       l = sorted.length;
       xmin = sorted[0][0];
       xmax = sorted[l - 1][0];
@@ -56,26 +55,26 @@
       });
       ymin = min(ycoords);
       ymax = max(ycoords);
-      if (close) {
+      if (closed) {
         ymin = Math.min(ymin, 0);
         ymax = Math.max(ymax, 0);
       }
       yscale = Linear([ymin, ymax], [0, height]);
-      head = sorted[0];
-      tail = sorted.slice(1, +l + 1 || 9e9);
       scale = function(_arg1) {
         var x, y;
         x = _arg1[0], y = _arg1[1];
         return [xscale(x), yscale(y)];
       };
-      path = tail.reduce((function(pt, p) {
-        return pt.lineto.apply(pt, scale(p));
-      }), Path().moveto(scale(head)));
-      if (close) {
-        path = path.lineto(scale([xmax, 0])).lineto(scale([xmin, 0])).closepath();
+      scaled_points = sorted.map(scale);
+      if (closed) {
+        scaled_points.push(scale([xmax, 0]));
+        scaled_points.push(scale([xmin, 0]));
       }
       return {
-        path: path,
+        path: Polygon({
+          points: scaled_points,
+          closed: closed
+        }),
         xscale: xscale,
         yscale: yscale
       };
