@@ -1,6 +1,6 @@
 {
   "name": "Paths.js",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "main": "./src/coffee/paths/path.coffee",
   "dependencies": {
     "requirejs": "*"
