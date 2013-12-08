@@ -29,8 +29,10 @@ define [
       scaled_points.push(scale [xmax, 0])
       scaled_points.push(scale [xmin, 0])
     
-    path: Polygon
+    polygon = Polygon
       points: scaled_points
       closed: closed
+      
+    path: polygon.path
     xscale: xscale
     yscale: yscale

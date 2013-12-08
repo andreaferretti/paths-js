@@ -1,21 +1,16 @@
 define [
   './path'
-], (Path)->
-  plus = ([a, b], [c, d]) -> [a + c, b + d]
-
-  minus = ([a, b], [c, d]) -> [a - c, b - d]
-
-  times = (k, [a, b]) -> [k * a, k * b]
-  
+  './ops'
+], (Path, O)->
   on_circle = (r, angle) ->
-    times(r, [Math.sin(angle), -Math.cos(angle)])
+    O.times(r, [Math.sin(angle), -Math.cos(angle)])
 
   ({center, r, R, start, end}) ->
     path: ->
-      a = plus(center, on_circle(R, start))
-      b = plus(center, on_circle(R, end))
-      c = plus(center, on_circle(r, end))
-      d = plus(center, on_circle(r, start))
+      a = O.plus(center, on_circle(R, start))
+      b = O.plus(center, on_circle(R, end))
+      c = O.plus(center, on_circle(r, end))
+      d = O.plus(center, on_circle(r, start))
         
       Path()
         .moveto(a...)
@@ -27,4 +22,4 @@ define [
     centroid: -> 
       mid_angle = (start + end) / 2
       mid_radius = (r + R) / 2
-      plus(center, on_circle(mid_radius, mid_angle))
+      O.plus(center, on_circle(mid_radius, mid_angle))

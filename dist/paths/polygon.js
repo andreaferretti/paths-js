@@ -1,5 +1,5 @@
 (function() {
-  define(['./path'], function(Path) {
+  define(['./path', './ops'], function(Path, O) {
     return function(_arg) {
       var closed, head, l, path, points, tail;
       points = _arg.points, closed = _arg.closed;
@@ -9,11 +9,10 @@
       path = tail.reduce((function(pt, p) {
         return pt.lineto.apply(pt, p);
       }), Path().moveto(head));
-      if (closed) {
-        return path.closepath();
-      } else {
-        return path;
-      }
+      return {
+        path: closed ? path.closepath() : path,
+        centroid: O.average(points)
+      };
     };
   });
 

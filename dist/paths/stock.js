@@ -12,7 +12,7 @@
       });
     };
     return function(_arg) {
-      var closed, data, f, height, item, l, points, scale, scaled_points, sorted, width, xaccessor, xmax, xmin, xscale, yaccessor, ycoords, ymax, ymin, yscale;
+      var closed, data, f, height, item, l, points, polygon, scale, scaled_points, sorted, width, xaccessor, xmax, xmin, xscale, yaccessor, ycoords, ymax, ymin, yscale;
       data = _arg.data, xaccessor = _arg.xaccessor, yaccessor = _arg.yaccessor, width = _arg.width, height = _arg.height, closed = _arg.closed;
       if (xaccessor == null) {
         xaccessor = function(_arg1) {
@@ -70,11 +70,12 @@
         scaled_points.push(scale([xmax, 0]));
         scaled_points.push(scale([xmin, 0]));
       }
+      polygon = Polygon({
+        points: scaled_points,
+        closed: closed
+      });
       return {
-        path: Polygon({
-          points: scaled_points,
-          closed: closed
-        }),
+        path: polygon.path,
         xscale: xscale,
         yscale: yscale
       };
