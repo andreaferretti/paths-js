@@ -9,8 +9,8 @@
       path = tail.reduce((function(pt, p) {
         return pt.lineto.apply(pt, p);
       }), Path().moveto(head));
-      if (closed(path.closepath())) {
-
+      if (closed) {
+        return path.closepath();
       } else {
         return path;
       }
