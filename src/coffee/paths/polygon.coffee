@@ -9,4 +9,4 @@ define [
     path = tail.reduce ((pt, p) ->
       pt.lineto(p...)), Path().moveto(head)
       
-    if closed path.closepath() else path
+    if closed then path.closepath() else path
