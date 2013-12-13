@@ -7,14 +7,19 @@ Paths.js offers three APIs, of increasing abstraction. The lowest level is a cha
 
 > Note that the API is still in flux and may not stabilize until version 0.1.0.
 
+How does it look like?
+----------------------
+
+Well, it depends on how you style the graphics, because the actual drawing of the SVG is left to you. Anyway, [here] [6] is an example demo application.
+
 Installation and usage
 ----------------------
 
-Paths.js is distributed with [bower] [6], so you can install it like
+Paths.js is distributed with [bower] [7], so you can install it like
 
     bower install paths-js
 
-It is distributed as an AMD module. If you use [RequireJS] [7], you can use a configuration such as
+It is distributed as an AMD module. If you use [RequireJS] [8], you can use a configuration such as
 
     require.config({
       'paths': 'components/paths-js/dist/paths'
@@ -38,7 +43,7 @@ At the heart of the library there is a very simple API to compose SVG paths by m
       .lineto(25, 28)
       .qcurveto(32, 27)
       .closepath();
-      
+
 When one is satisfied with the path, the `print` method will give the textual representation of the path, that can be used inside an SVG figure like
 
     <!-- inside a template -->
@@ -47,7 +52,7 @@ When one is satisfied with the path, the `print` method will give the textual re
     </svg>
 
 Path objects can be create with the `Path` function. All methods except `print` produce a new path (paths are immutable). These methods mimic the SVG path specification and are, until now, `moveto`, `lineto`, `curveto`, `qcurveto` and `closepath`. The missing methods - `hlineto`, `vlineto`, `smoothcurveto` and `smoothqcurveto` - will be added soon.
-      
+
 
 Mid level API (shapes)
 ----------------------
@@ -62,7 +67,7 @@ The first shape is `paths.polygon`, and it can be used like:
       points: points,
       closed: true
     });
-    
+
 As shown in the example, it expects as input an object with the property `points`, which is an array of points. The optional property `closed` defined whether the polygon is closed (false by default).
 
 A circular sector can be defined with `paths.sector`:
@@ -75,7 +80,7 @@ A circular sector can be defined with `paths.sector`:
       start: 0,
       end: Math.PI / 2
     });
-    
+
 The `Sector` function takes as input an object having the following properties. `center` contains the coordinates of the center of the circles defining the sector; `r` and `R` are the internal and external radii; `start` and `end` are the start and end angle in radians. One can put `r = 0` to get a degenerate sector.
 
 High level API (graphs)
@@ -86,5 +91,6 @@ High level API (graphs)
 [3]: http://handlebarsjs.com/
 [4]: http://www.ractivejs.org/
 [5]: http://angularjs.org/
-[6]: http://bower.io/
-[7]: http://requirejs.org/
+[6]: https://github.com/andreaferretti/paths-js-demo
+[7]: http://bower.io/
+[8]: http://requirejs.org/
