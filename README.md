@@ -86,6 +86,30 @@ The `Sector` function takes as input an object having the following properties. 
 High level API (graphs)
 -----------------------
 
+Based on the shapes above, we can construct more complex graphs. At this level, the API assume one has a collection of data that has to be shown on a graph, and take care of normalizing the data, so that for instance if you display multiple line graphs on the same chart, the scales are normalized.
+
+The `Pie` graph can be used as follows:
+
+    var Pie = require('paths/pie');
+    var pie = Pie({
+      data: [
+        { name: 'Italy', population: 59859996 },
+        { name: 'Mexico', population: 118395054 },
+        { name: 'France', population: 65806000 },
+        { name: 'Argentina', population: 40117096 },
+        { name: 'Japan', population: 127290000 }
+      ],
+      accessor: function(x) { return x.population; },
+      colors: function(i) { return somePalette[i]; },
+      center: [20, 15],
+      r: 30,
+      R: 50
+    });
+
+The parameters `center`, `r`, `R` have the same geometric meaning as in the `Sector` function. The parameter `data` should contain an array with the data to plot. The precise form of the data is not important, because the actual value of the data will be extracted by the `accessor` function. Finally `colors` is an optional parameter, holding a function that assign to a sector index its color.
+
+The `Pie` function will then return an array on which one can iterate to draw the sectors. Each member of this array has the properties `sector`, `color` and `item`, the latter containing the actual datum associated to the sector.
+
 [1]: http://www.w3.org/TR/SVG/paths.html
 [2]: http://mustache.github.io/
 [3]: http://handlebarsjs.com/
