@@ -10,16 +10,16 @@ Paths.js offers three APIs, of increasing abstraction. The lowest level is a cha
 How does it look like?
 ----------------------
 
-Well, it depends on how you style the graphics, because the actual drawing of the SVG is left to you. Anyway, [here] [6] is an example demo application.
+Well, it depends on how you style the graphics, because the actual drawing of the SVG is left to you. Anyway, [here] [6] is a demo application; a live version can be seen [here] [7].
 
 Installation and usage
 ----------------------
 
-Paths.js is distributed with [bower] [7], so you can install it like
+Paths.js is distributed with [bower] [8], so you can install it like
 
     bower install paths-js
 
-It is distributed as an AMD module. If you use [RequireJS] [8], you can use a configuration such as
+It is distributed as an AMD module. If you use [RequireJS] [9], you can use a configuration such as
 
     require.config({
       'paths': 'components/paths-js/dist/paths'
@@ -116,5 +116,6 @@ The `Pie` function will then return an array on which one can iterate to draw th
 [4]: http://www.ractivejs.org/
 [5]: http://angularjs.org/
 [6]: https://github.com/andreaferretti/paths-js-demo
-[7]: http://bower.io/
-[8]: http://requirejs.org/
+[7]: http://andreaferretti.github.io/paths-js-demo/
+[8]: http://bower.io/
+[9]: http://requirejs.org/
