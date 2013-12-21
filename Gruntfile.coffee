@@ -5,32 +5,32 @@ module.exports = (grunt)->
   grunt.loadNpmTasks('grunt-urequire')
 
   grunt.initConfig
-    yeoman:
+    config:
       src: 'src/coffee/paths'
       dist: 'dist'
       test: 'test'
 
     clean:
-      dist: ['<%= yeoman.dist %>']
+      dist: ['<%= config.dist %>']
 
     coffee:
       dist:
         expand: true
-        cwd: '<%= yeoman.src %>'
+        cwd: '<%= config.src %>'
         src: ['**/*.coffee']
-        dest: '<%= yeoman.dist %>/amd'
+        dest: '<%= config.dist %>/amd'
         ext: '.js'
 
     urequire:
       dist:
         template: 'nodejs'
-        path: "<%= yeoman.dist %>/amd"
-        dstPath: "<%= yeoman.dist %>/node"
+        path: "<%= config.dist %>/amd"
+        dstPath: "<%= config.dist %>/node"
 
     copy:
       dist:
         files: [
-          { expand: true, cwd: '.', src: ['package.json'], dest: '<%= yeoman.dist %>/node' }
+          { expand: true, cwd: '.', src: ['package.json'], dest: '<%= config.dist %>/node' }
         ]
 
   grunt.registerTask 'default', [
