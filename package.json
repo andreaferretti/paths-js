@@ -1,6 +1,12 @@
 {
-  "name": "Paths.js",
-  "version": "0.0.1",
+  "name": "paths-js",
+  "version": "0.0.7",
+  "author": {
+    "name": "Andrea Ferretti"
+  },
+  "license": "Apache-2.0",
+  "homepage": "https://github.com/andreaferretti/paths-js",
+  "keywords": ["svg", "path"],
   "dependencies": {},
   "devDependencies": {
     "grunt": "~0.4.0",
@@ -8,6 +14,7 @@
     "grunt-contrib-clean": "~0.5.0",
     "grunt-contrib-coffee": "~0.7.0"
   },
+  "files": ["dist/node"],
   "engines": {
     "node": ">=0.8.0"
   }

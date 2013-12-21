@@ -5,7 +5,7 @@ module.exports = (grunt)->
 
   grunt.initConfig
     yeoman:
-      src: 'src'
+      src: 'src/coffee/paths'
       dist: 'dist'
       test: 'test'
 
@@ -15,16 +15,15 @@ module.exports = (grunt)->
     coffee:
       dist:
         expand: true
-        cwd: 'src/coffee/'
+        cwd: '<%= yeoman.src %>'
         src: ['**/*.coffee']
-        dest: '<%= yeoman.dist %>'
+        dest: '<%= yeoman.dist %>/amd'
         ext: '.js'
     
     urequire:
       dist:
         template: 'nodejs'
-        path: "<%= yeoman.dist %>"
-        main: 'paths/path'
+        path: "<%= yeoman.dist %>/amd"
         dstPath: "<%= yeoman.dist %>/node"
 
   grunt.registerTask('default', ['clean:dist', 'coffee:dist', 'urequire:dist'])
