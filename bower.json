@@ -1,7 +1,7 @@
 {
-  "name": "Paths.js",
-  "version": "0.0.8",
-  "main": "./src/coffee/paths/path.coffee",
+  "name": "paths-js",
+  "version": "0.0.9",
+  "main": "dist/amd",
   "dependencies": {
     "requirejs": "*"
   },
