@@ -1,6 +1,6 @@
 {
   "name": "paths-js",
-  "version": "0.0.7",
+  "version": "0.0.8",
   "author": {
     "name": "Andrea Ferretti"
   },
@@ -13,7 +13,8 @@
     "grunt-urequire": "~0.6.0",
     "grunt-contrib-copy": "~0.4.1",
     "grunt-contrib-clean": "~0.5.0",
-    "grunt-contrib-coffee": "~0.7.0"
+    "grunt-contrib-coffee": "~0.7.0",
+    "grunt-jasmine": "~0.1.0"
   },
   "engines": {
     "node": ">=0.8.0"
