@@ -8,17 +8,7 @@ Polygon = require('./polygon'),
     Linear = require('./linear');
 
 module.exports = (function () {
-  var box, max, min;
-  min = function (xs) {
-    return xs.reduce(function (a, b) {
-      return Math.min(a, b);
-    });
-  };
-  max = function (xs) {
-    return xs.reduce(function (a, b) {
-      return Math.max(a, b);
-    });
-  };
+  var box;
   box = function (datum, accessor) {
     var item, l, points, sorted, ycoords;
     points = function () {
@@ -44,8 +34,8 @@ module.exports = (function () {
       points: sorted,
       xmin: sorted[0][0],
       xmax: sorted[l - 1][0],
-      ymin: min(ycoords),
-      ymax: max(ycoords)
+      ymin: O.min(ycoords),
+      ymax: O.max(ycoords)
     };
   };
   return function (_arg) {
@@ -80,16 +70,16 @@ module.exports = (function () {
       }
       return _results;
     }();
-    xmin = min(arranged.map(function (d) {
+    xmin = O.min(arranged.map(function (d) {
       return d.xmin;
     }));
-    xmax = min(arranged.map(function (d) {
+    xmax = O.max(arranged.map(function (d) {
       return d.xmax;
     }));
-    ymin = min(arranged.map(function (d) {
+    ymin = O.min(arranged.map(function (d) {
       return d.ymin;
     }));
-    ymax = min(arranged.map(function (d) {
+    ymax = O.max(arranged.map(function (d) {
       return d.ymax;
     }));
     if (closed) {

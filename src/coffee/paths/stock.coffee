@@ -3,9 +3,6 @@ define [
   './linear'
 ], (Polygon, Linear)->
 
-  min = (xs) -> xs.reduce (a, b) -> Math.min(a, b)
-  max = (xs) -> xs.reduce (a, b) -> Math.max(a, b)
-
   box = (datum, accessor) ->
     points = (accessor item for item in datum)
     sorted = points.sort ([a, b], [c, d]) -> a - c
@@ -15,8 +12,8 @@ define [
     points: sorted
     xmin: sorted[0][0]
     xmax: sorted[l - 1][0]
-    ymin: min ycoords
-    ymax: max ycoords
+    ymin: O.min ycoords
+    ymax: O.max ycoords
 
   ({data, xaccessor, yaccessor, width, height, colors, closed}) ->
     xaccessor ?= ([x, y]) -> x
@@ -24,10 +21,10 @@ define [
     f = (i) -> [xaccessor(i), -yaccessor(i)]
     arranged = (box(datum, f) for datum in data)
 
-    xmin = min(arranged.map (d) -> d.xmin)
-    xmax = min(arranged.map (d) -> d.xmax)
-    ymin = min(arranged.map (d) -> d.ymin)
-    ymax = min(arranged.map (d) -> d.ymax)
+    xmin = O.min(arranged.map (d) -> d.xmin)
+    xmax = O.max(arranged.map (d) -> d.xmax)
+    ymin = O.min(arranged.map (d) -> d.ymin)
+    ymax = O.max(arranged.map (d) -> d.ymax)
     if closed
       ymin = Math.min(ymin, 0)
       ymax = Math.max(ymax, 0)
