@@ -2,7 +2,7 @@ define [
   './polygon'
   './ops'
 ], (Polygon, O)->
-  collect_keys: (objects) ->
+  collect_keys = (objects) ->
     keys = []
     keysets = (Object.keys o for o in objects)
     for object in objects

@@ -1,32 +1,30 @@
 (function() {
   define(['./polygon', './ops'], function(Polygon, O) {
-    var global_max, key_accessor;
-    ({
-      collect_keys: function(objects) {
-        var key, keys, keysets, o, object, _i, _j, _len, _len1, _ref;
-        keys = [];
-        keysets = (function() {
-          var _i, _len, _results;
-          _results = [];
-          for (_i = 0, _len = objects.length; _i < _len; _i++) {
-            o = objects[_i];
-            _results.push(Object.keys(o));
-          }
-          return _results;
-        })();
+    var collect_keys, global_max, key_accessor;
+    collect_keys = function(objects) {
+      var key, keys, keysets, o, object, _i, _j, _len, _len1, _ref;
+      keys = [];
+      keysets = (function() {
+        var _i, _len, _results;
+        _results = [];
         for (_i = 0, _len = objects.length; _i < _len; _i++) {
-          object = objects[_i];
-          _ref = Object.keys(object);
-          for (_j = 0, _len1 = _ref.length; _j < _len1; _j++) {
-            key = _ref[_j];
-            if (keys.indexOf(key) === -1) {
-              keys.push(key);
-            }
+          o = objects[_i];
+          _results.push(Object.keys(o));
+        }
+        return _results;
+      })();
+      for (_i = 0, _len = objects.length; _i < _len; _i++) {
+        object = objects[_i];
+        _ref = Object.keys(object);
+        for (_j = 0, _len1 = _ref.length; _j < _len1; _j++) {
+          key = _ref[_j];
+          if (keys.indexOf(key) === -1) {
+            keys.push(key);
           }
         }
-        return keys;
       }
-    });
+      return keys;
+    };
     key_accessor = function(keys) {
       var a, key, _fn, _i, _len;
       a = {};
