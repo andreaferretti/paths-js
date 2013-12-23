@@ -5,7 +5,8 @@ var __isAMD = !!(typeof define === 'function' && define.amd),
     __isNode = (typeof exports === 'object'),
     __isWeb = !__isNode;
 Polygon = require('./polygon'),
-    Linear = require('./linear');
+    Linear = require('./linear'),
+    O = require('./ops');
 
 module.exports = (function () {
   var box;

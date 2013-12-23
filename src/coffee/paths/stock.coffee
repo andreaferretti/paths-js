@@ -1,7 +1,8 @@
 define [
   './polygon'
   './linear'
-], (Polygon, Linear)->
+  './ops'
+], (Polygon, Linear, O)->
 
   box = (datum, accessor) ->
     points = (accessor item for item in datum)

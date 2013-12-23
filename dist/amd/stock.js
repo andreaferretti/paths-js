@@ -1,5 +1,5 @@
 (function() {
-  define(['./polygon', './linear'], function(Polygon, Linear) {
+  define(['./polygon', './linear', './ops'], function(Polygon, Linear, O) {
     var box;
     box = function(datum, accessor) {
       var item, l, points, sorted, ycoords;
