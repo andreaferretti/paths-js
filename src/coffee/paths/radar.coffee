@@ -41,6 +41,7 @@ define [
       polygon: Polygon
         points: points
         closed: true
+      item: d
       color: colors(i)
 
     polygons: polygons

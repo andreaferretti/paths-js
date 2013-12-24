@@ -91,6 +91,7 @@ module.exports = (function () {
           points: points,
           closed: true
         }),
+        item: d,
         color: colors(i)
       };
     });
