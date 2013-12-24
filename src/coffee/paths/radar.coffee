@@ -34,7 +34,7 @@ define [
     max ?= global_max(data, accessor)
     
     ring_paths = [1..rings].map (n) ->
-      radius = (r * n) / (rings * max)
+      radius = r * n / rings
       points = [0..sides - 1].map (s) ->
         O.plus(center, O.on_circle(radius, s * angle))
       Polygon

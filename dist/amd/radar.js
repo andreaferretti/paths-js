@@ -73,7 +73,7 @@
         return _results;
       }).apply(this).map(function(n) {
         var points, radius, _i, _ref, _results;
-        radius = (r * n) / (rings * max);
+        radius = r * n / rings;
         points = (function() {
           _results = [];
           for (var _i = 0, _ref = sides - 1; 0 <= _ref ? _i <= _ref : _i >= _ref; 0 <= _ref ? _i++ : _i--){ _results.push(_i); }
