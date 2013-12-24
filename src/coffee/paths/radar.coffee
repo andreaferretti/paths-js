@@ -24,13 +24,22 @@ define [
       O.max(vals)
     O.max(maxs)
 
-  ({data, accessor, center, r, max, colors}) ->
+  ({data, accessor, center, r, max, rings, colors}) ->
+    rings ?= 3
     accessor ?= key_accessor(collect_keys(data))
     keys = Object.keys accessor
     sides = keys.length
     angle = 2 * Math.PI / sides
     i = -1
     max ?= global_max(data, accessor)
+    
+    ring_paths = [1..rings].map (n) ->
+      radius = (r * n) / (rings * max)
+      points = [0..sides - 1].map (s) ->
+        O.plus(center, O.on_circle(radius, s * angle))
+      Polygon
+        points: points
+        closed: true
 
     polygons = data.map (d) ->
       i += 1
@@ -45,3 +54,4 @@ define [
       color: colors(i)
 
     polygons: polygons
+    rings: ring_paths

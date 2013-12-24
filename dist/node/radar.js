@@ -60,8 +60,11 @@ module.exports = (function () {
     return O.max(maxs);
   };
   return function (_arg) {
-    var accessor, angle, center, colors, data, i, keys, max, polygons, r, sides;
-    data = _arg.data, accessor = _arg.accessor, center = _arg.center, r = _arg.r, max = _arg.max, colors = _arg.colors;
+    var accessor, angle, center, colors, data, i, keys, max, polygons, r, ring_paths, rings, sides, _i, _results;
+    data = _arg.data, accessor = _arg.accessor, center = _arg.center, r = _arg.r, max = _arg.max, rings = _arg.rings, colors = _arg.colors;
+    if (rings == null) {
+      rings = 3;
+    }
     if (accessor == null) {
       accessor = key_accessor(collect_keys(data));
     }
@@ -72,15 +75,38 @@ module.exports = (function () {
     if (max == null) {
       max = global_max(data, accessor);
     }
-    polygons = data.map(function (d) {
-      var points, _i, _ref, _results;
-      i += 1;
+    ring_paths = function () {
+      _results = [];
+      for (var _i = 1; 1 <= rings ? _i <= rings : _i >= rings; 1 <= rings ? _i++ : _i--) {
+        _results.push(_i);
+      }
+      return _results;
+    }.apply(this).map(function (n) {
+      var points, radius, _i, _ref, _results;
+      radius = r * n / (rings * max);
       points = function () {
         _results = [];
         for (var _i = 0, _ref = sides - 1; 0 <= _ref ? _i <= _ref : _i >= _ref; 0 <= _ref ? _i++ : _i--) {
           _results.push(_i);
         }
         return _results;
+      }.apply(this).map(function (s) {
+        return O.plus(center, O.on_circle(radius, s * angle));
+      });
+      return Polygon({
+        points: points,
+        closed: true
+      });
+    });
+    polygons = data.map(function (d) {
+      var points, _j, _ref, _results1;
+      i += 1;
+      points = function () {
+        _results1 = [];
+        for (var _j = 0, _ref = sides - 1; 0 <= _ref ? _j <= _ref : _j >= _ref; 0 <= _ref ? _j++ : _j--) {
+          _results1.push(_j);
+        }
+        return _results1;
       }.apply(this).map(function (n) {
         var key;
         key = keys[n];
@@ -95,7 +121,10 @@ module.exports = (function () {
         color: colors(i)
       };
     });
-    return { polygons: polygons };
+    return {
+      polygons: polygons,
+      rings: ring_paths
+    };
   };
 }).call(this);
 
