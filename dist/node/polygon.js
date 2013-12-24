@@ -9,14 +9,14 @@ Path = require('./path'),
 
 module.exports = (function () {
   return function (_arg) {
-    var closed, head, l, path, points, tail;
+    var closed, head, l, path, points, tail, _ref;
     points = _arg.points, closed = _arg.closed;
     l = points.length;
     head = points[0];
     tail = points.slice(1, +l + 1 || 9000000000);
     path = tail.reduce(function (pt, p) {
       return pt.lineto.apply(pt, p);
-    }, Path().moveto(head));
+    }, (_ref = Path()).moveto.apply(_ref, head));
     return {
       path: closed ? path.closepath() : path,
       centroid: O.average(points)
