@@ -8,8 +8,16 @@ define [
       copy.push el
       copy
 
-    printInstrunction = ({command, params}) ->
+    printInstrunction = ({ command, params }) ->
       "#{ command } #{ params.join ' ' }"
+  
+    point = ({ command, params }) ->
+      switch command
+        when 'M' then params
+        when 'L' then params
+        when 'Z' then []
+        when 'Q' then [params[2], params[3]]
+        when 'A' then [params[5], params[6]]
 
     plus = (instruction) ->
       Path(push instructions, instruction)
@@ -41,5 +49,11 @@ define [
 
     print: ->
       instructions.map(printInstrunction).join(' ')
+    
+    points: ->
+      ps = []
+      for instruction in instructions
+        ps.push point(instruction)
+      ps
 
   Path
