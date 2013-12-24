@@ -13,9 +13,9 @@ define [
   
     point = ({ command, params }) ->
       switch command
-        when 'M' then params
-        when 'L' then params
-        when 'Z' then []
+        when 'M' then [params[0], params[1]]
+        when 'L' then [params[0], params[1]]
+        when 'Z' then null
         when 'Q' then [params[2], params[3]]
         when 'A' then [params[5], params[6]]
 
@@ -53,7 +53,9 @@ define [
     points: ->
       ps = []
       for instruction in instructions
-        ps.push point(instruction)
+        do ->
+          p = point(instruction)
+          if p then ps.push p
       ps
 
   Path

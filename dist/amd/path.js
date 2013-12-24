@@ -20,11 +20,11 @@
         command = _arg.command, params = _arg.params;
         switch (command) {
           case 'M':
-            return params;
+            return [params[0], params[1]];
           case 'L':
-            return params;
+            return [params[0], params[1]];
           case 'Z':
-            return [];
+            return null;
           case 'Q':
             return [params[2], params[3]];
           case 'A':
@@ -75,11 +75,18 @@
           return instructions.map(printInstrunction).join(' ');
         },
         points: function() {
-          var instruction, ps, _i, _len;
+          var instruction, ps, _fn, _i, _len;
           ps = [];
+          _fn = function() {
+            var p;
+            p = point(instruction);
+            if (p) {
+              return ps.push(p);
+            }
+          };
           for (_i = 0, _len = instructions.length; _i < _len; _i++) {
             instruction = instructions[_i];
-            ps.push(point(instruction));
+            _fn();
           }
           return ps;
         }
