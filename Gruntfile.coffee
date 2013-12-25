@@ -14,6 +14,7 @@ module.exports = (grunt)->
 
     clean:
       dist: ['<%= config.dist %>']
+      test: ['<%= config.test_dist %>']
 
     coffee:
       dist:
@@ -48,13 +49,17 @@ module.exports = (grunt)->
       all: ['<%= config.test %>/*.js']
 
   grunt.registerTask 'test', [
+    'build'
+    'clean:test'
     'coffee:test'
     'mochacli'
   ]
 
-  grunt.registerTask 'default', [
+  grunt.registerTask 'build', [
     'clean:dist'
     'coffee:dist'
     'urequire:dist'
     'copy:dist'
   ]
+  
+  grunt.registerTask 'default', ['test']
