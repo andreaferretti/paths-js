@@ -14,7 +14,9 @@
     "grunt-contrib-copy": "~0.4.1",
     "grunt-contrib-clean": "~0.5.0",
     "grunt-contrib-coffee": "~0.7.0",
-    "grunt-jasmine": "~0.1.0"
+    "grunt-mocha-cli": "~1.4.0",
+    "expect.js": "~0.2.0",
+    "should": "~2.1.1"
   },
   "engines": {
     "node": ">=0.8.0"
