@@ -16,7 +16,8 @@ define [
         when 'M' then [params[0], params[1]]
         when 'L' then [params[0], params[1]]
         when 'Z' then null
-        when 'Q' then [params[2], params[3]]
+        when 'S' then [params[2], params[3]]
+        when 'Q' then [params[0], params[1]]
         when 'A' then [params[5], params[6]]
 
     plus = (instruction) ->
@@ -58,4 +59,4 @@ define [
           if p then ps.push p
       ps
 
-  Path
+  -> Path()

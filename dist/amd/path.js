@@ -25,8 +25,10 @@
             return [params[0], params[1]];
           case 'Z':
             return null;
-          case 'Q':
+          case 'S':
             return [params[2], params[3]];
+          case 'Q':
+            return [params[0], params[1]];
           case 'A':
             return [params[5], params[6]];
         }
@@ -92,7 +94,9 @@
         }
       };
     };
-    return Path;
+    return function() {
+      return Path();
+    };
   });
 
 }).call(this);

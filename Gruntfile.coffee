@@ -49,7 +49,7 @@ module.exports = (grunt)->
       all: ['<%= config.test %>/*.js']
 
   grunt.registerTask 'test', [
-    'build'
+#    'build'
     'clean:test'
     'coffee:test'
     'mochacli'

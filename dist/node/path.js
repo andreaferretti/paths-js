@@ -38,10 +38,15 @@ module.exports = (function () {
         ];
       case "Z":
         return null;
-      case "Q":
+      case "S":
         return [
           params[2],
           params[3]
+        ];
+      case "Q":
+        return [
+          params[0],
+          params[1]
         ];
       case "A":
         return [
@@ -133,7 +138,9 @@ module.exports = (function () {
       }
     };
   };
-  return Path;
+  return function () {
+    return Path();
+  };
 }).call(this);
 
 
