@@ -63,8 +63,10 @@ When one is satisfied with the path, the `print` method will give the textual re
     <svg width=300 height=300>
       <path d="{{ path.print() }}" fill="blue" />
     </svg>
+    
+Path objects also have a `points` method that return the array of points through which the path passes. This case be useful, for instance, to place labels near the endpoints.
 
-Path objects can be create with the `Path` function. All methods except `print` produce a new path (paths are immutable). These methods mimic the SVG path specification and are, until now, `moveto`, `lineto`, `curveto`, `qcurveto` and `closepath`. The missing methods - `hlineto`, `vlineto`, `smoothcurveto` and `smoothqcurveto` - will be added soon.
+Path objects are created with the `Path` function. All methods except `print` and `points` produce a new path (paths are immutable). These methods mimic the SVG path specification and are, until now, `moveto`, `lineto`, `curveto`, `qcurveto` and `closepath`. The missing methods - `hlineto`, `vlineto`, `smoothcurveto` and `smoothqcurveto` - will be added soon.
 
 
 Mid level API (shapes)
