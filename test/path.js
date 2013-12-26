@@ -1,11 +1,15 @@
 (function() {
-  var Path, expect;
+  var Path, expect, labels;
 
   Path = require('../dist/node/path.js');
 
   expect = require('expect.js');
 
-  console.log(expect);
+  labels = function(path) {
+    var regex;
+    regex = /([A-Z])/g;
+    return path.print().match(regex);
+  };
 
   describe('node module import', function() {
     return it('should export the correct type', function() {
@@ -82,6 +86,49 @@
       var path;
       path = Path().moveto(0, 1).arc(3, 3, 2, 0, 1, 6, -3).curveto(2, 1, -1, 17);
       return expect(path.points()).to.eql([[0, 1], [6, -3], [-1, 17]]);
+    });
+  });
+
+  describe('print method', function() {
+    it('should report the expected labels for a moveto command', function() {
+      var path;
+      path = Path().moveto(2, 10);
+      return expect(labels(path)).to.eql(['M']);
+    });
+    it('should report the expected labels for lineto commands', function() {
+      var path;
+      path = Path().moveto(4, 5).lineto(3, 1).lineto(-1, 17);
+      return expect(labels(path)).to.eql(['M', 'L', 'L']);
+    });
+    it('should report the expected labels for horizontal line commands', function() {
+      var path;
+      path = Path().moveto(4, 5).hlineto(3).lineto(-1, 17);
+      return expect(labels(path)).to.eql(['M', 'H', 'L']);
+    });
+    it('should report the expected labels for vertical line commands', function() {
+      var path;
+      path = Path().moveto(4, 5).vlineto(3).lineto(-1, 17);
+      return expect(labels(path)).to.eql(['M', 'V', 'L']);
+    });
+    it('should report the expected labels when closing a path', function() {
+      var path;
+      path = Path().moveto(4, 5).lineto(3, 1).lineto(-1, 17).closepath();
+      return expect(labels(path)).to.eql(['M', 'L', 'L', 'Z']);
+    });
+    it('should report the expected labels for curveto commands', function() {
+      var path;
+      path = Path().moveto(4, 5).curveto(1, 1, 3, 1).lineto(-1, 17);
+      return expect(labels(path)).to.eql(['M', 'S', 'L']);
+    });
+    it('should report the expected points for quadratic curveto commands', function() {
+      var path;
+      path = Path().moveto(4, 5).qcurveto(6, -3).curveto(2, 1, -1, 17);
+      return expect(labels(path)).to.eql(['M', 'Q', 'S']);
+    });
+    return it('should report the expected points for arc commands', function() {
+      var path;
+      path = Path().moveto(0, 1).arc(3, 3, 2, 0, 1, 6, -3).curveto(2, 1, -1, 17);
+      return expect(labels(path)).to.eql(['M', 'A', 'S']);
     });
   });
 
