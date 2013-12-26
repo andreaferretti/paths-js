@@ -3,12 +3,15 @@ module.exports = (grunt)->
   grunt.loadNpmTasks('grunt-contrib-coffee')
   grunt.loadNpmTasks('grunt-contrib-copy')
   grunt.loadNpmTasks('grunt-contrib-watch')
+  grunt.loadNpmTasks('grunt-contrib-concat')
+  grunt.loadNpmTasks('grunt-contrib-requirejs')
   grunt.loadNpmTasks('grunt-urequire')
   grunt.loadNpmTasks('grunt-mocha-cli')
 
   grunt.initConfig
     config:
       src: 'src/main/paths'
+      helpers: 'src/main/helpers'
       dist: 'dist'
       test: 'src/test'
       test_dist: 'test'
@@ -16,6 +19,7 @@ module.exports = (grunt)->
     clean:
       dist: ['<%= config.dist %>']
       test: ['<%= config.test_dist %>']
+      global: ['<%= config.dist %>/helpers', '<%= config.dist %>/temp']
 
     coffee:
       dist:
@@ -23,6 +27,12 @@ module.exports = (grunt)->
         cwd: '<%= config.src %>'
         src: ['**/*.coffee']
         dest: '<%= config.dist %>/amd'
+        ext: '.js'
+      help:
+        expand: true
+        cwd: '<%= config.helpers %>'
+        src: ['**/*.coffee']
+        dest: '<%= config.dist %>/helpers'
         ext: '.js'
       test:
         expand: true
@@ -42,6 +52,26 @@ module.exports = (grunt)->
         files: [
           { expand: true, cwd: '.', src: ['package.json'], dest: '<%= config.dist %>/node' }
         ]
+
+    concat:
+      options:
+        separator: ";"
+
+      global:
+        src: [
+          '<%= config.dist %>/helpers/simple-require.js'
+          '<%= config.dist %>/temp/all.js'
+        ]
+        dest: '<%= config.dist %>/global/paths.js'
+
+    requirejs:
+      compile:
+        options:
+          baseUrl: '.'
+          appDir: '<%= config.dist %>/helpers'
+          dir: '<%= config.dist %>/temp'
+          skipDirOptimize: true
+          modules: [{ name: 'all' }]
 
     watch:
       dist:
@@ -67,9 +97,11 @@ module.exports = (grunt)->
 
   grunt.registerTask 'build', [
     'clean:dist'
+    'coffee:help'
     'coffee:dist'
+    'requirejs:compile'
     'urequire:dist'
     'copy:dist'
+    'concat:global'
+    'clean:global'
   ]
-  
-  grunt.registerTask 'default', ['test']
