@@ -15,6 +15,19 @@ describe 'path', ->
     expect(path).to.have.property('points')
     expect(path).to.have.property('print')
 
+  it 'should have methods corresponding the SVG path spec', ->
+    path = Path()
+    expect(path).to.have.property('moveto')
+    expect(path).to.have.property('lineto')
+    expect(path).to.have.property('hlineto')
+    expect(path).to.have.property('vlineto')
+    expect(path).to.have.property('closepath')
+    expect(path).to.have.property('curveto')
+    expect(path).to.have.property('qcurveto')
+#    expect(path).to.have.property('smoothcurveto')
+#    expect(path).to.have.property('smoothqcurveto')
+    expect(path).to.have.property('arc')
+
   it 'should ignore constructor arguments', ->
     path = Path([{command: 'L', params: [2, 3]}])
     expect(path.points()).to.have.length(0)

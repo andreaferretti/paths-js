@@ -24,6 +24,18 @@
       expect(path).to.have.property('points');
       return expect(path).to.have.property('print');
     });
+    it('should have methods corresponding the SVG path spec', function() {
+      var path;
+      path = Path();
+      expect(path).to.have.property('moveto');
+      expect(path).to.have.property('lineto');
+      expect(path).to.have.property('hlineto');
+      expect(path).to.have.property('vlineto');
+      expect(path).to.have.property('closepath');
+      expect(path).to.have.property('curveto');
+      expect(path).to.have.property('qcurveto');
+      return expect(path).to.have.property('arc');
+    });
     it('should ignore constructor arguments', function() {
       var path;
       path = Path([
