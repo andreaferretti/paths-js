@@ -2,6 +2,7 @@ module.exports = (grunt)->
   grunt.loadNpmTasks('grunt-contrib-clean')
   grunt.loadNpmTasks('grunt-contrib-coffee')
   grunt.loadNpmTasks('grunt-contrib-copy')
+  grunt.loadNpmTasks('grunt-contrib-watch')
   grunt.loadNpmTasks('grunt-urequire')
   grunt.loadNpmTasks('grunt-mocha-cli')
 
@@ -42,6 +43,14 @@ module.exports = (grunt)->
           { expand: true, cwd: '.', src: ['package.json'], dest: '<%= config.dist %>/node' }
         ]
 
+    watch:
+      dist:
+        files: ['<%= config.src %>/{,**/}*.coffee']
+        tasks: ['coffee:dist', 'urequire:dist']
+      test:
+        files: ['<%= config.test %>/{,**/}*.coffee']
+        tasks: ['coffee:test', 'mochacli']
+
     mochacli:
       options:
         reporter: 'nyan'
@@ -53,6 +62,7 @@ module.exports = (grunt)->
     'clean:test'
     'coffee:test'
     'mochacli'
+    'watch'
   ]
 
   grunt.registerTask 'build', [
