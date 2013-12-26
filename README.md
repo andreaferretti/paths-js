@@ -3,7 +3,7 @@ Paths.js
 
 This library helps generating [SVG paths] [1] with a high level API. These paths can be then used together with a template engine such as [Mustache] [2] or [Handlebars] [3] to display SVG graphics in the browser. If instead of a static template engine, you use a data binding library, such as [Ractive.js] [4] or [Angular] [5], you get animated graphics for free.
 
-Paths.js offers three APIs, of increasing abstraction. The lowest level is a chainable API to generate an arbitrary SVG path. On top of this, paths for simple geometric shapes such as rectangles or circle sectors are defined. At the highest level, there is an API to generate some simple graphs (pie, bar chart, lines...) for a collection of data, assembling the simple shapes.
+Paths.js offers three APIs, of increasing abstraction. The lowest level is a chainable API to generate an arbitrary SVG path. On top of this, paths for simple geometric shapes such as polygons or circle sectors are defined. At the highest level, there is an API to generate some simple graphs (pie, line chart, radar...) for a collection of data, assembling the simple shapes.
 
 > Note that the API is still in flux and may not stabilize until version 0.1.0.
 
@@ -11,6 +11,11 @@ How does it look like?
 ----------------------
 
 Well, it depends on how you style the graphics, because the actual drawing of the SVG is left to you. Anyway, [here] [6] is a demo application; a live version can be seen [here] [7].
+
+Is it for me?
+-------------
+
+It depends. If what you need are some ready-made widgets and charts, probably not. In this case, libraries such as jquery.flot of vivagraph may be a better fit. On the other hand, if you want to create your own charts, possibly with custom styling, interactions or animations, it may be a better idea to use a data-binding library and generate the SVG elements yourself. In this case, you will probably need to write some SVG paths, and Paths.js is designed to do exactly this. Another situation where you may want to deal directly with SVG elements is the case where you need to generate the graphics server side with Node.js. In this case you can couple Paths.js with any templating library of your choice, since Paths.js does not make use of any browser API (or any API outside the core ES5, actually).
 
 Installation and usage
 ----------------------
@@ -22,14 +27,22 @@ Paths.js is distributed with [bower] [8], so you can install it like
 It is distributed as an AMD module. If you use [RequireJS] [9], you can use a configuration such as
 
     require.config({
-      'paths': 'components/paths-js/dist/paths'
+      'paths': 'components/paths-js/dist/amd'
     });
 
 (the actual path will depend on your bower configuration). Then import the various modules like
 
     var Pie = require('paths/pie');
 
-In the future, I will provide other ways to leverage Paths.js, either as a CommonJS module for use in node, or as a global.
+If you want to use it on the server, just do
+
+    npm install paths-js
+
+to install it and then
+
+    var Pie = require('paths-js/pie');
+    
+Paths.js is not distributed as a global object yet, but this will be possibly the case in the future.
 
 Low level API
 -------------
