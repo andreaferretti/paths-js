@@ -125,6 +125,13 @@ The parameters `center`, `r`, `R` have the same geometric meaning as in the `Sec
 
 The `Pie` function will then return an array on which one can iterate to draw the sectors. Each member of this array has the properties `sector`, `color` and `item`, the latter containing the actual datum associated to the sector.
 
+Browser support
+---------------
+
+Paths.js works in any environment that supports a modern version of Javascript, namely ES5. This includes any version of Node.js and all recent browsers. If you need support for older browsers, you can include an `ES5` polyfill.
+
+On the other hand, not every browser will be able to display the SVG graphics that you will generate. Usually, recent desktop browsers are ok, but mobile browser are slow in adopting the SVG specification. You can refer to caniuse for more detailed information.
+
 [1]: http://www.w3.org/TR/SVG/paths.html
 [2]: http://mustache.github.io/
 [3]: http://handlebarsjs.com/
