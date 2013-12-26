@@ -29,6 +29,14 @@ describe 'points method', ->
   it 'should report the expected points for lineto commands', ->
     path = Path().moveto(4, 5).lineto(3, 1).lineto(-1, 17)
     expect(path.points()).to.eql([[4, 5], [3, 1], [-1, 17]])
+
+  it 'should report the expected points for horizontal line commands', ->
+    path = Path().moveto(4, 5).hlineto(3).lineto(-1, 17)
+    expect(path.points()).to.eql([[4, 5], [3, 5], [-1, 17]])
+
+  it 'should report the expected points for vertical line commands', ->
+    path = Path().moveto(4, 5).vlineto(3).lineto(-1, 17)
+    expect(path.points()).to.eql([[4, 5], [4, 3], [-1, 17]])
   
   it 'should not add points when closing a path', ->
     path = Path().moveto(4, 5).lineto(3, 1).lineto(-1, 17)

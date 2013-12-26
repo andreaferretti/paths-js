@@ -11,10 +11,12 @@ define [
     printInstrunction = ({ command, params }) ->
       "#{ command } #{ params.join ' ' }"
   
-    point = ({ command, params }) ->
+    point = ({ command, params }, [prev_x, prev_y]) ->
       switch command
         when 'M' then [params[0], params[1]]
         when 'L' then [params[0], params[1]]
+        when 'H' then [params[0], prev_y]
+        when 'V' then [prev_x, params[0]]
         when 'Z' then null
         when 'S' then [params[2], params[3]]
         when 'Q' then [params[0], params[1]]
@@ -31,6 +33,14 @@ define [
     lineto: (x, y) -> plus
       command: 'L'
       params: [x, y]
+
+    hlineto: (x) -> plus
+      command: 'H'
+      params: [x]
+
+    vlineto: (y) -> plus
+      command: 'V'
+      params: [y]
 
     closepath: -> plus
       command: 'Z'
@@ -53,9 +63,11 @@ define [
     
     points: ->
       ps = []
+      prev = [0, 0]
       for instruction in instructions
         do ->
-          p = point(instruction)
+          p = point(instruction, prev)
+          prev = p
           if p then ps.push p
       ps
 

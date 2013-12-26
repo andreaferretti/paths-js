@@ -22,9 +22,10 @@ module.exports = (function () {
       command = _arg.command, params = _arg.params;
       return "" + command + " " + params.join(" ");
     };
-    point = function (_arg) {
-      var command, params;
+    point = function (_arg, _arg1) {
+      var command, params, prev_x, prev_y;
       command = _arg.command, params = _arg.params;
+      prev_x = _arg1[0], prev_y = _arg1[1];
       switch (command) {
       case "M":
         return [
@@ -35,6 +36,16 @@ module.exports = (function () {
         return [
           params[0],
           params[1]
+        ];
+      case "H":
+        return [
+          params[0],
+          prev_y
+        ];
+      case "V":
+        return [
+          prev_x,
+          params[0]
         ];
       case "Z":
         return null;
@@ -75,6 +86,18 @@ module.exports = (function () {
             x,
             y
           ]
+        });
+      },
+      hlineto: function (x) {
+        return plus({
+          command: "H",
+          params: [x]
+        });
+      },
+      vlineto: function (y) {
+        return plus({
+          command: "V",
+          params: [y]
         });
       },
       closepath: function () {
@@ -121,11 +144,16 @@ module.exports = (function () {
         return instructions.map(printInstrunction).join(" ");
       },
       points: function () {
-        var instruction, ps, _fn, _i, _len;
+        var instruction, prev, ps, _fn, _i, _len;
         ps = [];
+        prev = [
+          0,
+          0
+        ];
         _fn = function () {
           var p;
-          p = point(instruction);
+          p = point(instruction, prev);
+          prev = p;
           if (p) {
             return ps.push(p);
           }
