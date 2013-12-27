@@ -24,8 +24,8 @@ describe 'path', ->
     expect(path).to.have.property('closepath')
     expect(path).to.have.property('curveto')
     expect(path).to.have.property('qcurveto')
-#    expect(path).to.have.property('smoothcurveto')
-#    expect(path).to.have.property('smoothqcurveto')
+    expect(path).to.have.property('smoothcurveto')
+    expect(path).to.have.property('smoothqcurveto')
     expect(path).to.have.property('arc')
 
   it 'should ignore constructor arguments', ->
@@ -58,15 +58,23 @@ describe 'points method', ->
     expect(path.points()).to.eql(path.closepath().points())
 
   it 'should report the expected points for curveto commands', ->
-    path = Path().moveto(4, 5).curveto(1, 1, 3, 1).lineto(-1, 17)
+    path = Path().moveto(4, 5).curveto(1, 1, 2, 6, 3, 1).lineto(-1, 17)
+    expect(path.points()).to.eql([[4, 5], [3, 1], [-1, 17]])
+
+  it 'should report the expected points for smoothcurveto commands', ->
+    path = Path().moveto(4, 5).smoothcurveto(1, 1, 3, 1).lineto(-1, 17)
     expect(path.points()).to.eql([[4, 5], [3, 1], [-1, 17]])
 
   it 'should report the expected points for quadratic curveto commands', ->
-    path = Path().moveto(4, 5).qcurveto(6, -3).curveto(2, 1, -1, 17)
+    path = Path().moveto(4, 5).qcurveto(6, -3).curveto(2, 1, 3, -1, -1, 17)
     expect(path.points()).to.eql([[4, 5], [6, -3], [-1, 17]])
-    
+
+  it 'should report the expected points for smoothqcurveto commands', ->
+    path = Path().moveto(4, 5).smoothqcurveto(1, 1).lineto(1, 6)
+    expect(path.points()).to.eql([[4, 5], [1, 1], [1, 6]])
+
   it 'should report the expected points for arc commands', ->
-    path = Path().moveto(0, 1).arc(3, 3, 2, 0, 1, 6, -3).curveto(2, 1, -1, 17)
+    path = Path().moveto(0, 1).arc(3, 3, 2, 0, 1, 6, -3).curveto(2, 1, 3, 1, -1, 17)
     expect(path.points()).to.eql([[0, 1], [6, -3], [-1, 17]])
 
 describe 'print method', ->
@@ -92,12 +100,12 @@ describe 'print method', ->
 
   it 'should report the expected labels for curveto commands', ->
     path = Path().moveto(4, 5).curveto(1, 1, 3, 1).lineto(-1, 17)
-    expect(labels path).to.eql(['M', 'S', 'L'])
+    expect(labels path).to.eql(['M', 'C', 'L'])
 
   it 'should report the expected points for quadratic curveto commands', ->
     path = Path().moveto(4, 5).qcurveto(6, -3).curveto(2, 1, -1, 17)
-    expect(labels path).to.eql(['M', 'Q', 'S'])
+    expect(labels path).to.eql(['M', 'Q', 'C'])
     
   it 'should report the expected points for arc commands', ->
     path = Path().moveto(0, 1).arc(3, 3, 2, 0, 1, 6, -3).curveto(2, 1, -1, 17)
-    expect(labels path).to.eql(['M', 'A', 'S'])
+    expect(labels path).to.eql(['M', 'A', 'C'])

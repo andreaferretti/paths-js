@@ -105,3 +105,5 @@ module.exports = (grunt)->
     'concat:global'
     'clean:global'
   ]
+  
+  grunt.registerTask 'default', ['test']

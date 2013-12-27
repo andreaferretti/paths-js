@@ -49,12 +49,22 @@ module.exports = (function () {
         ];
       case "Z":
         return null;
+      case "C":
+        return [
+          params[4],
+          params[5]
+        ];
       case "S":
         return [
           params[2],
           params[3]
         ];
       case "Q":
+        return [
+          params[0],
+          params[1]
+        ];
+      case "T":
         return [
           params[0],
           params[1]
@@ -106,7 +116,20 @@ module.exports = (function () {
           params: []
         });
       },
-      curveto: function (x2, y2, x, y) {
+      curveto: function (x1, y1, x2, y2, x, y) {
+        return plus({
+          command: "C",
+          params: [
+            x1,
+            y1,
+            x2,
+            y2,
+            x,
+            y
+          ]
+        });
+      },
+      smoothcurveto: function (x2, y2, x, y) {
         return plus({
           command: "S",
           params: [
@@ -120,6 +143,15 @@ module.exports = (function () {
       qcurveto: function (x, y) {
         return plus({
           command: "Q",
+          params: [
+            x,
+            y
+          ]
+        });
+      },
+      smoothqcurveto: function (x, y) {
+        return plus({
+          command: "T",
           params: [
             x,
             y
