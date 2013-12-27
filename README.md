@@ -1,7 +1,7 @@
 Paths.js
 ========
 
-This library helps generating [SVG paths] [1] with a high level API. These paths can be then used together with a template engine such as [Mustache] [2] or [Handlebars] [3] to display SVG graphics in the browser. If instead of a static template engine, you use a data binding library, such as [Ractive.js] [4] or [Angular] [5], you get animated graphics for free.
+This library helps generating [SVG paths] [1] with a high level API. These paths can be then used together with a template engine such as [Mustache] [2] or [Handlebars] [3] to display SVG graphics in the browser. If instead of a static template engine, you use a data binding library, such as [Ractive.js] [4], [Angular] [5] or [Facebook React] [6], you get animated graphics for free.
 
 Paths.js offers three APIs, of increasing abstraction. The lowest level is a chainable API to generate an arbitrary SVG path. On top of this, paths for simple geometric shapes such as polygons or circle sectors are defined. At the highest level, there is an API to generate some simple graphs (pie, line chart, radar...) for a collection of data, assembling the simple shapes.
 
@@ -10,7 +10,7 @@ Paths.js offers three APIs, of increasing abstraction. The lowest level is a cha
 How does it look like?
 ----------------------
 
-Well, it depends on how you style the graphics, because the actual drawing of the SVG is left to you. Anyway, [here] [6] is a demo application; a live version can be seen [here] [7].
+Well, it depends on how you style the graphics, because the actual drawing of the SVG is left to you. Anyway, [here] [7] is a demo application; a live version can be seen [here] [8].
 
 Is it for me?
 -------------
@@ -20,11 +20,11 @@ It depends. If what you need are some ready-made widgets and charts, probably no
 Installation and usage
 ----------------------
 
-Paths.js is distributed with [bower] [8], so you can install it like
+Paths.js is distributed with [bower] [9], so you can install it like
 
     bower install paths-js
 
-It is distributed as an AMD module. If you use [RequireJS] [9], you can use a configuration such as
+It is distributed as an AMD module. If you use [RequireJS] [10], you can use a configuration such as
 
     require.config({
       'paths': 'components/paths-js/dist/amd'
@@ -42,7 +42,7 @@ to install it and then
 
     var Pie = require('paths-js/pie');
     
-Paths.js is not distributed as a global object yet, but this will be possibly the case in the future.
+Finally, if you want to use Paths.js in the browser, but you do not want to use AMD modules, there is the possibility to include it in the global object. To do this, just include the file `dist/global/paths.js` in a page, and then access the various APIs globally as `paths.Pie`, `paths.Polygon` and so on.
 
 Low level API
 -------------
@@ -128,16 +128,21 @@ The `Pie` function will then return an array on which one can iterate to draw th
 Browser support
 ---------------
 
-Paths.js works in any environment that supports a modern version of Javascript, namely ES5. This includes any version of Node.js and all recent browsers. If you need support for older browsers, you can include an `ES5` polyfill.
+Paths.js works in any environment that supports a modern version of Javascript, namely ES5. This includes any version of Node.js and all recent browsers. If you need support for older browsers, you can include an [ES5 polyfill] [11].
 
-On the other hand, not every browser will be able to display the SVG graphics that you will generate. Usually, recent desktop browsers are ok, but mobile browser are slow in adopting the SVG specification. You can refer to caniuse for more detailed information.
+On the other hand, not every browser will be able to display the SVG graphics that you will generate. Usually, recent desktop browsers are ok, but mobile browser are slow in adopting the SVG specification. You can refer to [caniuse] [12] for more detailed information. Moreover, the [canvg] [13] project allows to draw SVG paths on a `<canvas>` element, and it seems that canvas [will be able] [14] to support SVG paths natively. Of course, this solutions limits the possibilities offered by data binding libraries for interaction, but they could be used as a fallback on less recent browsers.
 
 [1]: http://www.w3.org/TR/SVG/paths.html
 [2]: http://mustache.github.io/
 [3]: http://handlebarsjs.com/
 [4]: http://www.ractivejs.org/
 [5]: http://angularjs.org/
-[6]: https://github.com/andreaferretti/paths-js-demo
-[7]: http://andreaferretti.github.io/paths-js-demo/
-[8]: http://bower.io/
-[9]: http://requirejs.org/
+[6]: http://facebook.github.io/react/
+[7]: https://github.com/andreaferretti/paths-js-demo
+[8]: http://andreaferretti.github.io/paths-js-demo/
+[9]: http://bower.io/
+[10]: http://requirejs.org/
+[11]: https://github.com/kriskowal/es5-shim/
+[12]: http://caniuse.com/#search=svg
+[13]: http://code.google.com/p/canvg/
+[14]: http://lists.w3.org/Archives/Public/public-whatwg-archive/2012Mar/0269.html
