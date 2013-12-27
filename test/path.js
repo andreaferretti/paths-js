@@ -98,7 +98,7 @@
     });
     it('should report the expected points for quadratic curveto commands', function() {
       var path;
-      path = Path().moveto(4, 5).qcurveto(6, -3).curveto(2, 1, 3, -1, -1, 17);
+      path = Path().moveto(4, 5).qcurveto(1, 1, 6, -3).curveto(2, 1, 3, -1, -1, 17);
       return expect(path.points()).to.eql([[4, 5], [6, -3], [-1, 17]]);
     });
     it('should report the expected points for smoothqcurveto commands', function() {
@@ -141,17 +141,27 @@
     });
     it('should report the expected labels for curveto commands', function() {
       var path;
-      path = Path().moveto(4, 5).curveto(1, 1, 3, 1).lineto(-1, 17);
+      path = Path().moveto(4, 5).curveto(1, 1, 2, 5, 3, 1).lineto(-1, 17);
       return expect(labels(path)).to.eql(['M', 'C', 'L']);
+    });
+    it('should report the expected labels for smoothcurveto commands', function() {
+      var path;
+      path = Path().moveto(4, 5).smoothcurveto(2, 5, 2, 6).lineto(-1, 17);
+      return expect(labels(path)).to.eql(['M', 'S', 'L']);
     });
     it('should report the expected points for quadratic curveto commands', function() {
       var path;
-      path = Path().moveto(4, 5).qcurveto(6, -3).curveto(2, 1, -1, 17);
+      path = Path().moveto(4, 5).qcurveto(0, 1, 2, 3).curveto(2, 1, 0, -1, -1, 17);
       return expect(labels(path)).to.eql(['M', 'Q', 'C']);
+    });
+    it('should report the expected points for smooth quadratic curveto commands', function() {
+      var path;
+      path = Path().moveto(4, 5).smoothqcurveto(6, -3).curveto(2, 1, 0, -1, -1, 17);
+      return expect(labels(path)).to.eql(['M', 'T', 'C']);
     });
     return it('should report the expected points for arc commands', function() {
       var path;
-      path = Path().moveto(0, 1).arc(3, 3, 2, 0, 1, 6, -3).curveto(2, 1, -1, 17);
+      path = Path().moveto(0, 1).arc(3, 3, 2, 0, 1, 6, -3).curveto(2, 1, 3, 1, -1, 17);
       return expect(labels(path)).to.eql(['M', 'A', 'C']);
     });
   });

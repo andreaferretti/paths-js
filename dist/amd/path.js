@@ -35,7 +35,7 @@
           case 'S':
             return [params[2], params[3]];
           case 'Q':
-            return [params[0], params[1]];
+            return [params[2], params[3]];
           case 'T':
             return [params[0], params[1]];
           case 'A':
@@ -88,10 +88,10 @@
             params: [x2, y2, x, y]
           });
         },
-        qcurveto: function(x, y) {
+        qcurveto: function(x1, y1, x, y) {
           return plus({
             command: 'Q',
-            params: [x, y]
+            params: [x1, y1, x, y]
           });
         },
         smoothqcurveto: function(x, y) {

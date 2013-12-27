@@ -61,8 +61,8 @@ module.exports = (function () {
         ];
       case "Q":
         return [
-          params[0],
-          params[1]
+          params[2],
+          params[3]
         ];
       case "T":
         return [
@@ -140,10 +140,12 @@ module.exports = (function () {
           ]
         });
       },
-      qcurveto: function (x, y) {
+      qcurveto: function (x1, y1, x, y) {
         return plus({
           command: "Q",
           params: [
+            x1,
+            y1,
             x,
             y
           ]

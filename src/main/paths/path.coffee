@@ -20,7 +20,7 @@ define [
         when 'Z' then null
         when 'C' then [params[4], params[5]]
         when 'S' then [params[2], params[3]]
-        when 'Q' then [params[0], params[1]]
+        when 'Q' then [params[2], params[3]]
         when 'T' then [params[0], params[1]]
         when 'A' then [params[5], params[6]]
 
@@ -56,9 +56,9 @@ define [
       command: 'S'
       params: [x2, y2, x, y]
 
-    qcurveto: (x, y) -> plus
+    qcurveto: (x1, y1, x, y) -> plus
       command: 'Q'
-      params: [x, y]
+      params: [x1, y1, x, y]
 
     smoothqcurveto: (x, y) -> plus
       command: 'T'
