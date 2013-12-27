@@ -1,12 +1,12 @@
 define [
-  '../amd/linear'
-  '../amd/ops'
-  '../amd/path'
-  '../amd/pie'
-  '../amd/polygon'
-  '../amd/radar'
-  '../amd/sector'
-  '../amd/stock'
+  './linear'
+  './ops'
+  './path'
+  './pie'
+  './polygon'
+  './radar'
+  './sector'
+  './stock'
 ], (Linear, Ops, Path, Pie, Polygon, Radar, Sector, Stock)->
 
   window.paths =

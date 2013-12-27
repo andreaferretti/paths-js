@@ -19,7 +19,7 @@ module.exports = (grunt)->
     clean:
       dist: ['<%= config.dist %>']
       test: ['<%= config.test_dist %>']
-      global: ['<%= config.dist %>/helpers', '<%= config.dist %>/temp']
+      global: ['<%= config.dist %>/helpers', '<%= config.dist %>/temp', '<%= config.dist %>/amd/all.js', '<%= config.dist %>/node/all.js']
 
     coffee:
       dist:
@@ -68,7 +68,7 @@ module.exports = (grunt)->
       compile:
         options:
           baseUrl: '.'
-          appDir: '<%= config.dist %>/helpers'
+          appDir: '<%= config.dist %>/amd'
           dir: '<%= config.dist %>/temp'
           skipDirOptimize: true
           modules: [{ name: 'all' }]
