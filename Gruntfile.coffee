@@ -51,6 +51,7 @@ module.exports = (grunt)->
       dist:
         files: [
           { expand: true, cwd: '.', src: ['package.json'], dest: '<%= config.dist %>/node' }
+          { expand: true, cwd: '.', src: ['README.md'], dest: '<%= config.dist %>/node' }
         ]
 
     concat:
