@@ -27,3 +27,23 @@ describe 'max function', ->
 
   it 'should work when only one element is given', ->
     expect(O.max [13]).to.be(13)
+
+describe 'vector sum', ->
+  it 'should yield the sum of the given vectors', ->
+    expect(O.plus [1, 2], [3, 4]).to.eql([4, 6])
+    expect(O.plus [0, -1], [1, 3]).to.eql([1, 2])
+
+describe 'vector difference', ->
+  it 'should yield the difference of the given vectors', ->
+    expect(O.minus [1, 2], [3, 4]).to.eql([-2, -2])
+    expect(O.minus [0, -1], [1, 3]).to.eql([-1, -4])
+
+describe 'scalar product', ->
+  it 'should yield the rescaled vector', ->
+    expect(O.times 5, [3, 4]).to.eql([15, 20])
+    expect(O.times -1, [1, 3]).to.eql([-1, -3])
+
+describe 'vector average', ->
+  it 'should yield the central point of the given vectors', ->
+    expect(O.average [[3, 4], [-1, -2], [3, 5], [-5, -7]]).to.eql([0, 0])
+    expect(O.average [[5, 4], [-1, 0], [3, 6], [-3, -6]]).to.eql([1, 1])
