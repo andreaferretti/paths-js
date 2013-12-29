@@ -1,6 +1,12 @@
 (function() {
   define(['./polygon', './ops'], function(Polygon, O) {
-    var collect_keys, global_max, key_accessor;
+    var collect_keys, global_max, key_accessor, rand_int, random_colors;
+    rand_int = function(max) {
+      return Math.floor(Math.random() * max);
+    };
+    random_colors = function() {
+      return "rgb(" + (rand_int(256)) + ", " + (rand_int(256)) + ", " + (rand_int(256)) + ")";
+    };
     collect_keys = function(objects) {
       var key, keys, keysets, o, object, _i, _j, _len, _len1, _ref;
       keys = [];
@@ -56,6 +62,9 @@
       data = _arg.data, accessor = _arg.accessor, center = _arg.center, r = _arg.r, max = _arg.max, rings = _arg.rings, colors = _arg.colors;
       if (rings == null) {
         rings = 3;
+      }
+      if (colors == null) {
+        colors = O.random_colors;
       }
       if (accessor == null) {
         accessor = key_accessor(collect_keys(data));

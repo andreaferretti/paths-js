@@ -1,6 +1,6 @@
 (function() {
   define([], function() {
-    var average, max, min, minus, on_circle, plus, times;
+    var average, max, min, minus, on_circle, plus, random_colors, random_int, times;
     min = function(xs) {
       return xs.reduce(function(a, b) {
         return Math.min(a, b);
@@ -34,6 +34,12 @@
     on_circle = function(r, angle) {
       return times(r, [Math.sin(angle), -Math.cos(angle)]);
     };
+    random_int = function(max) {
+      return Math.floor(Math.random() * max);
+    };
+    random_colors = function() {
+      return "rgb(" + (random_int(256)) + ", " + (random_int(256)) + ", " + (random_int(256)) + ")";
+    };
     return {
       min: min,
       max: max,
@@ -41,7 +47,9 @@
       minus: minus,
       times: times,
       average: average,
-      on_circle: on_circle
+      on_circle: on_circle,
+      random_int: random_int,
+      random_colors: random_colors
     };
   });
 

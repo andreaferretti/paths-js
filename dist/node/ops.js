@@ -7,7 +7,7 @@ var __isAMD = !!(typeof define === 'function' && define.amd),
 ;
 
 module.exports = (function () {
-  var average, max, min, minus, on_circle, plus, times;
+  var average, max, min, minus, on_circle, plus, random_colors, random_int, times;
   min = function (xs) {
     return xs.reduce(function (a, b) {
       return Math.min(a, b);
@@ -53,6 +53,12 @@ module.exports = (function () {
       -Math.cos(angle)
     ]);
   };
+  random_int = function (max) {
+    return Math.floor(Math.random() * max);
+  };
+  random_colors = function () {
+    return "rgb(" + random_int(256) + ", " + random_int(256) + ", " + random_int(256) + ")";
+  };
   return {
     min: min,
     max: max,
@@ -60,7 +66,9 @@ module.exports = (function () {
     minus: minus,
     times: times,
     average: average,
-    on_circle: on_circle
+    on_circle: on_circle,
+    random_int: random_int,
+    random_colors: random_colors
   };
 }).call(this);
 

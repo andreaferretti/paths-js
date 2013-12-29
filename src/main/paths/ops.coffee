@@ -15,6 +15,12 @@ define [
 
   on_circle = (r, angle) ->
     times(r, [Math.sin(angle), -Math.cos(angle)])
+
+  random_int = (max) ->
+    Math.floor(Math.random() * max)
+    
+  random_colors = ->
+    "rgb(#{ random_int(256) }, #{ random_int(256) }, #{ random_int(256) })"
   
   min: min
   max: max
@@ -23,3 +29,5 @@ define [
   times: times
   average: average
   on_circle: on_circle
+  random_int: random_int
+  random_colors: random_colors
