@@ -77,7 +77,7 @@ module.exports = (grunt)->
     watch:
       dist:
         files: ['<%= config.src %>/{,**/}*.coffee']
-        tasks: ['coffee:dist', 'urequire:dist']
+        tasks: ['coffee:dist', 'urequire:dist', 'clean:global']
       test:
         files: ['<%= config.test %>/{,**/}*.coffee']
         tasks: ['coffee:test', 'mochacli']
@@ -85,7 +85,7 @@ module.exports = (grunt)->
     mochacli:
       options:
         reporter: 'nyan'
-#        bail: true
+        bail: true
       all: ['<%= config.test %>/*.js']
 
   grunt.registerTask 'test', [
