@@ -1,22 +1,16 @@
 (function() {
-  define(['./linear', './sector'], function(Linear, Sector) {
-    var rand_int, random_colors, sum;
+  define(['./linear', './ops', './sector'], function(Linear, O, Sector) {
+    var sum;
     sum = function(values) {
       return values.reduce(function(a, b) {
         return a + b;
       });
     };
-    rand_int = function(max) {
-      return Math.floor(Math.random() * max);
-    };
-    random_colors = function() {
-      return "rgb(" + (rand_int(256)) + ", " + (rand_int(256)) + ", " + (rand_int(256)) + ")";
-    };
     return function(_arg) {
       var R, accessor, center, colors, data, i, item, pie, r, s, scale, t, value, values, _i, _len;
       data = _arg.data, accessor = _arg.accessor, center = _arg.center, r = _arg.r, R = _arg.R, colors = _arg.colors;
       if (colors == null) {
-        colors = random_colors;
+        colors = O.random_colors;
       }
       values = (function() {
         var _i, _len, _results;
