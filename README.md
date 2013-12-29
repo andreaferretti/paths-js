@@ -16,6 +16,7 @@ Table of contents
 - [Low level API](#low-level-api)
 - [Mid level API (shapes)](#mid-level-api-shapes)
 - [High level API (graphs)](#high-level-api-graphs)
+- [Miscellaneous](#miscellaneous)
 - [Browser support](#browser-support)
 
 How does it look like?
@@ -58,26 +59,26 @@ Finally, if you want to use Paths.js in the browser, but you do not want to use 
 Low level API
 -------------
 
-At the heart of the library there is a very simple API to compose SVG paths by method chaining. At this level, we do not try to abstract away the specification of SVG paths, and the parameters mimic exactly the ones in the specification. You can produce a path like
+At the heart of the library there is a very simple API to compose SVG paths by method chaining. At this level, we do not try to abstract away the specification of SVG paths, and the parameters mimic exactly the ones in the specification. An empty path object is created with the function `Path()` and complex path objects can be obtained from the empty one by chaining path methods. Thus, one can produce a path like
 
     var Path = require('paths/path');
     var path = Path()
       .moveto(10, 20)
       .lineto(30, 50)
       .lineto(25, 28)
-      .qcurveto(32, 27)
+      .qcurveto(27, 30, 32, 27)
       .closepath();
 
-When one is satisfied with the path, the `print` method will give the textual representation of the path, that can be used inside an SVG figure like
+Other than methods to compose other paths, path objects have the methods `print` and `points`. The `print` method will give the textual representation of the path, that can be used inside an SVG figure like
 
     <!-- inside a template -->
     <svg width=300 height=300>
       <path d="{{ path.print() }}" fill="blue" />
     </svg>
     
-Path objects also have a `points` method that return the array of points through which the path passes. This case be useful, for instance, to place labels near the endpoints.
+The `points` method returns the array of points through which the path passes. This case be useful, for instance, to place labels near the endpoints.
 
-Path objects are created with the `Path` function. All methods except `print` and `points` produce a new path (paths are immutable). These methods mimic the SVG path specification and are `moveto`, `lineto`, `hlineto`, `vlineto`, `curveto`, `qcurveto`, `smoothcurveto`, `smoothqcurveto` and `closepath`.
+All methods except `print` and `points` produce a new path (paths are immutable). These methods mimic the SVG path specification and are `moveto`, `lineto`, `hlineto`, `vlineto`, `curveto`, `qcurveto`, `smoothcurveto`, `smoothqcurveto` and `closepath`.
 
 
 Mid level API (shapes)
@@ -135,6 +136,17 @@ The `Pie` graph can be used as follows:
 The parameters `center`, `r`, `R` have the same geometric meaning as in the `Sector` function. The parameter `data` should contain an array with the data to plot. The precise form of the data is not important, because the actual value of the data will be extracted by the `accessor` function. Finally `colors` is an optional parameter, holding a function that assign to a sector index its color.
 
 The `Pie` function will then return an array on which one can iterate to draw the sectors. Each member of this array has the properties `sector`, `color` and `item`, the latter containing the actual datum associated to the sector.
+
+Miscellaneous
+-------------
+
+Other than the modules mentioned above, Paths.js has the `linear` and `ops` modules. The `linear` module contains a function that can be used to generate linear scale, that is, functions that interpolate linearly a source interval on a target one (affine functions of one variable). An example of use to map the interval `[0, 3]` on the interval `[10, 40]` would be
+
+    var Linear = require('paths/linear');
+    var scale = Linear([0, 3], [10, 40]);
+    var x = scale(2); // yields 30
+    
+The `ops` module contains various utility functions that are used internally. It is not meant for external use, hence it is not documented, but curious folks can have a look at its tests.
 
 Browser support
 ---------------
