@@ -27,10 +27,18 @@ describe 'radar chart', ->
       r: 10
     expect(radar.polygons[0].polygon.path.points()).to.have.length(6)
 
-  it 'should have as many rings as specified', ->
+describe 'radar chart rings', ->
+  it 'should be as many as specified', ->
     radar = Radar
       data: data
       center: [1, 1]
       r: 5
       rings: 4
     expect(radar.rings).to.have.length(4)
+
+  it 'should be centered at the given center', ->
+    radar = Radar
+      data: data
+      center: [2, 3]
+      r: 5
+    expect(radar.rings[0].centroid).to.eql([2, 3])

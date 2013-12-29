@@ -75,7 +75,7 @@
       });
       return expect(radar.polygons).to.have.length(data.length);
     });
-    it('should have by default as many sides as data properties', function() {
+    return it('should have by default as many sides as data properties', function() {
       var radar;
       radar = Radar({
         data: data,
@@ -84,7 +84,10 @@
       });
       return expect(radar.polygons[0].polygon.path.points()).to.have.length(6);
     });
-    return it('should have as many rings as specified', function() {
+  });
+
+  describe('radar chart rings', function() {
+    it('should be as many as specified', function() {
       var radar;
       radar = Radar({
         data: data,
@@ -93,6 +96,15 @@
         rings: 4
       });
       return expect(radar.rings).to.have.length(4);
+    });
+    return it('should be centered at the given center', function() {
+      var radar;
+      radar = Radar({
+        data: data,
+        center: [2, 3],
+        r: 5
+      });
+      return expect(radar.rings[0].centroid).to.eql([2, 3]);
     });
   });
 
