@@ -37,7 +37,7 @@
       expected = [[1, -3], [5, 1], [3, 1], [1, -1]];
       return expect(points).to.eql(expected);
     });
-    return it('should have the expected centroid', function() {
+    it('should have the expected centroid', function() {
       var sector;
       sector = Sector({
         r: 2,
@@ -47,6 +47,30 @@
         end: Math.PI
       });
       return expect(round_vector(sector.centroid)).to.eql([4, 0]);
+    });
+    it('should be closed', function() {
+      var sector;
+      sector = Sector({
+        r: 2,
+        R: 4,
+        center: [1, 1],
+        start: 0,
+        end: 1
+      });
+      return expect(sector.path.print()).to.match(/Z/);
+    });
+    return it('should pass through the center when r = 0', function() {
+      var sector;
+      sector = Sector({
+        r: 0,
+        R: 3,
+        center: [3, 16],
+        start: 1,
+        end: 2
+      });
+      return expect(sector.path.points().filter(function(x) {
+        return x[0] === 3 && x[1] === 16;
+      })).to.have.length(2);
     });
   });
 

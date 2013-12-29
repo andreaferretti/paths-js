@@ -28,3 +28,21 @@ describe 'sector function', ->
       start: 0
       end: Math.PI
     expect(round_vector(sector.centroid)).to.eql([4, 0])
+
+  it 'should be closed', ->
+    sector = Sector
+      r: 2
+      R: 4
+      center: [1, 1]
+      start: 0
+      end: 1
+    expect(sector.path.print()).to.match(/Z/)
+
+  it 'should pass through the center when r = 0', ->
+    sector = Sector
+      r: 0
+      R: 3
+      center: [3, 16]
+      start: 1
+      end: 2
+    expect(sector.path.points().filter (x) -> x[0] == 3 and x[1] == 16).to.have.length(2)
