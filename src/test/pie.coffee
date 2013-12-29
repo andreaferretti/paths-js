@@ -11,24 +11,25 @@ data = [
   { hp: 79, attack: 83, defense: 100, sp_attack: 85, sp_defense: 105, speed: 78 }
   { hp: 60, attack: 45, defense: 50, sp_attack: 90, sp_defense: 80, speed: 70 }
 ]
+
+pie = Pie
+  data: data
+  accessor: (x) -> x.hp
+  center: [1, 1]
+  r: 10
+  R: 20
   
 describe 'pie chart', ->
   it 'should generate as many sectors as data', ->
-    pie = Pie
-      data: data
-      accessor: (x) -> x.hp
-      center: [1, 1]
-      r: 10
-      R: 20
     expect(pie).to.have.length(data.length)
 
+  it 'should contain circle arcs', ->
+    expect(pie[1].sector.path.print()).to.match(/A/)
+
+  it 'should generate closed sectors', ->
+    expect(pie[1].sector.path.print()).to.match(/Z/)
+
   it 'should give access to the original items', ->
-    pie = Pie
-      data: data
-      accessor: (x) -> x.attack
-      center: [0, 1]
-      r: 1
-      R: 2
     expect(pie[2].item).to.be(data[2])
 
   it 'should allow custom color functions', ->

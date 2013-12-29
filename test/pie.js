@@ -1,5 +1,5 @@
 (function() {
-  var Pie, data, expect;
+  var Pie, data, expect, pie;
 
   Pie = require('../dist/node/pie.js');
 
@@ -65,35 +65,31 @@
     }
   ];
 
+  pie = Pie({
+    data: data,
+    accessor: function(x) {
+      return x.hp;
+    },
+    center: [1, 1],
+    r: 10,
+    R: 20
+  });
+
   describe('pie chart', function() {
     it('should generate as many sectors as data', function() {
-      var pie;
-      pie = Pie({
-        data: data,
-        accessor: function(x) {
-          return x.hp;
-        },
-        center: [1, 1],
-        r: 10,
-        R: 20
-      });
       return expect(pie).to.have.length(data.length);
     });
+    it('should contain circle arcs', function() {
+      return expect(pie[1].sector.path.print()).to.match(/A/);
+    });
+    it('should generate closed sectors', function() {
+      return expect(pie[1].sector.path.print()).to.match(/Z/);
+    });
     it('should give access to the original items', function() {
-      var pie;
-      pie = Pie({
-        data: data,
-        accessor: function(x) {
-          return x.attack;
-        },
-        center: [0, 1],
-        r: 1,
-        R: 2
-      });
       return expect(pie[2].item).to.be(data[2]);
     });
     return it('should allow custom color functions', function() {
-      var constant_color, pie;
+      var constant_color;
       constant_color = function() {
         return "#ffbb22";
       };
