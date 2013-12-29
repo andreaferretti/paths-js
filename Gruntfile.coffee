@@ -85,7 +85,7 @@ module.exports = (grunt)->
     mochacli:
       options:
         reporter: 'nyan'
-        bail: true
+#        bail: true
       all: ['<%= config.test %>/*.js']
 
   grunt.registerTask 'test', [

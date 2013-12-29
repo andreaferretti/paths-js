@@ -1,9 +1,6 @@
 Polygon = require '../dist/node/polygon.js'
 expect = require 'expect.js'
 
-is_closed = (polygon) ->
-  /Z/.test(polygon.path.print())
-  
 describe 'polygon function', ->
   it 'should start by moving to the first point of the polygon', ->
     polygon = Polygon
@@ -11,6 +8,13 @@ describe 'polygon function', ->
       closed: true
     path = polygon.path.print()
     expect(path.substring(0, 5)).to.be('M 1 6')
+
+  it 'should give the same points that are fed as input', ->
+    points = [[1, 6], [3, 1], [7, 5], [7, 2], [3, -1]]
+    polygon = Polygon
+      points: points
+      closed: true
+    expect(polygon.path.points()).to.eql(points)
     
   it 'should correctly handle closed and open polygons', ->
     points = [[-1, 3], [2, 17], [3, 5], [4, 6]]
@@ -20,8 +24,8 @@ describe 'polygon function', ->
     polygon2 = Polygon
       points: points
       closed: false
-    expect(is_closed(polygon1)).to.be(true)
-    expect(is_closed(polygon2)).to.be(false)
+    expect(polygon1.path.print()).to.match(/Z/)
+    expect(polygon2.path.print()).not.to.match(/Z/)
 
   it 'should compute the expected centroid of a square', ->
     square = Polygon
