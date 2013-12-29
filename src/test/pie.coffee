@@ -21,3 +21,25 @@ describe 'pie chart', ->
       r: 10
       R: 20
     expect(pie).to.have.length(data.length)
+
+  it 'should give access to the original items', ->
+    pie = Pie
+      data: data
+      accessor: (x) -> x.attack
+      center: [0, 1]
+      r: 1
+      R: 2
+    expect(pie[2].item).to.be(data[2])
+
+  it 'should allow custom color functions', ->
+    constant_color = ->
+      "#ffbb22"
+
+    pie = Pie
+      data: data
+      accessor: (x) -> x.hp
+      center: [1, 1]
+      r: 10
+      R: 20
+      colors: constant_color
+    expect(pie[2].color).to.be("#ffbb22")
