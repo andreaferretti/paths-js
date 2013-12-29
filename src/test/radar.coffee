@@ -19,3 +19,18 @@ describe 'radar chart', ->
       center: [1, 1]
       r: 10
     expect(radar.polygons).to.have.length(data.length)
+
+  it 'should have by default as many sides as data properties', ->
+    radar = Radar
+      data: data
+      center: [1, 1]
+      r: 10
+    expect(radar.polygons[0].polygon.path.points()).to.have.length(6)
+
+  it 'should have as many rings as specified', ->
+    radar = Radar
+      data: data
+      center: [1, 1]
+      r: 5
+      rings: 4
+    expect(radar.rings).to.have.length(4)

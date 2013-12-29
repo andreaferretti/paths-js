@@ -66,7 +66,7 @@
   ];
 
   describe('radar chart', function() {
-    return it('should generate as many polygons as data', function() {
+    it('should generate as many polygons as data', function() {
       var radar;
       radar = Radar({
         data: data,
@@ -74,6 +74,25 @@
         r: 10
       });
       return expect(radar.polygons).to.have.length(data.length);
+    });
+    it('should have by default as many sides as data properties', function() {
+      var radar;
+      radar = Radar({
+        data: data,
+        center: [1, 1],
+        r: 10
+      });
+      return expect(radar.polygons[0].polygon.path.points()).to.have.length(6);
+    });
+    return it('should have as many rings as specified', function() {
+      var radar;
+      radar = Radar({
+        data: data,
+        center: [1, 1],
+        r: 5,
+        rings: 4
+      });
+      return expect(radar.rings).to.have.length(4);
     });
   });
 
