@@ -1,5 +1,7 @@
 define [
 ], ()->
+  sum = (xs) -> xs.reduce ((a, b) -> a + b), 0
+
   min = (xs) -> xs.reduce (a, b) -> Math.min(a, b)
 
   max = (xs) -> xs.reduce (a, b) -> Math.max(a, b)
@@ -22,6 +24,7 @@ define [
   random_colors = ->
     "rgb(#{ random_int(256) }, #{ random_int(256) }, #{ random_int(256) })"
   
+  sum: sum
   min: min
   max: max
   plus: plus

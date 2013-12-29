@@ -167,8 +167,6 @@
     return d.getTime();
   };
 
-  console.log('this is the actual stock');
-
   stock = Stock({
     data: data,
     xaccessor: date,

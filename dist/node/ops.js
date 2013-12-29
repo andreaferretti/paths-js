@@ -7,7 +7,12 @@ var __isAMD = !!(typeof define === 'function' && define.amd),
 ;
 
 module.exports = (function () {
-  var average, max, min, minus, on_circle, plus, random_colors, random_int, times;
+  var average, max, min, minus, on_circle, plus, random_colors, random_int, sum, times;
+  sum = function (xs) {
+    return xs.reduce(function (a, b) {
+      return a + b;
+    }, 0);
+  };
   min = function (xs) {
     return xs.reduce(function (a, b) {
       return Math.min(a, b);
@@ -60,6 +65,7 @@ module.exports = (function () {
     return "rgb(" + random_int(256) + ", " + random_int(256) + ", " + random_int(256) + ")";
   };
   return {
+    sum: sum,
     min: min,
     max: max,
     plus: plus,

@@ -4,13 +4,10 @@ define [
   './sector'
 ], (Linear, O, Sector)->
 
-  sum = (values) ->
-    values.reduce (a, b) -> a + b
-    
   ({data, accessor, center, r, R, colors}) ->
     colors ?= O.random_colors
     values = (accessor item for item in data)
-    s = sum values
+    s = O.sum values
     scale = Linear [0, s], [0, 2 * Math.PI]
     pie = []
     t = 0

@@ -53,7 +53,6 @@ date = (data) ->
   d.setMonth(data.month - 1)
   d.getTime()
 
-console.log 'this is the actual stock'
 stock = Stock
   data: data
   xaccessor: date

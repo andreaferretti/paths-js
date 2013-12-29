@@ -9,12 +9,6 @@ Linear = require('./linear'),
     Sector = require('./sector');
 
 module.exports = (function () {
-  var sum;
-  sum = function (values) {
-    return values.reduce(function (a, b) {
-      return a + b;
-    });
-  };
   return function (_arg) {
     var R, accessor, center, colors, data, i, item, pie, r, s, scale, t, value, values, _i, _len;
     data = _arg.data, accessor = _arg.accessor, center = _arg.center, r = _arg.r, R = _arg.R, colors = _arg.colors;
@@ -30,7 +24,7 @@ module.exports = (function () {
       }
       return _results;
     }();
-    s = sum(values);
+    s = O.sum(values);
     scale = Linear([
       0,
       s
