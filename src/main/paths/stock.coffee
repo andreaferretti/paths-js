@@ -19,6 +19,7 @@ define [
   ({data, xaccessor, yaccessor, width, height, colors, closed}) ->
     xaccessor ?= ([x, y]) -> x
     yaccessor ?= ([x, y]) -> y
+    colors ?= O.random_colors
     f = (i) -> [xaccessor(i), -yaccessor(i)]
     arranged = (box(datum, f) for datum in data)
 

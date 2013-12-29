@@ -56,6 +56,9 @@ module.exports = (function () {
         return y;
       };
     }
+    if (colors == null) {
+      colors = O.random_colors;
+    }
     f = function (i) {
       return [
         xaccessor(i),

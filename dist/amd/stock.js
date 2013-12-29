@@ -47,6 +47,9 @@
           return y;
         };
       }
+      if (colors == null) {
+        colors = O.random_colors;
+      }
       f = function(i) {
         return [xaccessor(i), -yaccessor(i)];
       };
