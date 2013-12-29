@@ -1,9 +1,27 @@
 (function() {
-  var O, expect;
+  var O, expect, round, round_vector;
 
   O = require('../dist/node/ops.js');
 
   expect = require('expect.js');
+
+  round = function(x, digits) {
+    var a;
+    if (digits == null) {
+      digits = 5;
+    }
+    a = Math.pow(10, digits);
+    return Math.round(a * x) / a;
+  };
+
+  round_vector = function(v, digits) {
+    if (digits == null) {
+      digits = 5;
+    }
+    return v.map(function(x) {
+      return round(x, digits);
+    });
+  };
 
   describe('sum function', function() {
     it('should sum the given elements', function() {
@@ -63,6 +81,35 @@
     return it('should yield the central point of the given vectors', function() {
       expect(O.average([[3, 4], [-1, -2], [3, 5], [-5, -7]])).to.eql([0, 0]);
       return expect(O.average([[5, 4], [-1, 0], [3, 6], [-3, -6]])).to.eql([1, 1]);
+    });
+  });
+
+  describe('on_circle function', function() {
+    it('should yield the top point when the angle is 0', function() {
+      return expect(O.on_circle(3, 0)).to.eql([0, -3]);
+    });
+    return it('should yield the leftmost point when the angle is pi / 2', function() {
+      var point;
+      point = O.on_circle(3, 3 * Math.PI / 2);
+      return expect(round_vector(point)).to.eql([-3, 0]);
+    });
+  });
+
+  describe('random int', function() {
+    it('should be between 0 and max', function() {
+      expect(O.random_int(100)).to.be.above(0);
+      return expect(O.random_int(357)).to.be.below(357);
+    });
+    return it('should be an integer', function() {
+      var num;
+      num = O.random_int(100);
+      return expect(num).to.be(round(num));
+    });
+  });
+
+  describe('random color', function() {
+    return it('should generate an rgb string', function() {
+      return expect(O.random_colors()).to.match(/rgb\([\d]+, [\d]+, [\d]+\)/);
     });
   });
 
