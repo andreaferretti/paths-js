@@ -36,11 +36,11 @@ describe 'pie chart', ->
     constant_color = ->
       "#ffbb22"
 
-    pie = Pie
+    pie1 = Pie
       data: data
       accessor: (x) -> x.hp
       center: [1, 1]
       r: 10
       R: 20
       colors: constant_color
-    expect(pie[2].color).to.be("#ffbb22")
+    expect(pie1[2].color).to.be("#ffbb22")

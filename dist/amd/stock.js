@@ -51,7 +51,7 @@
         colors = O.random_colors;
       }
       f = function(i) {
-        return [xaccessor(i), -yaccessor(i)];
+        return [xaccessor(i), yaccessor(i)];
       };
       arranged = (function() {
         var _i, _len, _results;
@@ -78,9 +78,9 @@
         ymin = Math.min(ymin, 0);
         ymax = Math.max(ymax, 0);
       }
-      base = closed ? 0 : ymax;
+      base = closed ? 0 : ymin;
       xscale = Linear([xmin, xmax], [0, width]);
-      yscale = Linear([ymin, ymax], [0, height]);
+      yscale = Linear([ymin, ymax], [height, 0]);
       scale = function(_arg1) {
         var x, y;
         x = _arg1[0], y = _arg1[1];

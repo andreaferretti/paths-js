@@ -62,7 +62,7 @@ module.exports = (function () {
     f = function (i) {
       return [
         xaccessor(i),
-        -yaccessor(i)
+        yaccessor(i)
       ];
     };
     arranged = function () {
@@ -90,7 +90,7 @@ module.exports = (function () {
       ymin = Math.min(ymin, 0);
       ymax = Math.max(ymax, 0);
     }
-    base = closed ? 0 : ymax;
+    base = closed ? 0 : ymin;
     xscale = Linear([
       xmin,
       xmax
@@ -102,8 +102,8 @@ module.exports = (function () {
       ymin,
       ymax
     ], [
-      0,
-      height
+      height,
+      0
     ]);
     scale = function (_arg1) {
       var x, y;

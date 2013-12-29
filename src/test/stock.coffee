@@ -53,6 +53,7 @@ date = (data) ->
   d.setMonth(data.month - 1)
   d.getTime()
 
+console.log 'this is the actual stock'
 stock = Stock
   data: data
   xaccessor: date
@@ -79,14 +80,14 @@ describe 'stock chart', ->
     constant_color = ->
       "#ffbb22"
 
-    stock = Stock
+    stock1 = Stock
       data: data
       xaccessor: date
       yaccessor: (d) -> d.value
       width: 300
       height: 200
       colors: constant_color
-    expect(stock.polygons[1].color).to.be("#ffbb22")
+    expect(stock1.polygons[1].color).to.be("#ffbb22")
 
   it 'should allow not to include 0 as a baseline for area paths', ->
     points = stock.polygons[0].area.path.points().map (v) -> round_vector(v)
@@ -96,21 +97,32 @@ describe 'stock chart', ->
     expect(points.filter (p) -> p[1] == 200).to.have.length(3)
     
   it 'should allow to include 0 as a baseline for area paths', ->
-    stock = Stock
+    stock1 = Stock
       data: data
       xaccessor: date
       yaccessor: (d) -> d.value
       width: 300
       height: 200
       closed: true
-    points = stock.polygons[0].area.path.points().map (v) -> round_vector(v)
+    points = stock1.polygons[0].area.path.points().map (v) -> round_vector(v)
     # When 0 is not included, only the two extremes in the area path
     # have y = 200
     expect(points.filter (p) -> p[1] == 200).to.have.length(2)
     
 describe 'stock chart scales', ->
   it 'should take into account all data involved', ->
-    expect(true).to.be.ok()
+    scale = stock.yscale
+    expect(scale(8)).to.be(200)
+    expect(scale(22)).to.be(0)
 
   it 'should take into account if 0 is to be displayed as a baseline', ->
-    expect(true).to.be.ok()
+    stock1 = Stock
+      data: data
+      xaccessor: date
+      yaccessor: (d) -> d.value
+      width: 300
+      height: 200
+      closed: true
+    scale = stock1.yscale
+    expect(scale(0)).to.be(200)
+    expect(scale(22)).to.be(0)

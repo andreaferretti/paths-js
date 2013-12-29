@@ -20,7 +20,7 @@ define [
     xaccessor ?= ([x, y]) -> x
     yaccessor ?= ([x, y]) -> y
     colors ?= O.random_colors
-    f = (i) -> [xaccessor(i), -yaccessor(i)]
+    f = (i) -> [xaccessor(i), yaccessor(i)]
     arranged = (box(datum, f) for datum in data)
 
     xmin = O.min(arranged.map (d) -> d.xmin)
@@ -30,9 +30,9 @@ define [
     if closed
       ymin = Math.min(ymin, 0)
       ymax = Math.max(ymax, 0)
-    base = if closed then 0 else ymax
+    base = if closed then 0 else ymin
     xscale = Linear [xmin, xmax], [0, width]
-    yscale = Linear [ymin, ymax], [0, height]
+    yscale = Linear [ymin, ymax], [height, 0]
     scale = ([x, y]) -> [xscale(x), yscale(y)]
     i = -1
 

@@ -89,11 +89,11 @@
       return expect(pie[2].item).to.be(data[2]);
     });
     return it('should allow custom color functions', function() {
-      var constant_color;
+      var constant_color, pie1;
       constant_color = function() {
         return "#ffbb22";
       };
-      pie = Pie({
+      pie1 = Pie({
         data: data,
         accessor: function(x) {
           return x.hp;
@@ -103,7 +103,7 @@
         R: 20,
         colors: constant_color
       });
-      return expect(pie[2].color).to.be("#ffbb22");
+      return expect(pie1[2].color).to.be("#ffbb22");
     });
   });
 

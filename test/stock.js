@@ -167,6 +167,8 @@
     return d.getTime();
   };
 
+  console.log('this is the actual stock');
+
   stock = Stock({
     data: data,
     xaccessor: date,
@@ -195,11 +197,11 @@
       return expect(area.path.points().slice(0, 16)).to.eql(line.path.points());
     });
     it('should allow custom color functions', function() {
-      var constant_color;
+      var constant_color, stock1;
       constant_color = function() {
         return "#ffbb22";
       };
-      stock = Stock({
+      stock1 = Stock({
         data: data,
         xaccessor: date,
         yaccessor: function(d) {
@@ -209,7 +211,7 @@
         height: 200,
         colors: constant_color
       });
-      return expect(stock.polygons[1].color).to.be("#ffbb22");
+      return expect(stock1.polygons[1].color).to.be("#ffbb22");
     });
     it('should allow not to include 0 as a baseline for area paths', function() {
       var points;
@@ -221,8 +223,8 @@
       })).to.have.length(3);
     });
     return it('should allow to include 0 as a baseline for area paths', function() {
-      var points;
-      stock = Stock({
+      var points, stock1;
+      stock1 = Stock({
         data: data,
         xaccessor: date,
         yaccessor: function(d) {
@@ -232,7 +234,7 @@
         height: 200,
         closed: true
       });
-      points = stock.polygons[0].area.path.points().map(function(v) {
+      points = stock1.polygons[0].area.path.points().map(function(v) {
         return round_vector(v);
       });
       return expect(points.filter(function(p) {
@@ -243,10 +245,26 @@
 
   describe('stock chart scales', function() {
     it('should take into account all data involved', function() {
-      return expect(true).to.be.ok();
+      var scale;
+      scale = stock.yscale;
+      expect(scale(8)).to.be(200);
+      return expect(scale(22)).to.be(0);
     });
     return it('should take into account if 0 is to be displayed as a baseline', function() {
-      return expect(true).to.be.ok();
+      var scale, stock1;
+      stock1 = Stock({
+        data: data,
+        xaccessor: date,
+        yaccessor: function(d) {
+          return d.value;
+        },
+        width: 300,
+        height: 200,
+        closed: true
+      });
+      scale = stock1.yscale;
+      expect(scale(0)).to.be(200);
+      return expect(scale(22)).to.be(0);
     });
   });
 
