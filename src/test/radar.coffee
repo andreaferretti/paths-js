@@ -12,6 +12,12 @@ data = [
   { hp: 60, attack: 45, defense: 50, sp_attack: 90, sp_defense: 80, speed: 70 }
 ]
 
+key_accessor = (keys) ->
+  a = {}
+  for key in keys
+    ((k) -> (a[k] = (o) -> o[k]))(key)
+  a
+  
 describe 'radar chart', ->
   it 'should generate as many polygons as data', ->
     radar = Radar
@@ -20,12 +26,45 @@ describe 'radar chart', ->
       r: 10
     expect(radar.polygons).to.have.length(data.length)
 
+  it 'should generate closed polygons', ->
+    radar = Radar
+      data: data
+      center: [1, 1]
+      r: 10
+    expect(radar.polygons[4].polygon.path.print()).to.match(/Z/)
+
   it 'should have by default as many sides as data properties', ->
     radar = Radar
       data: data
       center: [1, 1]
       r: 10
     expect(radar.polygons[0].polygon.path.points()).to.have.length(6)
+
+  it 'should use the given key accessor', ->
+    radar = Radar
+      data: data
+      accessor: key_accessor(['attack', 'defense', 'speed'])
+      center: [1, 1]
+      r: 10
+    expect(radar.polygons[0].polygon.path.points()).to.have.length(3)
+
+  it 'should give access to the original items', ->
+    radar = Radar
+      data: data
+      center: [1, 1]
+      r: 10
+    expect(radar.polygons[3].item).to.be(data[3])
+
+  it 'should allow custom color functions', ->
+    constant_color = ->
+      "#ffbb22"
+
+    radar = Radar
+      data: data
+      center: [1, 1]
+      r: 10
+      colors: constant_color
+    expect(radar.polygons[3].color).to.be("#ffbb22")
 
 describe 'radar chart rings', ->
   it 'should be as many as specified', ->
@@ -42,3 +81,11 @@ describe 'radar chart rings', ->
       center: [2, 3]
       r: 5
     expect(radar.rings[0].centroid).to.eql([2, 3])
+
+  it 'should enclose the given chart', ->
+    radar = Radar
+      data: data
+      center: [0, 0]
+      rings: 3
+      r: 5
+    expect(radar.rings[2].path.points()[0]).to.eql([0, -5])

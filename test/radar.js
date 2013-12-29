@@ -1,5 +1,5 @@
 (function() {
-  var Radar, data, expect;
+  var Radar, data, expect, key_accessor;
 
   Radar = require('../dist/node/radar.js');
 
@@ -65,6 +65,21 @@
     }
   ];
 
+  key_accessor = function(keys) {
+    var a, key, _fn, _i, _len;
+    a = {};
+    _fn = function(k) {
+      return a[k] = function(o) {
+        return o[k];
+      };
+    };
+    for (_i = 0, _len = keys.length; _i < _len; _i++) {
+      key = keys[_i];
+      _fn(key);
+    }
+    return a;
+  };
+
   describe('radar chart', function() {
     it('should generate as many polygons as data', function() {
       var radar;
@@ -75,7 +90,16 @@
       });
       return expect(radar.polygons).to.have.length(data.length);
     });
-    return it('should have by default as many sides as data properties', function() {
+    it('should generate closed polygons', function() {
+      var radar;
+      radar = Radar({
+        data: data,
+        center: [1, 1],
+        r: 10
+      });
+      return expect(radar.polygons[4].polygon.path.print()).to.match(/Z/);
+    });
+    it('should have by default as many sides as data properties', function() {
       var radar;
       radar = Radar({
         data: data,
@@ -83,6 +107,38 @@
         r: 10
       });
       return expect(radar.polygons[0].polygon.path.points()).to.have.length(6);
+    });
+    it('should use the given key accessor', function() {
+      var radar;
+      radar = Radar({
+        data: data,
+        accessor: key_accessor(['attack', 'defense', 'speed']),
+        center: [1, 1],
+        r: 10
+      });
+      return expect(radar.polygons[0].polygon.path.points()).to.have.length(3);
+    });
+    it('should give access to the original items', function() {
+      var radar;
+      radar = Radar({
+        data: data,
+        center: [1, 1],
+        r: 10
+      });
+      return expect(radar.polygons[3].item).to.be(data[3]);
+    });
+    return it('should allow custom color functions', function() {
+      var constant_color, radar;
+      constant_color = function() {
+        return "#ffbb22";
+      };
+      radar = Radar({
+        data: data,
+        center: [1, 1],
+        r: 10,
+        colors: constant_color
+      });
+      return expect(radar.polygons[3].color).to.be("#ffbb22");
     });
   });
 
@@ -97,7 +153,7 @@
       });
       return expect(radar.rings).to.have.length(4);
     });
-    return it('should be centered at the given center', function() {
+    it('should be centered at the given center', function() {
       var radar;
       radar = Radar({
         data: data,
@@ -105,6 +161,16 @@
         r: 5
       });
       return expect(radar.rings[0].centroid).to.eql([2, 3]);
+    });
+    return it('should enclose the given chart', function() {
+      var radar;
+      radar = Radar({
+        data: data,
+        center: [0, 0],
+        rings: 3,
+        r: 5
+      });
+      return expect(radar.rings[2].path.points()[0]).to.eql([0, -5]);
     });
   });
 
