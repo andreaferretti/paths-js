@@ -16,6 +16,7 @@ Table of contents
 - [Low level API](#low-level-api)
 - [Mid level API (shapes)](#mid-level-api-shapes)
 - [High level API (graphs)](#high-level-api-graphs)
+- [Miscellaneous](#miscellaneous)
 - [Browser support](#browser-support)
 
 How does it look like?
@@ -58,26 +59,26 @@ Finally, if you want to use Paths.js in the browser, but you do not want to use 
 Low level API
 -------------
 
-At the heart of the library there is a very simple API to compose SVG paths by method chaining. At this level, we do not try to abstract away the specification of SVG paths, and the parameters mimic exactly the ones in the specification. You can produce a path like
+At the heart of the library there is a very simple API to compose SVG paths by method chaining. At this level, we do not try to abstract away the specification of SVG paths, and the parameters mimic exactly the ones in the specification. An empty path object is created with the function `Path()` and complex path objects can be obtained from the empty one by chaining path methods. Thus, one can produce a path like
 
     var Path = require('paths/path');
     var path = Path()
       .moveto(10, 20)
       .lineto(30, 50)
       .lineto(25, 28)
-      .qcurveto(32, 27)
+      .qcurveto(27, 30, 32, 27)
       .closepath();
 
-When one is satisfied with the path, the `print` method will give the textual representation of the path, that can be used inside an SVG figure like
+Other than methods to compose other paths, path objects have the methods `print` and `points`. The `print` method will give the textual representation of the path, that can be used inside an SVG figure like
 
     <!-- inside a template -->
     <svg width=300 height=300>
       <path d="{{ path.print() }}" fill="blue" />
     </svg>
     
-Path objects also have a `points` method that return the array of points through which the path passes. This case be useful, for instance, to place labels near the endpoints.
+The `points` method returns the array of points through which the path passes. This case be useful, for instance, to place labels near the endpoints.
 
-Path objects are created with the `Path` function. All methods except `print` and `points` produce a new path (paths are immutable). These methods mimic the SVG path specification and are `moveto`, `lineto`, `hlineto`, `vlineto`, `curveto`, `qcurveto`, `smoothcurveto`, `smoothqcurveto` and `closepath`.
+All methods except `print` and `points` produce a new path (paths are immutable). These methods mimic the SVG path specification and are `moveto`, `lineto`, `hlineto`, `vlineto`, `curveto`, `qcurveto`, `smoothcurveto`, `smoothqcurveto` and `closepath`.
 
 
 Mid level API (shapes)
@@ -135,6 +136,56 @@ The `Pie` graph can be used as follows:
 The parameters `center`, `r`, `R` have the same geometric meaning as in the `Sector` function. The parameter `data` should contain an array with the data to plot. The precise form of the data is not important, because the actual value of the data will be extracted by the `accessor` function. Finally `colors` is an optional parameter, holding a function that assign to a sector index its color.
 
 The `Pie` function will then return an array on which one can iterate to draw the sectors. Each member of this array has the properties `sector`, `color` and `item`, the latter containing the actual datum associated to the sector.
+
+The `Stock` graph is used to represent one or more line charts. It can be used as follows:
+
+    var Stock = require('paths/stock');
+    var data = [
+      [
+        { year: 2012, month: 1, value: 13 },
+        { year: 2012, month: 2, value: 12 },
+        { year: 2012, month: 3, value: 15 }
+      ],
+      [
+        { year: 2012, month: 1, value: 21 },
+        { year: 2012, month: 2, value: 22 },
+        { year: 2012, month: 3, value: 22 }
+      ]
+    ];
+
+    function date(data) {
+      var d = new Date();
+      d.setYear(data.year);
+      d.setMonth(data.month - 1);
+      return d.getTime();
+    }
+
+    var stock = Stock({
+      data: data,
+      xaccessor: date,
+      yaccessor: function(d) -> return { d.value },
+      width: 300,
+      height: 200,
+      colors: function(i) { return somePalette[i]; },
+      closed: true
+    });
+    
+The parameters `width` and `height` have the obvious geometric meaning; data will be rescaled to fit into a rectangle of these dimensions. The `data` parameter contains the actual data to plot. It should be an array of arrays, each internal array representing a time series to be plotted. The actual format of the data in the time series is not important; the actual abscissa and ordinate of the point are extracted by the `xaccessor` and `yaccessor` function. If these are missing their default are `function(d) { return d[0] }` and `function(d) { return d[1] }` respectively, so if `data` is passed as an array of arrays of arrays of 2 elements, the accessor functions are optional. The parameter `closed` is an optional boolean (default `false`) and it is used to decide how to construct the paths for the area plots. If `closed` is set to true, these will be stretched to include part of the x axis, even if the data are not around 0. Use this if you want to be sure that the area paths touch the horizontal axis. Finally `colors` is an optional parameter, holding a function that assign to a line index its color.
+
+The `Stock` function will then return an object with the properties `polygons`, `xscale` and `yscale`. Under `polygons` it contains an array of objects, each having the properties `line`, `area`, `item` and `color`. `line` and `area` are two polygon objects, as in the previous paragraph; the first one holds the polygon for the line chart, while the second one is a closed polygon that can be used to draw the area fill. Under `item` one finds the original element in the data.
+
+Finally, `xscale` and `yscale` are the scales used to represent the data on the given width and height. They can be used to find the coordinates of the axis and draw them.
+
+Miscellaneous
+-------------
+
+Other than the modules mentioned above, Paths.js has the `linear` and `ops` modules. The `linear` module contains a function that can be used to generate linear scale, that is, functions that interpolate linearly a source interval on a target one (affine functions of one variable). An example of use to map the interval `[0, 3]` on the interval `[10, 40]` would be
+
+    var Linear = require('paths/linear');
+    var scale = Linear([0, 3], [10, 40]);
+    var x = scale(2); // yields 30
+    
+The `ops` module contains various utility functions that are used internally. It is not meant for external use, hence it is not documented, but curious folks can have a look at its tests.
 
 Browser support
 ---------------

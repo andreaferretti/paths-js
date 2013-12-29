@@ -194,6 +194,9 @@
       area = stock.polygons[0].area;
       return expect(area.path.points().slice(0, 16)).to.eql(line.path.points());
     });
+    it('should give access to the original items', function() {
+      return expect(stock.polygons[1].item).to.be(data[1]);
+    });
     it('should allow custom color functions', function() {
       var constant_color, stock1;
       constant_color = function() {

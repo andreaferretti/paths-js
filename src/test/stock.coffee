@@ -75,6 +75,9 @@ describe 'stock chart', ->
     area = stock.polygons[0].area
     expect(area.path.points().slice(0, 16)).to.eql(line.path.points())
 
+  it 'should give access to the original items', ->
+    expect(stock.polygons[1].item).to.be(data[1])
+
   it 'should allow custom color functions', ->
     constant_color = ->
       "#ffbb22"

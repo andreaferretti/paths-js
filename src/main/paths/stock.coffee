@@ -43,6 +43,7 @@ define [
       scaled_points_closed = points.map scale
       i += 1
 
+      item: data[i]
       line: Polygon
         points: scaled_points
         closed: false

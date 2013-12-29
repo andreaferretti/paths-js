@@ -129,6 +129,7 @@ module.exports = (function () {
       scaled_points_closed = points.map(scale);
       i += 1;
       return {
+        item: data[i],
         line: Polygon({
           points: scaled_points,
           closed: false
