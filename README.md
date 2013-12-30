@@ -32,11 +32,13 @@ It depends. If what you need are some ready-made widgets and charts, probably no
 Installation and usage
 ----------------------
 
-Paths.js is distributed with [bower] [11], so you can install it like
+### Bower and RequireJS ###
+
+Paths.js is distributed with [bower] [11], so you can install it with
 
     bower install paths-js
 
-It is distributed as an AMD module. If you use [RequireJS] [12], you can use a configuration such as
+It is comprised of various AMD modules. If you use [RequireJS] [12], you can use a configuration such as
 
     require.config({
       'paths': 'components/paths-js/dist/amd'
@@ -46,6 +48,8 @@ It is distributed as an AMD module. If you use [RequireJS] [12], you can use a c
 
     var Pie = require('paths/pie');
 
+### Node.js ###
+
 If you want to use it on the server, just do
 
     npm install paths-js
@@ -53,8 +57,10 @@ If you want to use it on the server, just do
 to install it and then
 
     var Pie = require('paths-js/pie');
+
+### Standalone script ###
     
-Finally, if you want to use Paths.js in the browser, but you do not want to use AMD modules, there is the possibility to include it in the global object. To do this, just include the file `dist/global/paths.js` in a page, and then access the various APIs globally as `paths.Pie`, `paths.Polygon` and so on. Paths.js at version 0.14 weighs only 7.3kB minified and 2.5kB minified and gzipped, but of course if you choose the AMD version, you get to include exactly the modules you need.
+If you want to use Paths.js in the browser, but you do not want to use AMD modules, there is the possibility to include it in the global object. To do this, just include the file `dist/global/paths.js` in a page, and then access the various APIs globally as `paths.Pie`, `paths.Polygon` and so on. Paths.js at version 0.14 weighs only 7.3kB minified and 2.5kB minified and gzipped, but of course if you choose the AMD version, you get to include exactly the modules you need.
 
 Low level API
 -------------
