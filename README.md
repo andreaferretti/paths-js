@@ -115,6 +115,8 @@ High level API (graphs)
 
 Based on the shapes above, we can construct more complex graphs. At this level, the API assume one has a collection of data that has to be shown on a graph, and take care of normalizing the data, so that for instance if you display multiple line graphs on the same chart, the scales are normalized.
 
+### Pie graph ###
+
 The `Pie` graph can be used as follows:
 
     var Pie = require('paths/pie');
@@ -141,6 +143,8 @@ Parameters:
 * `colors` (optional): a function that assign to a sector index its color.
 
 The `Pie` function will then return an array on which one can iterate to draw the sectors. Each member of this array has the properties `sector`, `color` and `item`, the latter containing the actual datum associated to the sector.
+
+### Stock graph ###
 
 The `Stock` graph is used to represent one or more line charts. It can be used as follows:
 
@@ -174,8 +178,14 @@ The `Stock` graph is used to represent one or more line charts. It can be used a
       colors: function(i) { return somePalette[i]; },
       closed: true
     });
+
+Parameters:
     
-The parameters `width` and `height` have the obvious geometric meaning; data will be rescaled to fit into a rectangle of these dimensions. The `data` parameter contains the actual data to plot. It should be an array of arrays, each internal array representing a time series to be plotted. The actual format of the data in the time series is not important; the actual abscissa and ordinate of the point are extracted by the `xaccessor` and `yaccessor` function. If these are missing their default are `function(d) { return d[0] }` and `function(d) { return d[1] }` respectively, so if `data` is passed as an array of arrays of arrays of 2 elements, the accessor functions are optional. The parameter `closed` is an optional boolean (default `false`) and it is used to decide how to construct the paths for the area plots. If `closed` is set to true, these will be stretched to include part of the x axis, even if the data are not around 0. Use this if you want to be sure that the area paths touch the horizontal axis. Finally `colors` is an optional parameter, holding a function that assign to a line index its color.
+* `width` and `height`: have the obvious geometric meaning; data will be rescaled to fit into a rectangle of these dimensions
+* `data`: contains the actual data to plot. It should be an array of arrays, each internal array representing a time series to be plotted. The actual format of the data in the time series is not important; the actual abscissa and ordinate of the point are extracted by the `xaccessor` and `yaccessor` function.
+* `xaccessor`, `yaccessor`: two functions that extract from each datum its x and y cordinates. They default to `function(d) { return d[0] }` and `function(d) { return d[1] }` respectively, so if `data` is passed as an array of arrays of arrays of 2 elements, the accessor functions are optional.
+* `closed` (optional, default `false`): a boolean used to decide how to construct the paths for the area plots. If `closed` is set to true, these will be stretched to include part of the x axis, even if the data are not around 0. Use this if you want to be sure that the area paths touch the horizontal axis
+* `colors` (optional): a function that assign to a line index its color.
 
 The `Stock` function will then return an object with the properties `polygons`, `xscale` and `yscale`. Under `polygons` it contains an array of objects, each having the properties `line`, `area`, `item` and `color`. `line` and `area` are two polygon objects, as in the previous paragraph; the first one holds the polygon for the line chart, while the second one is a closed polygon that can be used to draw the area fill. Under `item` one finds the original element in the data.
 
