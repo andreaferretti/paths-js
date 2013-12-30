@@ -133,7 +133,12 @@ The `Pie` graph can be used as follows:
       R: 50
     });
 
-The parameters `center`, `r`, `R` have the same geometric meaning as in the `Sector` function. The parameter `data` should contain an array with the data to plot. The precise form of the data is not important, because the actual value of the data will be extracted by the `accessor` function. Finally `colors` is an optional parameter, holding a function that assign to a sector index its color.
+Parameters: 
+
+* `center`, `r`, `R`: have the same geometric meaning as in the `Sector` function
+* `data`: contains an array with the data to plot. The precise form of the data is not important, because the actual value of the data will be extracted by the `accessor` function.
+* `accessor`: a function that is applied to each datum in `data` to extract a numeric value
+* `colors` (optional): a function that assign to a sector index its color.
 
 The `Pie` function will then return an array on which one can iterate to draw the sectors. Each member of this array has the properties `sector`, `color` and `item`, the latter containing the actual datum associated to the sector.
 

@@ -163,7 +163,7 @@ The `Stock` graph is used to represent one or more line charts. It can be used a
     var stock = Stock({
       data: data,
       xaccessor: date,
-      yaccessor: function(d) -> return { d.value },
+      yaccessor: function(d) { return d.value; },
       width: 300,
       height: 200,
       colors: function(i) { return somePalette[i]; },
