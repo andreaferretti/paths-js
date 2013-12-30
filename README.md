@@ -86,6 +86,8 @@ Mid level API (shapes)
 
 At a higher level of abstraction, we have some simple shapes. A module for a shape defines a function that takes as input some geometric data and returns a shape object. Shape objects have the two properties `path` and `centroid`. The first one contains a `Path`, in the sense of the previous paragraph, while the second one is a point that is somehow central to the figure - for instance, it can be used to place a label.
 
+### Polygon ###
+
 The first shape is `paths.polygon`, and it can be used like:
 
     var Polygon = require('paths/polygon');
@@ -96,6 +98,8 @@ The first shape is `paths.polygon`, and it can be used like:
     });
 
 As shown in the example, it expects as input an object with the property `points`, which is an array of points. The optional property `closed` defined whether the polygon is closed (false by default).
+
+### Sector ###
 
 A circular sector can be defined with `paths.sector`:
 
