@@ -1,5 +1,5 @@
 (function() {
-  define(['./polygon', './ops'], function(Polygon, O) {
+  define(['./semi-regular-polygon', './ops'], function(SemiRegularPolygon, O) {
     var collect_keys, global_max, key_accessor, rand_int, random_colors;
     rand_int = function(max) {
       return Math.floor(Math.random() * max);
@@ -81,36 +81,27 @@
         for (var _i = 1; 1 <= rings ? _i <= rings : _i >= rings; 1 <= rings ? _i++ : _i--){ _results.push(_i); }
         return _results;
       }).apply(this).map(function(n) {
-        var points, radius, _i, _ref, _results;
+        var radius, _i, _ref, _results;
         radius = r * n / rings;
-        points = (function() {
-          _results = [];
-          for (var _i = 0, _ref = sides - 1; 0 <= _ref ? _i <= _ref : _i >= _ref; 0 <= _ref ? _i++ : _i--){ _results.push(_i); }
-          return _results;
-        }).apply(this).map(function(s) {
-          return O.plus(center, O.on_circle(radius, s * angle));
-        });
-        return Polygon({
-          points: points,
-          closed: true
+        return SemiRegularPolygon({
+          center: center,
+          radii: (function() {
+            _results = [];
+            for (var _i = 0, _ref = sides - 1; 0 <= _ref ? _i <= _ref : _i >= _ref; 0 <= _ref ? _i++ : _i--){ _results.push(_i); }
+            return _results;
+          }).apply(this).map(function(s) {
+            return radius;
+          })
         });
       });
       polygons = data.map(function(d) {
-        var points, _j, _ref, _results1;
         i += 1;
-        points = (function() {
-          _results1 = [];
-          for (var _j = 0, _ref = sides - 1; 0 <= _ref ? _j <= _ref : _j >= _ref; 0 <= _ref ? _j++ : _j--){ _results1.push(_j); }
-          return _results1;
-        }).apply(this).map(function(n) {
-          var key;
-          key = keys[n];
-          return O.plus(center, O.on_circle(r * accessor[key](d) / max, n * angle));
-        });
         return {
-          polygon: Polygon({
-            points: points,
-            closed: true
+          polygon: SemiRegularPolygon({
+            center: center,
+            radii: keys.map(function(k) {
+              return r * accessor[k](d);
+            })
           }),
           item: d,
           color: colors(i)

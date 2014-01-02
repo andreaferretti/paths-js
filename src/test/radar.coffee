@@ -17,7 +17,7 @@ key_accessor = (keys) ->
   for key in keys
     ((k) -> (a[k] = (o) -> o[k]))(key)
   a
-  
+
 describe 'radar chart', ->
   it 'should generate as many polygons as data', ->
     radar = Radar

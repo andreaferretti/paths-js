@@ -32,11 +32,13 @@ It depends. If what you need are some ready-made widgets and charts, probably no
 Installation and usage
 ----------------------
 
-Paths.js is distributed with [bower] [11], so you can install it like
+### Bower and RequireJS ###
+
+Paths.js is distributed with [bower] [11], so you can install it with
 
     bower install paths-js
 
-It is distributed as an AMD module. If you use [RequireJS] [12], you can use a configuration such as
+It is comprised of various AMD modules. If you use [RequireJS] [12], you can use a configuration such as
 
     require.config({
       'paths': 'components/paths-js/dist/amd'
@@ -46,6 +48,8 @@ It is distributed as an AMD module. If you use [RequireJS] [12], you can use a c
 
     var Pie = require('paths/pie');
 
+### Node.js ###
+
 If you want to use it on the server, just do
 
     npm install paths-js
@@ -53,8 +57,10 @@ If you want to use it on the server, just do
 to install it and then
 
     var Pie = require('paths-js/pie');
+
+### Standalone script ###
     
-Finally, if you want to use Paths.js in the browser, but you do not want to use AMD modules, there is the possibility to include it in the global object. To do this, just include the file `dist/global/paths.js` in a page, and then access the various APIs globally as `paths.Pie`, `paths.Polygon` and so on. Paths.js at version 0.14 weighs only 7.3kB minified and 2.5kB minified and gzipped, but of course if you choose the AMD version, you get to include exactly the modules you need.
+If you want to use Paths.js in the browser, but you do not want to use AMD modules, there is the possibility to include it in the global object. To do this, just include the file `dist/global/paths.js` in a page, and then access the various APIs globally as `paths.Pie`, `paths.Polygon` and so on. Paths.js at version 0.14 weighs only 7.3kB minified and 2.5kB minified and gzipped, but of course if you choose the AMD version, you get to include exactly the modules you need.
 
 Low level API
 -------------
@@ -86,6 +92,8 @@ Mid level API (shapes)
 
 At a higher level of abstraction, we have some simple shapes. A module for a shape defines a function that takes as input some geometric data and returns a shape object. Shape objects have the two properties `path` and `centroid`. The first one contains a `Path`, in the sense of the previous paragraph, while the second one is a point that is somehow central to the figure - for instance, it can be used to place a label.
 
+### Polygon ###
+
 The first shape is `paths.polygon`, and it can be used like:
 
     var Polygon = require('paths/polygon');
@@ -96,6 +104,8 @@ The first shape is `paths.polygon`, and it can be used like:
     });
 
 As shown in the example, it expects as input an object with the property `points`, which is an array of points. The optional property `closed` defined whether the polygon is closed (false by default).
+
+### Sector ###
 
 A circular sector can be defined with `paths.sector`:
 
@@ -115,6 +125,8 @@ High level API (graphs)
 
 Based on the shapes above, we can construct more complex graphs. At this level, the API assume one has a collection of data that has to be shown on a graph, and take care of normalizing the data, so that for instance if you display multiple line graphs on the same chart, the scales are normalized.
 
+### Pie graph ###
+
 The `Pie` graph can be used as follows:
 
     var Pie = require('paths/pie');
@@ -133,9 +145,16 @@ The `Pie` graph can be used as follows:
       R: 50
     });
 
-The parameters `center`, `r`, `R` have the same geometric meaning as in the `Sector` function. The parameter `data` should contain an array with the data to plot. The precise form of the data is not important, because the actual value of the data will be extracted by the `accessor` function. Finally `colors` is an optional parameter, holding a function that assign to a sector index its color.
+Parameters: 
+
+* `center`, `r`, `R`: have the same geometric meaning as in the `Sector` function
+* `data`: contains an array with the data to plot. The precise form of the data is not important, because the actual value of the data will be extracted by the `accessor` function.
+* `accessor`: a function that is applied to each datum in `data` to extract a numeric value
+* `colors` (optional): a function that assign to a sector index its color.
 
 The `Pie` function will then return an array on which one can iterate to draw the sectors. Each member of this array has the properties `sector`, `color` and `item`, the latter containing the actual datum associated to the sector.
+
+### Stock graph ###
 
 The `Stock` graph is used to represent one or more line charts. It can be used as follows:
 
@@ -169,8 +188,14 @@ The `Stock` graph is used to represent one or more line charts. It can be used a
       colors: function(i) { return somePalette[i]; },
       closed: true
     });
+
+Parameters:
     
-The parameters `width` and `height` have the obvious geometric meaning; data will be rescaled to fit into a rectangle of these dimensions. The `data` parameter contains the actual data to plot. It should be an array of arrays, each internal array representing a time series to be plotted. The actual format of the data in the time series is not important; the actual abscissa and ordinate of the point are extracted by the `xaccessor` and `yaccessor` function. If these are missing their default are `function(d) { return d[0] }` and `function(d) { return d[1] }` respectively, so if `data` is passed as an array of arrays of arrays of 2 elements, the accessor functions are optional. The parameter `closed` is an optional boolean (default `false`) and it is used to decide how to construct the paths for the area plots. If `closed` is set to true, these will be stretched to include part of the x axis, even if the data are not around 0. Use this if you want to be sure that the area paths touch the horizontal axis. Finally `colors` is an optional parameter, holding a function that assign to a line index its color.
+* `width` and `height`: have the obvious geometric meaning; data will be rescaled to fit into a rectangle of these dimensions
+* `data`: contains the actual data to plot. It should be an array of arrays, each internal array representing a time series to be plotted. The actual format of the data in the time series is not important; the actual abscissa and ordinate of the point are extracted by the `xaccessor` and `yaccessor` function.
+* `xaccessor`, `yaccessor`: two functions that extract from each datum its x and y cordinates. They default to `function(d) { return d[0] }` and `function(d) { return d[1] }` respectively, so if `data` is passed as an array of arrays of arrays of 2 elements, the accessor functions are optional.
+* `closed` (optional, default `false`): a boolean used to decide how to construct the paths for the area plots. If `closed` is set to true, these will be stretched to include part of the x axis, even if the data are not around 0. Use this if you want to be sure that the area paths touch the horizontal axis
+* `colors` (optional): a function that assign to a line index its color.
 
 The `Stock` function will then return an object with the properties `polygons`, `xscale` and `yscale`. Under `polygons` it contains an array of objects, each having the properties `line`, `area`, `item` and `color`. `line` and `area` are two polygon objects, as in the previous paragraph; the first one holds the polygon for the line chart, while the second one is a closed polygon that can be used to draw the area fill. Under `item` one finds the original element in the data.
 
