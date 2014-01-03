@@ -59,7 +59,7 @@ to install it and then
     var Pie = require('paths-js/pie');
 
 ### Standalone script ###
-    
+
 If you want to use Paths.js in the browser, but you do not want to use AMD modules, there is the possibility to include it in the global object. To do this, just include the file `dist/global/paths.js` in a page, and then access the various APIs globally as `paths.Pie`, `paths.Polygon` and so on. Paths.js at version 0.14 weighs only 7.3kB minified and 2.5kB minified and gzipped, but of course if you choose the AMD version, you get to include exactly the modules you need.
 
 Low level API
@@ -81,7 +81,7 @@ Other than methods to compose other paths, path objects have the methods `print`
     <svg width=300 height=300>
       <path d="{{ path.print() }}" fill="blue" />
     </svg>
-    
+
 The `points` method returns the array of points through which the path passes. This case be useful, for instance, to place labels near the endpoints.
 
 All methods except `print` and `points` produce a new path (paths are immutable). These methods mimic the SVG path specification and are `moveto`, `lineto`, `hlineto`, `vlineto`, `curveto`, `qcurveto`, `smoothcurveto`, `smoothqcurveto` and `closepath`.
@@ -104,6 +104,24 @@ The first shape is `paths.polygon`, and it can be used like:
     });
 
 As shown in the example, it expects as input an object with the property `points`, which is an array of points. The optional property `closed` defined whether the polygon is closed (false by default).
+
+### Semi-regular polygon ###
+
+A special case of the above is a polygon whose points are placed on half-lines starting from a fixed center and forming constant angles between each other; we call these kinds of polygons semi-regular. In the even more special case where all points have the same distance from the center, the polygon is regular.
+
+A semi-regular polygon is defined by its center and the distance of each of its points from the center, like
+
+    var SemiRegularPolygon = require('paths/semi-regular-polygon');
+    var polygon = SemiRegularPolygon({
+      center: [0, 0],
+      radii: [2, 3, 5, 7, 9, 12]
+    });
+    var regularPolygon = SemiRegularPolygon({
+      center: [1, 2],
+      radii: [3, 3, 3, 3, 3]
+    });
+
+In the above example, `polygon` is semi-regular and centered at the origin, while `regularPolygon` is a regular pentagon centered at `[1, 2]`.
 
 ### Sector ###
 
@@ -145,7 +163,7 @@ The `Pie` graph can be used as follows:
       R: 50
     });
 
-Parameters: 
+Parameters:
 
 * `center`, `r`, `R`: have the same geometric meaning as in the `Sector` function
 * `data`: contains an array with the data to plot. The precise form of the data is not important, because the actual value of the data will be extracted by the `accessor` function.
@@ -190,7 +208,7 @@ The `Stock` graph is used to represent one or more line charts. It can be used a
     });
 
 Parameters:
-    
+
 * `width` and `height`: have the obvious geometric meaning; data will be rescaled to fit into a rectangle of these dimensions
 * `data`: contains the actual data to plot. It should be an array of arrays, each internal array representing a time series to be plotted. The actual format of the data in the time series is not important; the actual abscissa and ordinate of the point are extracted by the `xaccessor` and `yaccessor` function.
 * `xaccessor`, `yaccessor`: two functions that extract from each datum its x and y cordinates. They default to `function(d) { return d[0] }` and `function(d) { return d[1] }` respectively, so if `data` is passed as an array of arrays of arrays of 2 elements, the accessor functions are optional.
@@ -209,7 +227,7 @@ Other than the modules mentioned above, Paths.js has the `linear` and `ops` modu
     var Linear = require('paths/linear');
     var scale = Linear([0, 3], [10, 40]);
     var x = scale(2); // yields 30
-    
+
 The `ops` module contains various utility functions that are used internally. It is not meant for external use, hence it is not documented, but curious folks can have a look at its tests.
 
 Browser support
