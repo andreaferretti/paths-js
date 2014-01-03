@@ -1,13 +1,13 @@
 Sector = require '../dist/node/sector.js'
 expect = require 'expect.js'
-  
+
 round = (x, digits = 5) ->
   a = Math.pow(10, digits)
   Math.round(a * x) / a
 
 round_vector = (v, digits = 5) ->
   v.map (x) -> round(x, digits)
-  
+
 describe 'sector function', ->
   it 'should pass through the expected points', ->
     sector = Sector
