@@ -100,7 +100,7 @@
           polygon: SemiRegularPolygon({
             center: center,
             radii: keys.map(function(k) {
-              return r * accessor[k](d);
+              return r * accessor[k](d) / max;
             })
           }),
           item: d,

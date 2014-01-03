@@ -51,7 +51,7 @@ define [
 
       polygon: SemiRegularPolygon
         center: center
-        radii: keys.map (k) -> r * accessor[k](d)
+        radii: keys.map (k) -> r * accessor[k](d) / max
       item: d
       color: colors(i)
 
