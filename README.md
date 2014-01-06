@@ -238,6 +238,41 @@ Finally, `xscale` and `yscale` are the scales used to represent the data on the 
 
 The smooth line graph is used to represent one or more line charts; unlike `Stock` it interpolates between the data points with smooth Bézier curves. The API for `paths.smooth-line` is identical to `paths.stock`, so the two can be used interchangeably.
 
+### Radar graph ###
+
+The radar graph can be used as follows:
+
+    var Radar = require('paths/radar');
+    var data = [
+      { hp: 45, attack: 49, defense: 49, sp_attack: 65, sp_defense: 65, speed: 45 },
+      { hp: 60, attack: 62, defense: 63, sp_attack: 80, sp_defense: 80, speed: 60 },
+      { hp: 80, attack: 82, defense: 83, sp_attack: 100, sp_defense: 100, speed: 80 },
+      { hp: 45, attack: 25, defense: 50, sp_attack: 25, sp_defense: 25, speed: 35 }
+    ]
+    var radar = Radar({
+      data: data,
+      accessor: {
+        attack: function(x) { return x.attack; },
+        defense: function(x) { return x.defense; },
+        speed: function(x) { return x.speed; }
+      },
+      colors: function(i) { return somePalette[i]; },
+      max: 100,
+      center: [20, 15],
+      r: 30,
+      rings: 5
+    });
+
+Parameters:
+
+* `data`: contains an array of data to be plotted.
+* `accessor`: an object that describes how to extract the various features from the data. The keys of this object correspond to the axes that are shown in the radar chart, and associated to each key is a function that maps a datum to its value along this axis. `accessor` is optional in the case where each datum is itself an object with numeric properties. For instance, if in the example above `accessor` was left out, we would obtain a radar graph of hexagons.
+* `max`: represents the ideal maximum of each feature. `max` is optional; if it is left out, it is computed as the actual maximum of each feature, but one may want to override the computed value, for instance for constancy of scale during an animation.
+* `r` and `center`: the radius and the center of the figure, respectively. So, the whole figure is scaled in such a way that a feature with value `max` will be sent to a distance `r` from the `center`.
+* `rings` (optional, default `3`): the number of polygonal rings that shall appear in the chart.
+* `colors` (optional): a function that assign to a polygon index its color.
+
+The return value from `Radar` is an object with the properties `curves` and `rings`. `curves` is an array of objects, each one having the properties `polygon`, `item` and `color`, where `polygon` contains the actual path object. `rings` is an array of path objects, representing concentric regular polygons of increasing radius.
 
 Miscellaneous
 -------------
