@@ -1,5 +1,5 @@
 (function() {
-  define(['./bezier', './line-chart-comp'], function(Bezier, comp) {
+  define(['./bezier', './ops', './line-chart-comp'], function(Bezier, O, comp) {
     return function(options) {
       var arranged, base, colors, i, lines, scale, xscale, yscale, _ref;
       _ref = comp(options), arranged = _ref.arranged, scale = _ref.scale, xscale = _ref.xscale, yscale = _ref.yscale, colors = _ref.colors, base = _ref.base;
@@ -12,7 +12,10 @@
         line = Bezier({
           points: scaled_points
         });
-        area = line.lineto(scale([xmax, base])).lineto(scale([xmin, base])).closepath();
+        area = {
+          path: line.path.lineto(scale([xmax, base])).lineto(scale([xmin, base])).closepath(),
+          centroid: O.average([line.centroid, scale([xmin, base]), scale([xmax, base])])
+        };
         return {
           item: options.data[i],
           line: line,

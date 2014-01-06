@@ -5,6 +5,7 @@ var __isAMD = !!(typeof define === 'function' && define.amd),
     __isNode = (typeof exports === 'object'),
     __isWeb = !__isNode;
 Bezier = require('./bezier'),
+    O = require('./ops'),
     comp = require('./line-chart-comp');
 
 module.exports = (function () {
@@ -18,13 +19,26 @@ module.exports = (function () {
       scaled_points = points.map(scale);
       i += 1;
       line = Bezier({ points: scaled_points });
-      area = line.lineto(scale([
-        xmax,
-        base
-      ])).lineto(scale([
-        xmin,
-        base
-      ])).closepath();
+      area = {
+        path: line.path.lineto(scale([
+          xmax,
+          base
+        ])).lineto(scale([
+          xmin,
+          base
+        ])).closepath(),
+        centroid: O.average([
+          line.centroid,
+          scale([
+            xmin,
+            base
+          ]),
+          scale([
+            xmax,
+            base
+          ])
+        ])
+      };
       return {
         item: options.data[i],
         line: line,

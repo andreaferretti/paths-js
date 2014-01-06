@@ -1,7 +1,8 @@
 define [
   './bezier'
+  './ops'
   './line-chart-comp'
-], (Bezier, comp)->
+], (Bezier, O, comp)->
 
   (options) ->
     { arranged, scale, xscale, yscale, colors, base } = comp(options)
@@ -11,10 +12,16 @@ define [
       scaled_points = points.map scale
       i += 1
       line = Bezier(points: scaled_points)
-      area = line
-        .lineto(scale([xmax, base]))
-        .lineto(scale([xmin, base]))
-        .closepath()
+      area =
+        path: line.path
+          .lineto(scale([xmax, base]))
+          .lineto(scale([xmin, base]))
+          .closepath()
+        centroid: O.average([
+            line.centroid,
+            scale([xmin, base]),
+            scale([xmax, base])
+          ])
 
       item: options.data[i]
       line: line
