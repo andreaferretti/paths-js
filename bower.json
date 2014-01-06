@@ -1,15 +1,13 @@
 {
   "name": "paths-js",
-  "version": "0.0.16",
+  "version": "0.0.17",
   "main": "dist/amd",
-  "dependencies": {
-    "requirejs": "*"
-  },
   "ignore": [
     ".gitignore",
     "node_modules",
     "Gruntfile.coffee",
     "package.json"
   ],
+  "dependencies": {},
   "devDependencies": {}
 }
