@@ -1,6 +1,6 @@
 {
   "name": "paths-js",
-  "version": "0.0.17",
+  "version": "0.0.18",
   "main": "dist/amd",
   "ignore": [
     ".gitignore",
