@@ -23,6 +23,6 @@ define [
         closed: true
       color: colors(i)
 
-    polygons: polygons
+    curves: polygons
     xscale: xscale
     yscale: yscale

@@ -24,21 +24,21 @@ describe 'radar chart', ->
       data: data
       center: [1, 1]
       r: 10
-    expect(radar.polygons).to.have.length(data.length)
+    expect(radar.curves).to.have.length(data.length)
 
   it 'should generate closed polygons', ->
     radar = Radar
       data: data
       center: [1, 1]
       r: 10
-    expect(radar.polygons[4].polygon.path.print()).to.match(/Z/)
+    expect(radar.curves[4].polygon.path.print()).to.match(/Z/)
 
   it 'should have by default as many sides as data properties', ->
     radar = Radar
       data: data
       center: [1, 1]
       r: 10
-    expect(radar.polygons[0].polygon.path.points()).to.have.length(6)
+    expect(radar.curves[0].polygon.path.points()).to.have.length(6)
 
   it 'should use the given key accessor', ->
     radar = Radar
@@ -46,14 +46,14 @@ describe 'radar chart', ->
       accessor: key_accessor(['attack', 'defense', 'speed'])
       center: [1, 1]
       r: 10
-    expect(radar.polygons[0].polygon.path.points()).to.have.length(3)
+    expect(radar.curves[0].polygon.path.points()).to.have.length(3)
 
   it 'should give access to the original items', ->
     radar = Radar
       data: data
       center: [1, 1]
       r: 10
-    expect(radar.polygons[3].item).to.be(data[3])
+    expect(radar.curves[3].item).to.be(data[3])
 
   it 'should allow custom color functions', ->
     constant_color = ->
@@ -64,7 +64,7 @@ describe 'radar chart', ->
       center: [1, 1]
       r: 10
       colors: constant_color
-    expect(radar.polygons[3].color).to.be("#ffbb22")
+    expect(radar.curves[3].color).to.be("#ffbb22")
 
 describe 'radar chart rings', ->
   it 'should be as many as specified', ->

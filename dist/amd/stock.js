@@ -26,7 +26,7 @@
         };
       });
       return {
-        polygons: polygons,
+        curves: polygons,
         xscale: xscale,
         yscale: yscale
       };

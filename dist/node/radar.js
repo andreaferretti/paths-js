@@ -120,7 +120,7 @@ module.exports = (function () {
       };
     });
     return {
-      polygons: polygons,
+      curves: polygons,
       rings: ring_paths
     };
   };

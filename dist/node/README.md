@@ -123,6 +123,21 @@ A semi-regular polygon is defined by its center and the distance of each of its 
 
 In the above example, `polygon` is semi-regular and centered at the origin, while `regularPolygon` is a regular pentagon centered at `[1, 2]`.
 
+### Bezier ###
+
+Similar to `paths.polygon`, the module `paths.bezier` defines a curve that passes through a given list of vertices, but does so with a line that interpolates smoothly between the data points. Unlike polygons, curves produced in this way are always open.
+
+An example is
+
+    var Bezier = require('paths/bezier');
+    var points = [[1, 3], [2, 5], [3, 4], [4, 0]];
+    var curve = Bezier({
+      points: points,
+      tension: 0.4
+    });
+
+The parameter `tension` is optional and defaults to `0.3`; curves with smaller tension will look more pointy at the vertices.
+
 ### Sector ###
 
 A circular sector can be defined with `paths.sector`:
@@ -215,9 +230,14 @@ Parameters:
 * `closed` (optional, default `false`): a boolean used to decide how to construct the paths for the area plots. If `closed` is set to true, these will be stretched to include part of the x axis, even if the data are not around 0. Use this if you want to be sure that the area paths touch the horizontal axis
 * `colors` (optional): a function that assign to a line index its color.
 
-The `Stock` function will then return an object with the properties `polygons`, `xscale` and `yscale`. Under `polygons` it contains an array of objects, each having the properties `line`, `area`, `item` and `color`. `line` and `area` are two polygon objects, as in the previous paragraph; the first one holds the polygon for the line chart, while the second one is a closed polygon that can be used to draw the area fill. Under `item` one finds the original element in the data.
+The `Stock` function will then return an object with the properties `curves`, `xscale` and `yscale`. Under `curves` it contains an array of objects, each having the properties `line`, `area`, `item` and `color`. `line` and `area` are two polygon objects, as in the previous paragraph; the first one holds the polygon for the line chart, while the second one is a closed polygon that can be used to draw the area fill. Under `item` one finds the original element in the data.
 
 Finally, `xscale` and `yscale` are the scales used to represent the data on the given width and height. They can be used to find the coordinates of the axis and draw them.
+
+### Smooth line graph ###
+
+The smooth line graph is used to represent one or more line charts; unlike `Stock` it interpolates between the data points with smooth Bézier curves. The API for `paths.smooth-line` is identical to `paths.stock`, so the two can be used interchangeably.
+
 
 Miscellaneous
 -------------

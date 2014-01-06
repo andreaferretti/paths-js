@@ -59,24 +59,24 @@ stock = Stock
   yaccessor: (d) -> d.value
   width: 300
   height: 200
-  
+
 describe 'stock chart', ->
   it 'should generate as many points as data', ->
-    expect(stock.polygons[0].line.path.points()).to.have.length(data[0].length)
+    expect(stock.curves[0].line.path.points()).to.have.length(data[0].length)
 
   it 'should generate both closed and open polygons', ->
-    line = stock.polygons[0].line
-    area = stock.polygons[0].area
+    line = stock.curves[0].line
+    area = stock.curves[0].area
     expect(line.path.print()).not.to.match(/Z/)
     expect(area.path.print()).to.match(/Z/)
 
   it 'should generate closed and open polygons with the same points', ->
-    line = stock.polygons[0].line
-    area = stock.polygons[0].area
+    line = stock.curves[0].line
+    area = stock.curves[0].area
     expect(area.path.points().slice(0, 16)).to.eql(line.path.points())
 
   it 'should give access to the original items', ->
-    expect(stock.polygons[1].item).to.be(data[1])
+    expect(stock.curves[1].item).to.be(data[1])
 
   it 'should allow custom color functions', ->
     constant_color = ->
@@ -89,15 +89,15 @@ describe 'stock chart', ->
       width: 300
       height: 200
       colors: constant_color
-    expect(stock1.polygons[1].color).to.be("#ffbb22")
+    expect(stock1.curves[1].color).to.be("#ffbb22")
 
   it 'should allow not to include 0 as a baseline for area paths', ->
-    points = stock.polygons[0].area.path.points().map (v) -> round_vector(v)
+    points = stock.curves[0].area.path.points().map (v) -> round_vector(v)
     # When 0 is not included, the two extremes in the area path
     # close at the same level as the minimum value, hence we find
     # 3 points with y = 200
     expect(points.filter (p) -> p[1] == 200).to.have.length(3)
-    
+
   it 'should allow to include 0 as a baseline for area paths', ->
     stock1 = Stock
       data: data
@@ -106,11 +106,11 @@ describe 'stock chart', ->
       width: 300
       height: 200
       closed: true
-    points = stock1.polygons[0].area.path.points().map (v) -> round_vector(v)
+    points = stock1.curves[0].area.path.points().map (v) -> round_vector(v)
     # When 0 is not included, only the two extremes in the area path
     # have y = 200
     expect(points.filter (p) -> p[1] == 200).to.have.length(2)
-    
+
 describe 'stock chart scales', ->
   it 'should take into account all data involved', ->
     scale = stock.yscale

@@ -88,7 +88,7 @@
         center: [1, 1],
         r: 10
       });
-      return expect(radar.polygons).to.have.length(data.length);
+      return expect(radar.curves).to.have.length(data.length);
     });
     it('should generate closed polygons', function() {
       var radar;
@@ -97,7 +97,7 @@
         center: [1, 1],
         r: 10
       });
-      return expect(radar.polygons[4].polygon.path.print()).to.match(/Z/);
+      return expect(radar.curves[4].polygon.path.print()).to.match(/Z/);
     });
     it('should have by default as many sides as data properties', function() {
       var radar;
@@ -106,7 +106,7 @@
         center: [1, 1],
         r: 10
       });
-      return expect(radar.polygons[0].polygon.path.points()).to.have.length(6);
+      return expect(radar.curves[0].polygon.path.points()).to.have.length(6);
     });
     it('should use the given key accessor', function() {
       var radar;
@@ -116,7 +116,7 @@
         center: [1, 1],
         r: 10
       });
-      return expect(radar.polygons[0].polygon.path.points()).to.have.length(3);
+      return expect(radar.curves[0].polygon.path.points()).to.have.length(3);
     });
     it('should give access to the original items', function() {
       var radar;
@@ -125,7 +125,7 @@
         center: [1, 1],
         r: 10
       });
-      return expect(radar.polygons[3].item).to.be(data[3]);
+      return expect(radar.curves[3].item).to.be(data[3]);
     });
     return it('should allow custom color functions', function() {
       var constant_color, radar;
@@ -138,7 +138,7 @@
         r: 10,
         colors: constant_color
       });
-      return expect(radar.polygons[3].color).to.be("#ffbb22");
+      return expect(radar.curves[3].color).to.be("#ffbb22");
     });
   });
 

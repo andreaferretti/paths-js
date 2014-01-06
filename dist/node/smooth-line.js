@@ -47,7 +47,7 @@ module.exports = (function () {
       };
     });
     return {
-      lines: lines,
+      curves: lines,
       xscale: xscale,
       yscale: yscale
     };

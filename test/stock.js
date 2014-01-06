@@ -179,23 +179,23 @@
 
   describe('stock chart', function() {
     it('should generate as many points as data', function() {
-      return expect(stock.polygons[0].line.path.points()).to.have.length(data[0].length);
+      return expect(stock.curves[0].line.path.points()).to.have.length(data[0].length);
     });
     it('should generate both closed and open polygons', function() {
       var area, line;
-      line = stock.polygons[0].line;
-      area = stock.polygons[0].area;
+      line = stock.curves[0].line;
+      area = stock.curves[0].area;
       expect(line.path.print()).not.to.match(/Z/);
       return expect(area.path.print()).to.match(/Z/);
     });
     it('should generate closed and open polygons with the same points', function() {
       var area, line;
-      line = stock.polygons[0].line;
-      area = stock.polygons[0].area;
+      line = stock.curves[0].line;
+      area = stock.curves[0].area;
       return expect(area.path.points().slice(0, 16)).to.eql(line.path.points());
     });
     it('should give access to the original items', function() {
-      return expect(stock.polygons[1].item).to.be(data[1]);
+      return expect(stock.curves[1].item).to.be(data[1]);
     });
     it('should allow custom color functions', function() {
       var constant_color, stock1;
@@ -212,11 +212,11 @@
         height: 200,
         colors: constant_color
       });
-      return expect(stock1.polygons[1].color).to.be("#ffbb22");
+      return expect(stock1.curves[1].color).to.be("#ffbb22");
     });
     it('should allow not to include 0 as a baseline for area paths', function() {
       var points;
-      points = stock.polygons[0].area.path.points().map(function(v) {
+      points = stock.curves[0].area.path.points().map(function(v) {
         return round_vector(v);
       });
       return expect(points.filter(function(p) {
@@ -235,7 +235,7 @@
         height: 200,
         closed: true
       });
-      points = stock1.polygons[0].area.path.points().map(function(v) {
+      points = stock1.curves[0].area.path.points().map(function(v) {
         return round_vector(v);
       });
       return expect(points.filter(function(p) {

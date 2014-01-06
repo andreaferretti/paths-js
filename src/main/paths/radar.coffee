@@ -55,5 +55,5 @@ define [
       item: d
       color: colors(i)
 
-    polygons: polygons
+    curves: polygons
     rings: ring_paths

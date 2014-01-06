@@ -28,6 +28,6 @@ define [
       area: area
       color: colors(i)
 
-    lines: lines
+    curves: lines
     xscale: xscale
     yscale: yscale
