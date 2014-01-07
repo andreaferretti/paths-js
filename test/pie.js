@@ -77,16 +77,16 @@
 
   describe('pie chart', function() {
     it('should generate as many sectors as data', function() {
-      return expect(pie).to.have.length(data.length);
+      return expect(pie.curves).to.have.length(data.length);
     });
     it('should contain circle arcs', function() {
-      return expect(pie[1].sector.path.print()).to.match(/A/);
+      return expect(pie.curves[1].sector.path.print()).to.match(/A/);
     });
     it('should generate closed sectors', function() {
-      return expect(pie[1].sector.path.print()).to.match(/Z/);
+      return expect(pie.curves[1].sector.path.print()).to.match(/Z/);
     });
     it('should give access to the original items', function() {
-      return expect(pie[2].item).to.be(data[2]);
+      return expect(pie.curves[2].item).to.be(data[2]);
     });
     return it('should allow custom color functions', function() {
       var constant_color, pie1;
@@ -103,7 +103,7 @@
         R: 20,
         colors: constant_color
       });
-      return expect(pie1[2].color).to.be("#ffbb22");
+      return expect(pie1.curves[2].color).to.be("#ffbb22");
     });
   });
 

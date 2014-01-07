@@ -18,19 +18,19 @@ pie = Pie
   center: [1, 1]
   r: 10
   R: 20
-  
+
 describe 'pie chart', ->
   it 'should generate as many sectors as data', ->
-    expect(pie).to.have.length(data.length)
+    expect(pie.curves).to.have.length(data.length)
 
   it 'should contain circle arcs', ->
-    expect(pie[1].sector.path.print()).to.match(/A/)
+    expect(pie.curves[1].sector.path.print()).to.match(/A/)
 
   it 'should generate closed sectors', ->
-    expect(pie[1].sector.path.print()).to.match(/Z/)
+    expect(pie.curves[1].sector.path.print()).to.match(/Z/)
 
   it 'should give access to the original items', ->
-    expect(pie[2].item).to.be(data[2])
+    expect(pie.curves[2].item).to.be(data[2])
 
   it 'should allow custom color functions', ->
     constant_color = ->
@@ -43,4 +43,4 @@ describe 'pie chart', ->
       r: 10
       R: 20
       colors: constant_color
-    expect(pie1[2].color).to.be("#ffbb22")
+    expect(pie1.curves[2].color).to.be("#ffbb22")

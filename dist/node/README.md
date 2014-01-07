@@ -90,7 +90,12 @@ All methods except `print` and `points` produce a new path (paths are immutable)
 Mid level API (shapes)
 ----------------------
 
-At a higher level of abstraction, we have some simple shapes. A module for a shape defines a function that takes as input some geometric data and returns a shape object. Shape objects have the two properties `path` and `centroid`. The first one contains a `Path`, in the sense of the previous paragraph, while the second one is a point that is somehow central to the figure - for instance, it can be used to place a label.
+At a higher level of abstraction, we have some simple shapes. A module for a shape defines a function that takes as input some geometric data and returns a shape object. Shape objects have the two properties `path` and `centroid`. The first one contains a `Path`, in the sense of the previous paragraph, while the second one is a point that is somehow central to the figure - for instance, it can be used to place a label. Thus a shape object has the structure
+
+    {
+      path: <path object>
+      centroid: [<x>, <y>]
+    }
 
 ### Polygon ###
 
@@ -158,6 +163,21 @@ High level API (graphs)
 
 Based on the shapes above, we can construct more complex graphs. At this level, the API assume one has a collection of data that has to be shown on a graph, and take care of normalizing the data, so that for instance if you display multiple line graphs on the same chart, the scales are normalized.
 
+All graph objects - that is, objects returned by some graph functions - have the field `curves` that contains an array, and possibly more fields, depending on the graph. Each element of `curves` has the properties `item`, which is a reference to the corresponding data item, `color`, and one or more field containing shape objects, for instance `sector` in the case of the pie graph, or `line` and `area` for the line charts. Thus, a graph object has the shape
+
+    {
+      curves: [
+        {
+          item: <datum>,
+          color: <color>,
+          <label>: <shape object>,
+          ...
+        },
+        ...
+      ],
+      ...
+    }
+
 ### Pie graph ###
 
 The `Pie` graph can be used as follows:
@@ -185,7 +205,7 @@ Parameters:
 * `accessor`: a function that is applied to each datum in `data` to extract a numeric value
 * `colors` (optional): a function that assign to a sector index its color.
 
-The `Pie` function will then return an array on which one can iterate to draw the sectors. Each member of this array has the properties `sector`, `color` and `item`, the latter containing the actual datum associated to the sector.
+The object returned by the `Pie` function contains the `curves` array, on which one can iterate to draw the sectors. Each member of this array has the properties `sector`, `color` and `item`, the latter containing the actual datum associated to the sector.
 
 ### Stock graph ###
 

@@ -10,7 +10,7 @@ Linear = require('./linear'),
 
 module.exports = (function () {
   return function (_arg) {
-    var R, accessor, center, colors, data, i, item, pie, r, s, scale, t, value, values, _i, _len;
+    var R, accessor, center, colors, curves, data, i, item, r, s, scale, t, value, values, _i, _len;
     data = _arg.data, accessor = _arg.accessor, center = _arg.center, r = _arg.r, R = _arg.R, colors = _arg.colors;
     if (colors == null) {
       colors = O.random_colors;
@@ -32,12 +32,12 @@ module.exports = (function () {
       0,
       2 * Math.PI
     ]);
-    pie = [];
+    curves = [];
     t = 0;
     for (i = _i = 0, _len = data.length; _i < _len; i = ++_i) {
       item = data[i];
       value = values[i];
-      pie.push({
+      curves.push({
         item: item,
         color: colors(i),
         sector: Sector({
@@ -50,7 +50,7 @@ module.exports = (function () {
       });
       t += value;
     }
-    return pie;
+    return { curves: curves };
   };
 }).call(this);
 

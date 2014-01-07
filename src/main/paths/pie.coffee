@@ -9,11 +9,11 @@ define [
     values = (accessor item for item in data)
     s = O.sum values
     scale = Linear [0, s], [0, 2 * Math.PI]
-    pie = []
+    curves = []
     t = 0
     for item, i in data
       value = values[i]
-      pie.push
+      curves.push
         item: item
         color: colors(i)
         sector: Sector
@@ -23,4 +23,5 @@ define [
           start: scale(t)
           end: scale(t + value)
       t += value
-    pie
+
+    curves: curves
