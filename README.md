@@ -60,7 +60,7 @@ to install it and then
 
 ### Standalone script ###
 
-If you want to use Paths.js in the browser, but you do not want to use AMD modules, there is the possibility to include it in the global object. To do this, just include the file `dist/global/paths.js` in a page, and then access the various APIs globally as `paths.Pie`, `paths.Polygon` and so on. Paths.js at version 0.14 weighs only 7.3kB minified and 2.5kB minified and gzipped, but of course if you choose the AMD version, you get to include exactly the modules you need.
+If you want to use Paths.js in the browser, but you do not want to use AMD modules, there is the possibility to include it in the global object. To do this, just include the file `dist/global/paths.js` in a page, and then access the various APIs globally as `paths.Pie`, `paths.Polygon` and so on. Paths.js at version 0.20 weighs only 9.3kB minified and 3.2kB minified and gzipped, but of course if you choose the AMD version, you get to include exactly the modules you need.
 
 Low level API
 -------------
