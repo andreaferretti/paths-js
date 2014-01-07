@@ -15,7 +15,7 @@ describe 'polygon function', ->
       points: points
       closed: true
     expect(polygon.path.points()).to.eql(points)
-    
+
   it 'should correctly handle closed and open polygons', ->
     points = [[-1, 3], [2, 17], [3, 5], [4, 6]]
     polygon1 = Polygon
