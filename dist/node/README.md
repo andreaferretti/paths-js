@@ -5,7 +5,7 @@ This library helps generating [SVG paths] [1] with a high level API. These paths
 
 Paths.js offers three APIs, of increasing abstraction. The lowest level is a chainable API to generate an arbitrary SVG path. On top of this, paths for simple geometric shapes such as polygons or circle sectors are defined. At the highest level, there is an API to generate some simple graphs (pie, line chart, radar...) for a collection of data, assembling the simple shapes.
 
-> Note that the API is still in flux and may not stabilize until version 0.1.0.
+> Note that the API is still in flux and may not stabilize until version 0.2.0.
 
 Table of contents
 -----------------
@@ -60,7 +60,7 @@ to install it and then
 
 ### Standalone script ###
 
-If you want to use Paths.js in the browser, but you do not want to use AMD modules, there is the possibility to include it in the global object. To do this, just include the file `dist/global/paths.js` in a page, and then access the various APIs globally as `paths.Pie`, `paths.Polygon` and so on. Paths.js at version 0.14 weighs only 7.3kB minified and 2.5kB minified and gzipped, but of course if you choose the AMD version, you get to include exactly the modules you need.
+If you want to use Paths.js in the browser, but you do not want to use AMD modules, there is the possibility to include it in the global object. To do this, just include the file `dist/global/paths.js` in a page, and then access the various APIs globally as `paths.Pie`, `paths.Polygon` and so on. Paths.js at version 0.1.0 weighs only 9.3kB minified and 3.2kB minified and gzipped, but of course if you choose the AMD version, you get to include exactly the modules you need.
 
 Low level API
 -------------
