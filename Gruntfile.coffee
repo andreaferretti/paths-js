@@ -19,7 +19,14 @@ module.exports = (grunt)->
     clean:
       dist: ['<%= config.dist %>']
       test: ['<%= config.test_dist %>']
-      global: ['<%= config.dist %>/helpers', '<%= config.dist %>/temp', '<%= config.dist %>/amd/all.js', '<%= config.dist %>/node/all.js']
+      global: [
+        '<%= config.dist %>/helpers',
+        '<%= config.dist %>/temp',
+        '<%= config.dist %>/amd/all.js',
+        '<%= config.dist %>/amd/almond.js',
+        '<%= config.dist %>/node/all.js',
+        '<%= config.dist %>/node/almond.js'
+      ]
 
     coffee:
       dist:
@@ -27,12 +34,6 @@ module.exports = (grunt)->
         cwd: '<%= config.src %>'
         src: ['**/*.coffee']
         dest: '<%= config.dist %>/amd'
-        ext: '.js'
-      help:
-        expand: true
-        cwd: '<%= config.helpers %>'
-        src: ['**/*.coffee']
-        dest: '<%= config.dist %>/helpers'
         ext: '.js'
       test:
         expand: true
@@ -52,6 +53,21 @@ module.exports = (grunt)->
         files: [
           { expand: true, cwd: '.', src: ['package.json'], dest: '<%= config.dist %>/node' }
           { expand: true, cwd: '.', src: ['README.md'], dest: '<%= config.dist %>/node' }
+          {
+              expand: false,
+              cwd: '.',
+              src: ['<%= config.dist %>/temp/almond.js'],
+              dest: '<%= config.dist %>/global/paths.js'
+          }
+        ]
+      almond:
+        files:[
+          {
+              expand: false,
+              cwd: '.',
+              src: ['bower_components/almond/almond.js'],
+              dest: '<%= config.dist %>/amd/almond.js'
+          }
         ]
 
     concat:
@@ -72,7 +88,10 @@ module.exports = (grunt)->
           appDir: '<%= config.dist %>/amd'
           dir: '<%= config.dist %>/temp'
           skipDirOptimize: true
-          modules: [{ name: 'all' }]
+          deps: ['all']
+          insertRequire: ['all']
+          name: 'almond'
+          # modules: [{ name: 'all' }]
 
     watch:
       dist:
@@ -97,13 +116,12 @@ module.exports = (grunt)->
 
   grunt.registerTask 'build', [
     'clean:dist'
-    'coffee:help'
     'coffee:dist'
+    'copy:almond'
     'requirejs:compile'
     'urequire:dist'
     'copy:dist'
-    'concat:global'
     'clean:global'
   ]
-  
+
   grunt.registerTask 'default', ['test']

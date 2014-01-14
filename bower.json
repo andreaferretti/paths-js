@@ -9,5 +9,7 @@
     "package.json"
   ],
   "dependencies": {},
-  "devDependencies": {}
+  "devDependencies": {
+    "almond": "~0.2.9"
+  }
 }
