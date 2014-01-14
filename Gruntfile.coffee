@@ -91,7 +91,6 @@ module.exports = (grunt)->
           deps: ['all']
           insertRequire: ['all']
           name: 'almond'
-          # modules: [{ name: 'all' }]
 
     watch:
       dist:
