@@ -29,6 +29,8 @@ module.exports = (grunt)->
       ]
 
     coffee:
+#      options:
+#        bare: true
       dist:
         expand: true
         cwd: '<%= config.src %>'
@@ -116,11 +118,11 @@ module.exports = (grunt)->
   grunt.registerTask 'build', [
     'clean:dist'
     'coffee:dist'
-    'copy:almond'
-    'requirejs:compile'
+#    'copy:almond'
+#    'requirejs:compile'
     'urequire:dist'
     'copy:dist'
-    'clean:global'
+#    'clean:global'
   ]
 
   grunt.registerTask 'default', ['test']
