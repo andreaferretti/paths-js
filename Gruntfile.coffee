@@ -72,17 +72,6 @@ module.exports = (grunt)->
           }
         ]
 
-    concat:
-      options:
-        separator: ";"
-
-      global:
-        src: [
-          '<%= config.dist %>/helpers/simple-require.js'
-          '<%= config.dist %>/temp/all.js'
-        ]
-        dest: '<%= config.dist %>/global/paths.js'
-
     requirejs:
       compile:
         options:
@@ -118,11 +107,11 @@ module.exports = (grunt)->
   grunt.registerTask 'build', [
     'clean:dist'
     'coffee:dist'
-#    'copy:almond'
-#    'requirejs:compile'
+    'copy:almond'
+    'requirejs:compile'
     'urequire:dist'
     'copy:dist'
-#    'clean:global'
+    'clean:global'
   ]
 
   grunt.registerTask 'default', ['test']
