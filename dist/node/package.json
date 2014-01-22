@@ -18,6 +18,7 @@
     "grunt-contrib-concat": "~0.3.0",
     "grunt-contrib-requirejs": "~0.4.1",
     "grunt-mocha-cli": "~1.4.0",
+    "amdclean": "~0.5.0",
     "expect.js": "~0.2.0"
   },
   "engines": {

@@ -11,7 +11,6 @@ module.exports = (grunt)->
   grunt.initConfig
     config:
       src: 'src/main/paths'
-      helpers: 'src/main/helpers'
       dist: 'dist'
       test: 'src/test'
       test_dist: 'test'
@@ -20,22 +19,25 @@ module.exports = (grunt)->
       dist: ['<%= config.dist %>']
       test: ['<%= config.test_dist %>']
       global: [
-        '<%= config.dist %>/helpers',
-        '<%= config.dist %>/temp',
-        '<%= config.dist %>/amd/all.js',
-        '<%= config.dist %>/amd/almond.js',
-        '<%= config.dist %>/node/all.js',
-        '<%= config.dist %>/node/almond.js'
+        '<%= config.dist %>/temp'
+        '<%= config.dist %>/amd/all.js'
+        '<%= config.dist %>/node/all.js'
       ]
 
     coffee:
-#      options:
-#        bare: true
       dist:
         expand: true
         cwd: '<%= config.src %>'
         src: ['**/*.coffee']
         dest: '<%= config.dist %>/amd'
+        ext: '.js'
+      temp:
+        options:
+          bare: true
+        expand: true
+        cwd: '<%= config.src %>'
+        src: ['**/*.coffee']
+        dest: '<%= config.dist %>/temp'
         ext: '.js'
       test:
         expand: true
@@ -55,35 +57,18 @@ module.exports = (grunt)->
         files: [
           { expand: true, cwd: '.', src: ['package.json'], dest: '<%= config.dist %>/node' }
           { expand: true, cwd: '.', src: ['README.md'], dest: '<%= config.dist %>/node' }
-          {
-              expand: false,
-              cwd: '.',
-              src: ['<%= config.dist %>/temp/almond.js'],
-              dest: '<%= config.dist %>/global/paths.js'
-          }
-        ]
-      almond:
-        files:[
-          {
-              expand: false,
-              cwd: '.',
-              src: ['bower_components/almond/almond.js'],
-              dest: '<%= config.dist %>/amd/almond.js'
-          }
         ]
 
     requirejs:
       compile:
         options:
-          baseUrl: '.'
-          appDir: '<%= config.dist %>/amd'
-          dir: '<%= config.dist %>/temp'
+          baseUrl: '<%= config.dist %>/temp'
           skipDirOptimize: true
-          deps: ['all']
-          name: 'almond'
-          wrap:
-            start: "(function() {"
-            end: "require('all');}());"
+          name: 'all'
+          out: '<%= config.dist %>/global/paths.js'
+          wrap: true
+          onBuildWrite: (moduleName, path, contents) ->
+            module.require('amdclean').clean(contents)
 
     watch:
       dist:
@@ -109,7 +94,7 @@ module.exports = (grunt)->
   grunt.registerTask 'build', [
     'clean:dist'
     'coffee:dist'
-    'copy:almond'
+    'coffee:temp'
     'requirejs:compile'
     'urequire:dist'
     'copy:dist'
