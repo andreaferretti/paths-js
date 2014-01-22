@@ -80,9 +80,10 @@ module.exports = (grunt)->
           dir: '<%= config.dist %>/temp'
           skipDirOptimize: true
           deps: ['all']
-          insertRequire: ['all']
           name: 'almond'
-          wrap: true
+          wrap:
+            start: "(function() {"
+            end: "require('all');}());"
 
     watch:
       dist:
