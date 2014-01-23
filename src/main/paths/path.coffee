@@ -10,7 +10,7 @@ define [
 
     printInstrunction = ({ command, params }) ->
       "#{ command } #{ params.join ' ' }"
-  
+
     point = ({ command, params }, [prev_x, prev_y]) ->
       switch command
         when 'M' then [params[0], params[1]]
@@ -24,23 +24,28 @@ define [
         when 'T' then [params[0], params[1]]
         when 'A' then [params[5], params[6]]
 
+    verbosify = (keys, f) ->
+      (a) ->
+        args = if typeof a == 'object' then keys.map (k) -> a[k] else arguments
+        f.apply(null, args)
+
     plus = (instruction) ->
       Path(push instructions, instruction)
 
     # Returned instance
-    moveto: (x, y) -> plus
+    moveto: verbosify ['x', 'y'], (x, y) -> plus
       command: 'M'
       params: [x, y]
 
-    lineto: (x, y) -> plus
+    lineto: verbosify ['x', 'y'], (x, y) -> plus
       command: 'L'
       params: [x, y]
 
-    hlineto: (x) -> plus
+    hlineto: verbosify ['x'], (x) -> plus
       command: 'H'
       params: [x]
 
-    vlineto: (y) -> plus
+    vlineto: verbosify ['y'], (y) -> plus
       command: 'V'
       params: [y]
 
@@ -48,29 +53,30 @@ define [
       command: 'Z'
       params: []
 
-    curveto: (x1, y1, x2, y2, x, y) -> plus
+    curveto: verbosify ['x1', 'y1', 'x2', 'y2','x', 'y'], (x1, y1, x2, y2, x, y) -> plus
       command: 'C'
       params: [x1, y1, x2, y2, x, y]
 
-    smoothcurveto: (x2, y2, x, y) -> plus
+    smoothcurveto: verbosify ['x2', 'y2','x', 'y'], (x2, y2, x, y) -> plus
       command: 'S'
       params: [x2, y2, x, y]
 
-    qcurveto: (x1, y1, x, y) -> plus
+    qcurveto: verbosify ['x1', 'y1', 'x', 'y'], (x1, y1, x, y) -> plus
       command: 'Q'
       params: [x1, y1, x, y]
 
-    smoothqcurveto: (x, y) -> plus
+    smoothqcurveto: verbosify ['x', 'y'], (x, y) -> plus
       command: 'T'
       params: [x, y]
 
-    arc: (rx, ry, xrot, large_arc_flag, sweep_flag, x, y) -> plus
-      command: 'A'
-      params: [rx, ry, xrot, large_arc_flag, sweep_flag, x, y]
+    arc: verbosify ['rx', 'ry', 'xrot', 'large_arc_flag', 'sweep_flag', 'x', 'y'],
+      (rx, ry, xrot, large_arc_flag, sweep_flag, x, y) -> plus
+        command: 'A'
+        params: [rx, ry, xrot, large_arc_flag, sweep_flag, x, y]
 
     print: ->
       instructions.map(printInstrunction).join(' ')
-    
+
     points: ->
       ps = []
       prev = [0, 0]

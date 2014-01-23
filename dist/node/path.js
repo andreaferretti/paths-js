@@ -9,7 +9,7 @@ var __isAMD = !!(typeof define === 'function' && define.amd),
 module.exports = (function () {
   var Path;
   Path = function (init) {
-    var instructions, plus, point, printInstrunction, push;
+    var instructions, plus, point, printInstrunction, push, verbosify;
     instructions = init || [];
     push = function (arr, el) {
       var copy;
@@ -76,11 +76,23 @@ module.exports = (function () {
         ];
       }
     };
+    verbosify = function (keys, f) {
+      return function (a) {
+        var args;
+        args = typeof a === "object" ? keys.map(function (k) {
+          return a[k];
+        }) : arguments;
+        return f.apply(null, args);
+      };
+    };
     plus = function (instruction) {
       return Path(push(instructions, instruction));
     };
     return {
-      moveto: function (x, y) {
+      moveto: verbosify([
+        "x",
+        "y"
+      ], function (x, y) {
         return plus({
           command: "M",
           params: [
@@ -88,8 +100,11 @@ module.exports = (function () {
             y
           ]
         });
-      },
-      lineto: function (x, y) {
+      }),
+      lineto: verbosify([
+        "x",
+        "y"
+      ], function (x, y) {
         return plus({
           command: "L",
           params: [
@@ -97,26 +112,33 @@ module.exports = (function () {
             y
           ]
         });
-      },
-      hlineto: function (x) {
+      }),
+      hlineto: verbosify(["x"], function (x) {
         return plus({
           command: "H",
           params: [x]
         });
-      },
-      vlineto: function (y) {
+      }),
+      vlineto: verbosify(["y"], function (y) {
         return plus({
           command: "V",
           params: [y]
         });
-      },
+      }),
       closepath: function () {
         return plus({
           command: "Z",
           params: []
         });
       },
-      curveto: function (x1, y1, x2, y2, x, y) {
+      curveto: verbosify([
+        "x1",
+        "y1",
+        "x2",
+        "y2",
+        "x",
+        "y"
+      ], function (x1, y1, x2, y2, x, y) {
         return plus({
           command: "C",
           params: [
@@ -128,8 +150,13 @@ module.exports = (function () {
             y
           ]
         });
-      },
-      smoothcurveto: function (x2, y2, x, y) {
+      }),
+      smoothcurveto: verbosify([
+        "x2",
+        "y2",
+        "x",
+        "y"
+      ], function (x2, y2, x, y) {
         return plus({
           command: "S",
           params: [
@@ -139,8 +166,13 @@ module.exports = (function () {
             y
           ]
         });
-      },
-      qcurveto: function (x1, y1, x, y) {
+      }),
+      qcurveto: verbosify([
+        "x1",
+        "y1",
+        "x",
+        "y"
+      ], function (x1, y1, x, y) {
         return plus({
           command: "Q",
           params: [
@@ -150,8 +182,11 @@ module.exports = (function () {
             y
           ]
         });
-      },
-      smoothqcurveto: function (x, y) {
+      }),
+      smoothqcurveto: verbosify([
+        "x",
+        "y"
+      ], function (x, y) {
         return plus({
           command: "T",
           params: [
@@ -159,8 +194,16 @@ module.exports = (function () {
             y
           ]
         });
-      },
-      arc: function (rx, ry, xrot, large_arc_flag, sweep_flag, x, y) {
+      }),
+      arc: verbosify([
+        "rx",
+        "ry",
+        "xrot",
+        "large_arc_flag",
+        "sweep_flag",
+        "x",
+        "y"
+      ], function (rx, ry, xrot, large_arc_flag, sweep_flag, x, y) {
         return plus({
           command: "A",
           params: [
@@ -173,7 +216,7 @@ module.exports = (function () {
             y
           ]
         });
-      },
+      }),
       print: function () {
         return instructions.map(printInstrunction).join(" ");
       },
