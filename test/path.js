@@ -166,4 +166,19 @@
     });
   });
 
+  describe('verbose api', function() {
+    return it('should work the same as the short one', function() {
+      var path1, path2;
+      path1 = Path().moveto(2, 10).lineto(3, 5);
+      path2 = Path().moveto({
+        x: 2,
+        y: 10
+      }).lineto({
+        x: 3,
+        y: 5
+      });
+      return expect(path1.print()).to.equal(path2.print());
+    });
+  });
+
 }).call(this);

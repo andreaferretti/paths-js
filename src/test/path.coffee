@@ -4,11 +4,11 @@ expect = require 'expect.js'
 labels = (path) ->
   regex = /([A-Z])/g
   path.print().match regex
- 
+
 describe 'node module import', ->
   it 'should export the correct type', ->
     expect(Path).to.be.a('function')
-  
+
 describe 'path', ->
   it 'should have methods to get the points and the printed string', ->
     path = Path()
@@ -52,7 +52,7 @@ describe 'points method', ->
   it 'should report the expected points for vertical line commands', ->
     path = Path().moveto(4, 5).vlineto(3).lineto(-1, 17)
     expect(path.points()).to.eql([[4, 5], [4, 3], [-1, 17]])
-  
+
   it 'should not add points when closing a path', ->
     path = Path().moveto(4, 5).lineto(3, 1).lineto(-1, 17)
     expect(path.points()).to.eql(path.closepath().points())
@@ -93,7 +93,7 @@ describe 'print method', ->
   it 'should report the expected labels for vertical line commands', ->
     path = Path().moveto(4, 5).vlineto(3).lineto(-1, 17)
     expect(labels path).to.eql(['M', 'V', 'L'])
-  
+
   it 'should report the expected labels when closing a path', ->
     path = Path().moveto(4, 5).lineto(3, 1).lineto(-1, 17).closepath()
     expect(labels path).to.eql(['M', 'L', 'L', 'Z'])
@@ -113,7 +113,13 @@ describe 'print method', ->
   it 'should report the expected points for smooth quadratic curveto commands', ->
     path = Path().moveto(4, 5).smoothqcurveto(6, -3).curveto(2, 1, 0, -1, -1, 17)
     expect(labels path).to.eql(['M', 'T', 'C'])
-    
+
   it 'should report the expected points for arc commands', ->
     path = Path().moveto(0, 1).arc(3, 3, 2, 0, 1, 6, -3).curveto(2, 1, 3, 1, -1, 17)
     expect(labels path).to.eql(['M', 'A', 'C'])
+
+describe 'verbose api', ->
+  it 'should work the same as the short one', ->
+    path1 = Path().moveto(2, 10).lineto(3, 5)
+    path2 = Path().moveto({x: 2, y: 10}).lineto({x: 3, y: 5})
+    expect(path1.print()).to.equal(path2.print())
