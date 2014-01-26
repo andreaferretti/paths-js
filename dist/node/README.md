@@ -177,7 +177,7 @@ Another special case of `Polygon` is a rectangle having sides parallel to the ax
     var Rectangle = require('paths/rectangle');
     var rectangle = Rectangle({
       top: 10,
-      bottom: 3l
+      bottom: 3,
       left: -2,
       right: 5
     });
