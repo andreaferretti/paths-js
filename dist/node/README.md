@@ -170,6 +170,20 @@ A semi-regular polygon is defined by its center and the distance of each of its 
 
 In the above example, `polygon` is semi-regular and centered at the origin, while `regularPolygon` is a regular pentagon centered at `[1, 2]`.
 
+### Rectangle ###
+
+Another special case of `Polygon` is a rectangle having sides parallel to the axes. It can be generated with
+
+    var Rectangle = require('paths/rectangle');
+    var rectangle = Rectangle({
+      top: 10,
+      bottom: 3l
+      left: -2,
+      right: 5
+    });
+
+The SVG spec includes `<rect>` elements, so usually there is no need to use a `<path>` element to draw a rectangle, but it can be useful from time to time, in particular when generating bar charts.
+
 ### Bezier ###
 
 Similar to `paths.polygon`, the module `paths.bezier` defines a curve that passes through a given list of vertices, but does so with a line that interpolates smoothly between the data points. Unlike polygons, curves produced in this way are always open.

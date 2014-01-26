@@ -6,11 +6,12 @@ define [
   './pie'
   './polygon'
   './radar'
+  './rectangle'
   './sector'
   './semi-regular-polygon'
   './smooth-line'
   './stock'
-], (Bezier, Linear, Ops, Path, Pie, Polygon, Radar, Sector, SemiRegularPolygon, SmoothLine, Stock)->
+], (Bezier, Linear, Ops, Path, Pie, Polygon, Radar, Rectangle, Sector, SemiRegularPolygon, SmoothLine, Stock)->
 
   window.paths =
     Bezier: Bezier
@@ -20,6 +21,7 @@ define [
     Pie: Pie
     Polygon: Polygon
     Radar: Radar
+    Rectangle: Rectangle
     Sector: Sector
     SemiRegularPolygon: SemiRegularPolygon
     SmoothLine: SmoothLine
