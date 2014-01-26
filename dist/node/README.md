@@ -86,6 +86,46 @@ The `points` method returns the array of points through which the path passes. T
 
 All methods except `print` and `points` produce a new path (paths are immutable). These methods mimic the SVG path specification and are `moveto`, `lineto`, `hlineto`, `vlineto`, `curveto`, `qcurveto`, `smoothcurveto`, `smoothqcurveto` and `closepath`.
 
+### Verbose API ###
+
+It is also possible to use a more verbose API, where the parameters to the path methods are named. To do so, just pass an object to the path methods. The names of the parameters are the same as in the SVG specification. Hence
+
+    Path()
+      .moveto(2, 10)
+      .lineto(3, 5)
+      .hlineto(4)
+      .vlineto(3)
+      .curveto(1, 1, 2, 5, 3, 1)
+      .smoothcurveto(2, 5, 2, 6)
+      .qcurveto(0, 1, 2, 3)
+      .smoothqcurveto(6, -3)
+      .arc(3, 3, 2, 0, 1, 6, -3)
+      .closepath()
+
+is equivalent to
+
+    Path()
+      .moveto({x: 2, y: 10})
+      .lineto({x: 3, y: 5})
+      .hlineto({x: 4})
+      .vlineto({y: 3})
+      .curveto({x1: 1, y1: 1, x2: 2, y2: 5, x: 3, y:1})
+      .smoothcurveto({x2: 2, y2: 5, x: 2, y: 6})
+      .qcurveto({x1: 0, y1: 1, x: 2, y: 3})
+      .smoothqcurveto({x: 6, y: -3})
+      .arc({rx: 3, ry: 3, xrot: 2, large_arc_flag: 0, sweep_flag: 1, x: 6, y: -3})
+      .closepath()
+
+The verbose API can be freely mixed with the shorter one, so for instance
+
+    Path()
+      .moveto(2, 10)
+      .lineto(3, 5)
+      .curveto({x1: 1, y1: 1, x2: 2, y2: 5, x: 3, y:1})
+      .smoothcurveto(2, 5, 2, 6)
+      .qcurveto({x1: 0, y1: 1, x: 2, y: 3})
+
+is perfectly valid.
 
 Mid level API (shapes)
 ----------------------
