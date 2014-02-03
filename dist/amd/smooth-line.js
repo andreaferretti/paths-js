@@ -5,7 +5,7 @@
       _ref = comp(options), arranged = _ref.arranged, scale = _ref.scale, xscale = _ref.xscale, yscale = _ref.yscale, colors = _ref.colors, base = _ref.base;
       i = -1;
       lines = arranged.map(function(_arg) {
-        var area, line, points, scaled_points, xmax, xmin;
+        var area, line, points, scaled_points, xmax, xmin, _ref1, _ref2;
         points = _arg.points, xmin = _arg.xmin, xmax = _arg.xmax;
         scaled_points = points.map(scale);
         i += 1;
@@ -13,7 +13,7 @@
           points: scaled_points
         });
         area = {
-          path: line.path.lineto(scale([xmax, base])).lineto(scale([xmin, base])).closepath(),
+          path: (_ref1 = (_ref2 = line.path).lineto.apply(_ref2, scale([xmax, base]))).lineto.apply(_ref1, scale([xmin, base])).closepath(),
           centroid: O.average([line.centroid, scale([xmin, base]), scale([xmax, base])])
         };
         return {

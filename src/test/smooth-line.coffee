@@ -1,4 +1,5 @@
 SmoothLine = require '../dist/node/smooth-line.js'
+Stock = require '../dist/node/stock.js'
 expect = require 'expect.js'
 
 data = [
@@ -53,12 +54,14 @@ date = (data) ->
   d.setMonth(data.month - 1)
   d.getTime()
 
-chart = SmoothLine
+params =
   data: data
   xaccessor: date
   yaccessor: (d) -> d.value
   width: 300
   height: 200
+
+chart = SmoothLine(params)
 
 describe 'smooth line chart', ->
   it 'should generate as many points as data', ->
@@ -74,6 +77,20 @@ describe 'smooth line chart', ->
     line = chart.curves[0].line
     area = chart.curves[0].area
     expect(area.path.points().slice(0, 16)).to.eql(line.path.points())
+
+  it 'should close area paths with two additional points on the base', ->
+    line = chart.curves[0].line
+    area = chart.curves[0].area
+    expect(area.path.points().length).to.equal(line.path.points().length + 2)
+
+  it 'should pass through the same points as the stock graph', ->
+    line = chart.curves[0].line
+    area = chart.curves[0].area
+    chart1 = Stock(params)
+    line1 = chart1.curves[0].line
+    area1 = chart1.curves[0].area
+    expect(area.path.points().map (x) -> round_vector(x)).to.eql(area1.path.points().map (x) -> round_vector(x))
+    expect(line.path.points().map (x) -> round_vector(x)).to.eql(line1.path.points().map (x) -> round_vector(x))
 
   it 'should give access to the original items', ->
     expect(chart.curves[1].item).to.be(data[1])

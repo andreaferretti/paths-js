@@ -14,8 +14,8 @@ define [
       line = Bezier(points: scaled_points)
       area =
         path: line.path
-          .lineto(scale([xmax, base]))
-          .lineto(scale([xmin, base]))
+          .lineto(scale([xmax, base])...)
+          .lineto(scale([xmin, base])...)
           .closepath()
         centroid: O.average([
             line.centroid,

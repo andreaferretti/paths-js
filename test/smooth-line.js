@@ -1,7 +1,9 @@
 (function() {
-  var SmoothLine, chart, data, date, expect, round, round_vector;
+  var SmoothLine, Stock, chart, data, date, expect, params, round, round_vector;
 
   SmoothLine = require('../dist/node/smooth-line.js');
+
+  Stock = require('../dist/node/stock.js');
 
   expect = require('expect.js');
 
@@ -167,7 +169,7 @@
     return d.getTime();
   };
 
-  chart = SmoothLine({
+  params = {
     data: data,
     xaccessor: date,
     yaccessor: function(d) {
@@ -175,7 +177,9 @@
     },
     width: 300,
     height: 200
-  });
+  };
+
+  chart = SmoothLine(params);
 
   describe('smooth line chart', function() {
     it('should generate as many points as data', function() {
@@ -193,6 +197,30 @@
       line = chart.curves[0].line;
       area = chart.curves[0].area;
       return expect(area.path.points().slice(0, 16)).to.eql(line.path.points());
+    });
+    it('should close area paths with two additional points on the base', function() {
+      var area, line;
+      line = chart.curves[0].line;
+      area = chart.curves[0].area;
+      return expect(area.path.points().length).to.equal(line.path.points().length + 2);
+    });
+    it('should pass through the same points as the stock graph', function() {
+      var area, area1, chart1, line, line1;
+      line = chart.curves[0].line;
+      area = chart.curves[0].area;
+      chart1 = Stock(params);
+      line1 = chart1.curves[0].line;
+      area1 = chart1.curves[0].area;
+      expect(area.path.points().map(function(x) {
+        return round_vector(x);
+      })).to.eql(area1.path.points().map(function(x) {
+        return round_vector(x);
+      }));
+      return expect(line.path.points().map(function(x) {
+        return round_vector(x);
+      })).to.eql(line1.path.points().map(function(x) {
+        return round_vector(x);
+      }));
     });
     it('should give access to the original items', function() {
       return expect(chart.curves[1].item).to.be(data[1]);
