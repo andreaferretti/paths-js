@@ -15,10 +15,10 @@ describe 'sum function', ->
 
   it 'should work when only one element is given', ->
     expect(O.sum [13]).to.be(13)
-    
+
   it 'should return 0 on an empty array', ->
     expect(O.sum []).to.be(0)
-    
+
 describe 'min function', ->
   it 'should yield the minimum of the given elements', ->
     expect(O.min [1, 2, 3, 4]).to.be(1)
@@ -58,7 +58,7 @@ describe 'vector average', ->
 describe 'on_circle function', ->
   it 'should yield the top point when the angle is 0', ->
     expect(O.on_circle 3, 0).to.eql([0, -3])
-    
+
   it 'should yield the leftmost point when the angle is pi / 2', ->
     point = O.on_circle(3, 3 * Math.PI / 2)
     expect(round_vector(point)).to.eql([-3, 0])

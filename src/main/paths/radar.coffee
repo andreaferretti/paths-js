@@ -2,12 +2,6 @@ define [
   './semi-regular-polygon'
   './ops'
 ], (SemiRegularPolygon, O)->
-  rand_int = (max) ->
-    Math.floor(Math.random() * max)
-
-  random_colors = ->
-    "rgb(#{ rand_int(256) }, #{ rand_int(256) }, #{ rand_int(256) })"
-
   collect_keys = (objects) ->
     keys = []
     keysets = (Object.keys o for o in objects)

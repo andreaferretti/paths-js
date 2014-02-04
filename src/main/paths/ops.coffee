@@ -11,7 +11,7 @@ define [
   minus = ([a, b], [c, d]) -> [a - c, b - d]
 
   times = (k, [a, b]) -> [k * a, k * b]
-  
+
   average = (points) ->
     times (1 / points.length), points.reduce plus
 
@@ -20,10 +20,10 @@ define [
 
   random_int = (max) ->
     Math.floor(Math.random() * max)
-    
+
   random_colors = ->
     "rgb(#{ random_int(256) }, #{ random_int(256) }, #{ random_int(256) })"
-  
+
   sum: sum
   min: min
   max: max

@@ -1,12 +1,6 @@
 (function() {
   define(['./semi-regular-polygon', './ops'], function(SemiRegularPolygon, O) {
-    var collect_keys, global_max, key_accessor, rand_int, random_colors;
-    rand_int = function(max) {
-      return Math.floor(Math.random() * max);
-    };
-    random_colors = function() {
-      return "rgb(" + (rand_int(256)) + ", " + (rand_int(256)) + ", " + (rand_int(256)) + ")";
-    };
+    var collect_keys, global_max, key_accessor;
     collect_keys = function(objects) {
       var key, keys, keysets, o, object, _i, _j, _len, _len1, _ref;
       keys = [];
