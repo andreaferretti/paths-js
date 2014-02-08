@@ -74,6 +74,7 @@ module.exports = (function () {
           top: top
         });
         curves.push({
+          item: data[j][i],
           line: line,
           color: cols[j]
         });

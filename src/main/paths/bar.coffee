@@ -35,6 +35,7 @@ define [
         top = scale(el)
         line = Rectangle(left: left, right: right, bottom: bottom, top: top)
         curves.push
+          item: data[j][i]
           line: line
           color: cols[j]
 

@@ -59,6 +59,7 @@
             top: top
           });
           curves.push({
+            item: data[j][i],
             line: line,
             color: cols[j]
           });
