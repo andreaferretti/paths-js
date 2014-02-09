@@ -52,4 +52,11 @@
     });
   });
 
+  describe('bar chart scale', function() {
+    return it('should take into account all data involved', function() {
+      expect(bar.scale(9)).to.be(0);
+      return expect(bar.scale(0)).to.be(400);
+    });
+  });
+
 }).call(this);

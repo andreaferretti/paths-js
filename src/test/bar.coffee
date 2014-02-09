@@ -43,3 +43,8 @@ describe 'bar chart', ->
       gutter: 15
       colors: constant_color
     expect(bar1.curves[14].color).to.be("#ffbb22")
+
+describe 'bar chart scale', ->
+  it 'should take into account all data involved', ->
+    expect(bar.scale(9)).to.be(0)
+    expect(bar.scale(0)).to.be(400)

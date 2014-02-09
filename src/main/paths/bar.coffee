@@ -14,16 +14,16 @@ define [
     for d, i in data
       cols[i] ?= colors(i)
       for el, j in d
-        val = -accessor(el)
-        if -val < min then min = -val
-        if -val > max then max = -val
+        val = accessor(el)
+        if val < min then min = val
+        if val > max then max = val
         groups[j] ?= []
         groups[j][i] = val
 
     n = groups.length
     group_width = (width - gutter * (n - 1)) / n
     curves = []
-    scale = Linear [-min, -max], [height, 0]
+    scale = Linear [min, max], [height, 0]
 
     for g, i in groups
       w = group_width / g.length

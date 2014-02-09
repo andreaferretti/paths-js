@@ -25,12 +25,12 @@
         }
         for (j = _j = 0, _len1 = d.length; _j < _len1; j = ++_j) {
           el = d[j];
-          val = -accessor(el);
-          if (-val < min) {
-            min = -val;
+          val = accessor(el);
+          if (val < min) {
+            min = val;
           }
-          if (-val > max) {
-            max = -val;
+          if (val > max) {
+            max = val;
           }
           if (groups[j] == null) {
             groups[j] = [];
@@ -41,7 +41,7 @@
       n = groups.length;
       group_width = (width - gutter * (n - 1)) / n;
       curves = [];
-      scale = Linear([-min, -max], [height, 0]);
+      scale = Linear([min, max], [height, 0]);
       for (i = _k = 0, _len2 = groups.length; _k < _len2; i = ++_k) {
         g = groups[i];
         w = group_width / g.length;

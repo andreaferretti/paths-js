@@ -34,12 +34,12 @@ module.exports = (function () {
       }
       for (j = _j = 0, _len1 = d.length; _j < _len1; j = ++_j) {
         el = d[j];
-        val = -accessor(el);
-        if (-val < min) {
-          min = -val;
+        val = accessor(el);
+        if (val < min) {
+          min = val;
         }
-        if (-val > max) {
-          max = -val;
+        if (val > max) {
+          max = val;
         }
         if (groups[j] == null) {
           groups[j] = [];
@@ -51,8 +51,8 @@ module.exports = (function () {
     group_width = (width - gutter * (n - 1)) / n;
     curves = [];
     scale = Linear([
-      -min,
-      -max
+      min,
+      max
     ], [
       height,
       0
