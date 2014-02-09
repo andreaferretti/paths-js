@@ -48,3 +48,13 @@ describe 'bar chart scale', ->
   it 'should take into account all data involved', ->
     expect(bar.scale(9)).to.be(0)
     expect(bar.scale(0)).to.be(400)
+
+  it 'should allow a custom accessor function', ->
+    bar1 = Bar
+      data: data
+      accessor: (x) -> x * x
+      width: 300
+      height: 400
+      gutter: 15
+    expect(bar1.scale(81)).to.be(0)
+    expect(bar1.scale(0)).to.be(400)

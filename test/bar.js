@@ -53,9 +53,23 @@
   });
 
   describe('bar chart scale', function() {
-    return it('should take into account all data involved', function() {
+    it('should take into account all data involved', function() {
       expect(bar.scale(9)).to.be(0);
       return expect(bar.scale(0)).to.be(400);
+    });
+    return it('should allow a custom accessor function', function() {
+      var bar1;
+      bar1 = Bar({
+        data: data,
+        accessor: function(x) {
+          return x * x;
+        },
+        width: 300,
+        height: 400,
+        gutter: 15
+      });
+      expect(bar1.scale(81)).to.be(0);
+      return expect(bar1.scale(0)).to.be(400);
     });
   });
 
