@@ -263,6 +263,52 @@ Parameters:
 
 The object returned by the `Pie` function contains the `curves` array, on which one can iterate to draw the sectors. Each member of this array has the properties `sector`, `color` and `item`, the latter containing the actual datum associated to the sector.
 
+### Bar graph ###
+
+The `Bar` graph can be used as follows:
+
+    var Bar = require('paths/bar');
+    var bar = Bar({
+      data: [
+        [
+          { name: 'Italy', population: 59859996 },
+          { name: 'Spain', population: 46704314 }
+          { name: 'France', population: 65806000 },
+          { name: 'Romania', population: 20121641 },
+          { name: 'Greece', population: 10815197 }
+        ],
+        [
+          { name: 'Zambia', population: 14580290 },
+          { name: 'Cameroon', population: 20386799 }
+          { name: 'Nigeria', population: 173615000 },
+          { name: 'Ethiopia', population: 86613986 },
+          { name: 'Ghana', population: 24658823 }
+        ]
+      ],
+      accessor: function(x) { return x.population; },
+      colors: function(i) { return somePalette[i]; },
+      width: 500,
+      height: 400,
+      gutter: 10
+    });
+
+Parameters:
+
+* `width`, `height`: have the obvious geometric meaning
+* `data`: contains an array of arrays with the data to plot. The precise form of the data is not important, because the actual value of the data will be extracted by the `accessor` function. Each array will be represented by a series of bars with the same color.
+* `accessor`: a function that is applied to each datum inside each item in `data` to extract a numeric value
+* `gutter` (optional): the space to leave between each group of bars
+* `colors` (optional): a function that assign to a sector index its color.
+
+The bar chart allows multiple histograms to be drawn side by side. If you just have one series to be plotted, put it inside an array of length one anyway, like this:
+
+    Bar({
+      data: [[2, 5, 3, 9, 7]],
+      ...
+    });
+
+The object returned by the `Bar` function contains the `curves` array, on which one can iterate to draw the rectangles. Each member of this array has the properties `line`, `color` and `item`, the latter containing the actual datum associated to the rectangle.
+
 ### Stock graph ###
 
 The `Stock` graph is used to represent one or more line charts. It can be used as follows:
