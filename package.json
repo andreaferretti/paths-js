@@ -1,27 +1,27 @@
 {
-  "name": "paths-js",
-  "version": "0.1.6",
-  "author": {
-    "name": "Andrea Ferretti"
-  },
-  "license": "Apache-2.0",
-  "homepage": "https://github.com/andreaferretti/paths-js",
-  "keywords": ["svg", "path", "chart"],
-  "dependencies": {},
-  "devDependencies": {
-    "grunt": "~0.4.1",
-    "grunt-urequire": "~0.6.0",
-    "grunt-contrib-copy": "~0.4.1",
-    "grunt-contrib-clean": "~0.5.0",
-    "grunt-contrib-coffee": "~0.7.0",
-    "grunt-contrib-watch": "~0.5.3",
-    "grunt-contrib-concat": "~0.3.0",
-    "grunt-contrib-requirejs": "~0.4.1",
-    "grunt-mocha-cli": "~1.4.0",
-    "amdclean": "~0.5.0",
-    "expect.js": "~0.2.0"
-  },
-  "engines": {
-    "node": ">=0.8.0"
-  }
+	"name": "paths-js",
+	"version": "0.2.0",
+	"author": {
+		"name": "Andrea Ferretti"
+	},
+	"license": "Apache-2.0",
+	"homepage": "https://github.com/andreaferretti/paths-js",
+	"keywords": ["svg", "path", "chart"],
+	"dependencies": {},
+	"devDependencies": {
+		"grunt": "~0.4.1",
+		"grunt-urequire": "~0.6.0",
+		"grunt-contrib-copy": "~0.4.1",
+		"grunt-contrib-clean": "~0.5.0",
+		"grunt-contrib-coffee": "~0.7.0",
+		"grunt-contrib-watch": "~0.5.3",
+		"grunt-contrib-concat": "~0.3.0",
+		"grunt-contrib-requirejs": "~0.4.1",
+		"grunt-mocha-cli": "~1.4.0",
+		"amdclean": "~0.5.0",
+		"expect.js": "~0.2.0"
+	},
+	"engines": {
+		"node": ">=0.8.0"
+	}
 }
