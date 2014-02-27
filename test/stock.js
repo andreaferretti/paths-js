@@ -197,7 +197,7 @@
     it('should give access to the original items', function() {
       return expect(stock.curves[1].item).to.be(data[1]);
     });
-    it('should allow custom color functions', function() {
+    it('should allow custom computations', function() {
       var constant_color, stock1;
       constant_color = function() {
         return "#ffbb22";
@@ -210,7 +210,9 @@
         },
         width: 300,
         height: 200,
-        colors: constant_color
+        compute: {
+          color: constant_color
+        }
       });
       return expect(stock1.curves[1].color).to.be("#ffbb22");
     });

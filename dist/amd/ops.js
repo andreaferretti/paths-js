@@ -1,6 +1,6 @@
 (function() {
   define([], function() {
-    var average, max, min, minus, on_circle, plus, random_colors, random_int, sum, times;
+    var average, enhance, max, min, minus, on_circle, plus, sum, times;
     sum = function(xs) {
       return xs.reduce((function(a, b) {
         return a + b;
@@ -39,11 +39,14 @@
     on_circle = function(r, angle) {
       return times(r, [Math.sin(angle), -Math.cos(angle)]);
     };
-    random_int = function(max) {
-      return Math.floor(Math.random() * max);
-    };
-    random_colors = function() {
-      return "rgb(" + (random_int(256)) + ", " + (random_int(256)) + ", " + (random_int(256)) + ")";
+    enhance = function(compute, curve) {
+      var key, method, _ref;
+      _ref = compute || {};
+      for (key in _ref) {
+        method = _ref[key];
+        curve[key] = method(curve.index, curve.item);
+      }
+      return curve;
     };
     return {
       sum: sum,
@@ -54,8 +57,7 @@
       times: times,
       average: average,
       on_circle: on_circle,
-      random_int: random_int,
-      random_colors: random_colors
+      enhance: enhance
     };
   });
 

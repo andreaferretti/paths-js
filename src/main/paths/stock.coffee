@@ -1,10 +1,11 @@
 define [
   './polygon'
   './line-chart-comp'
-], (Polygon, comp)->
+  './ops'
+], (Polygon, comp, O)->
 
   (options) ->
-    { arranged, scale, xscale, yscale, colors, base } = comp(options)
+    { arranged, scale, xscale, yscale, base } = comp(options)
     i = -1
 
     polygons = arranged.map ({ points, xmin, xmax }) ->
@@ -14,14 +15,15 @@ define [
       scaled_points_closed = points.map scale
       i += 1
 
-      item: options.data[i]
-      line: Polygon
-        points: scaled_points
-        closed: false
-      area: Polygon
-        points: scaled_points_closed
-        closed: true
-      color: colors(i)
+      O.enhance options.compute,
+        item: options.data[i]
+        line: Polygon
+          points: scaled_points
+          closed: false
+        area: Polygon
+          points: scaled_points_closed
+          closed: true
+        index: i
 
     curves: polygons
     xscale: xscale

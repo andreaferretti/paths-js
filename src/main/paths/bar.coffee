@@ -3,16 +3,13 @@ define [
   './linear'
   './rectangle'
 ], (O, Linear, Rectangle)->
-  ({data, accessor, width, height, gutter, colors}) ->
+  ({data, accessor, width, height, gutter, compute}) ->
     accessor ?= (x) -> x
     gutter ?= 0
-    colors ?= O.random_colors
     groups = []
     min = 0
     max = 0
-    cols = [] # must remember generated colors in case they are random
     for d, i in data
-      cols[i] ?= colors(i)
       for el, j in d
         val = accessor(el)
         if val < min then min = val
@@ -34,10 +31,10 @@ define [
         bottom = scale(0)
         top = scale(el)
         line = Rectangle(left: left, right: right, bottom: bottom, top: top)
-        curves.push
+        curves.push O.enhance compute,
           item: data[j][i]
           line: line
-          color: cols[j]
+          index: j
 
     curves: curves
     scale: scale

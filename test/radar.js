@@ -127,7 +127,7 @@
       });
       return expect(radar.curves[3].item).to.be(data[3]);
     });
-    return it('should allow custom color functions', function() {
+    return it('should allow custom computations', function() {
       var constant_color, radar;
       constant_color = function() {
         return "#ffbb22";
@@ -136,7 +136,9 @@
         data: data,
         center: [1, 1],
         r: 10,
-        colors: constant_color
+        compute: {
+          color: constant_color
+        }
       });
       return expect(radar.curves[3].color).to.be("#ffbb22");
     });

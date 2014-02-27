@@ -88,7 +88,7 @@
     it('should give access to the original items', function() {
       return expect(pie.curves[2].item).to.be(data[2]);
     });
-    return it('should allow custom color functions', function() {
+    return it('should allow custom computations', function() {
       var constant_color, pie1;
       constant_color = function() {
         return "#ffbb22";
@@ -101,7 +101,9 @@
         center: [1, 1],
         r: 10,
         R: 20,
-        colors: constant_color
+        compute: {
+          color: constant_color
+        }
       });
       return expect(pie1.curves[2].color).to.be("#ffbb22");
     });

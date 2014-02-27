@@ -39,8 +39,8 @@ module.exports = (function () {
     };
   };
   return function (_arg) {
-    var arranged, base, closed, colors, data, datum, f, height, scale, width, xaccessor, xmax, xmin, xscale, yaccessor, ymax, ymin, yscale;
-    data = _arg.data, xaccessor = _arg.xaccessor, yaccessor = _arg.yaccessor, width = _arg.width, height = _arg.height, colors = _arg.colors, closed = _arg.closed;
+    var arranged, base, closed, data, datum, f, height, scale, width, xaccessor, xmax, xmin, xscale, yaccessor, ymax, ymin, yscale;
+    data = _arg.data, xaccessor = _arg.xaccessor, yaccessor = _arg.yaccessor, width = _arg.width, height = _arg.height, closed = _arg.closed;
     if (xaccessor == null) {
       xaccessor = function (_arg1) {
         var x, y;
@@ -54,9 +54,6 @@ module.exports = (function () {
         x = _arg1[0], y = _arg1[1];
         return y;
       };
-    }
-    if (colors == null) {
-      colors = O.random_colors;
     }
     f = function (i) {
       return [
@@ -117,8 +114,7 @@ module.exports = (function () {
       scale: scale,
       xscale: xscale,
       yscale: yscale,
-      base: base,
-      colors: colors
+      base: base
     };
   };
 }).call(this);

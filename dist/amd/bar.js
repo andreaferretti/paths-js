@@ -1,8 +1,8 @@
 (function() {
   define(['./ops', './linear', './rectangle'], function(O, Linear, Rectangle) {
     return function(_arg) {
-      var accessor, bottom, colors, cols, curves, d, data, el, g, group_width, groups, gutter, height, i, j, left, line, max, min, n, right, scale, shift, top, val, w, width, _i, _j, _k, _l, _len, _len1, _len2, _len3;
-      data = _arg.data, accessor = _arg.accessor, width = _arg.width, height = _arg.height, gutter = _arg.gutter, colors = _arg.colors;
+      var accessor, bottom, compute, curves, d, data, el, g, group_width, groups, gutter, height, i, j, left, line, max, min, n, right, scale, shift, top, val, w, width, _i, _j, _k, _l, _len, _len1, _len2, _len3;
+      data = _arg.data, accessor = _arg.accessor, width = _arg.width, height = _arg.height, gutter = _arg.gutter, compute = _arg.compute;
       if (accessor == null) {
         accessor = function(x) {
           return x;
@@ -11,18 +11,11 @@
       if (gutter == null) {
         gutter = 0;
       }
-      if (colors == null) {
-        colors = O.random_colors;
-      }
       groups = [];
       min = 0;
       max = 0;
-      cols = [];
       for (i = _i = 0, _len = data.length; _i < _len; i = ++_i) {
         d = data[i];
-        if (cols[i] == null) {
-          cols[i] = colors(i);
-        }
         for (j = _j = 0, _len1 = d.length; _j < _len1; j = ++_j) {
           el = d[j];
           val = accessor(el);
@@ -58,11 +51,11 @@
             bottom: bottom,
             top: top
           });
-          curves.push({
+          curves.push(O.enhance(compute, {
             item: data[j][i],
             line: line,
-            color: cols[j]
-          });
+            index: j
+          }));
         }
       }
       return {

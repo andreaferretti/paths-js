@@ -62,16 +62,3 @@ describe 'on_circle function', ->
   it 'should yield the leftmost point when the angle is pi / 2', ->
     point = O.on_circle(3, 3 * Math.PI / 2)
     expect(round_vector(point)).to.eql([-3, 0])
-
-describe 'random int', ->
-  it 'should be between 0 and max', ->
-    expect(O.random_int(100)).to.be.above(0)
-    expect(O.random_int(357)).to.be.below(357)
-
-  it 'should be an integer', ->
-    num = O.random_int(100)
-    expect(num).to.be(round(num))
-
-describe 'random color', ->
-  it 'should generate an rgb string', ->
-    expect(O.random_colors()).to.match(/rgb\([\d]+, [\d]+, [\d]+\)/)

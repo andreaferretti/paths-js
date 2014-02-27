@@ -52,13 +52,10 @@
       return O.max(maxs);
     };
     return function(_arg) {
-      var accessor, angle, center, colors, data, i, keys, max, polygons, r, ring_paths, rings, sides, _i, _results;
-      data = _arg.data, accessor = _arg.accessor, center = _arg.center, r = _arg.r, max = _arg.max, rings = _arg.rings, colors = _arg.colors;
+      var accessor, angle, center, compute, data, i, keys, max, polygons, r, ring_paths, rings, sides, _i, _results;
+      data = _arg.data, accessor = _arg.accessor, center = _arg.center, r = _arg.r, max = _arg.max, rings = _arg.rings, compute = _arg.compute;
       if (rings == null) {
         rings = 3;
-      }
-      if (colors == null) {
-        colors = O.random_colors;
       }
       if (accessor == null) {
         accessor = key_accessor(collect_keys(data));
@@ -90,7 +87,7 @@
       });
       polygons = data.map(function(d) {
         i += 1;
-        return {
+        return O.enhance(compute, {
           polygon: SemiRegularPolygon({
             center: center,
             radii: keys.map(function(k) {
@@ -98,8 +95,8 @@
             })
           }),
           item: d,
-          color: colors(i)
-        };
+          index: i
+        });
       });
       return {
         curves: polygons,

@@ -1,8 +1,8 @@
 (function() {
-  define(['./polygon', './line-chart-comp'], function(Polygon, comp) {
+  define(['./polygon', './line-chart-comp', './ops'], function(Polygon, comp, O) {
     return function(options) {
-      var arranged, base, colors, i, polygons, scale, xscale, yscale, _ref;
-      _ref = comp(options), arranged = _ref.arranged, scale = _ref.scale, xscale = _ref.xscale, yscale = _ref.yscale, colors = _ref.colors, base = _ref.base;
+      var arranged, base, i, polygons, scale, xscale, yscale, _ref;
+      _ref = comp(options), arranged = _ref.arranged, scale = _ref.scale, xscale = _ref.xscale, yscale = _ref.yscale, base = _ref.base;
       i = -1;
       polygons = arranged.map(function(_arg) {
         var points, scaled_points, scaled_points_closed, xmax, xmin;
@@ -12,7 +12,7 @@
         points.push([xmin, base]);
         scaled_points_closed = points.map(scale);
         i += 1;
-        return {
+        return O.enhance(options.compute, {
           item: options.data[i],
           line: Polygon({
             points: scaled_points,
@@ -22,8 +22,8 @@
             points: scaled_points_closed,
             closed: true
           }),
-          color: colors(i)
-        };
+          index: i
+        });
       });
       return {
         curves: polygons,

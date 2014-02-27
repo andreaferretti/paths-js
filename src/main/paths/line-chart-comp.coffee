@@ -15,10 +15,9 @@ define [
     ymin: O.min ycoords
     ymax: O.max ycoords
 
-  ({data, xaccessor, yaccessor, width, height, colors, closed}) ->
+  ({data, xaccessor, yaccessor, width, height, closed}) ->
     xaccessor ?= ([x, y]) -> x
     yaccessor ?= ([x, y]) -> y
-    colors ?= O.random_colors
     f = (i) -> [xaccessor(i), yaccessor(i)]
     arranged = (box(datum, f) for datum in data)
 
@@ -39,4 +38,3 @@ define [
     xscale: xscale
     yscale: yscale
     base: base
-    colors: colors

@@ -5,12 +5,13 @@ var __isAMD = !!(typeof define === 'function' && define.amd),
     __isNode = (typeof exports === 'object'),
     __isWeb = !__isNode;
 Polygon = require('./polygon'),
-    comp = require('./line-chart-comp');
+    comp = require('./line-chart-comp'),
+    O = require('./ops');
 
 module.exports = (function () {
   return function (options) {
-    var arranged, base, colors, i, polygons, scale, xscale, yscale, _ref;
-    _ref = comp(options), arranged = _ref.arranged, scale = _ref.scale, xscale = _ref.xscale, yscale = _ref.yscale, colors = _ref.colors, base = _ref.base;
+    var arranged, base, i, polygons, scale, xscale, yscale, _ref;
+    _ref = comp(options), arranged = _ref.arranged, scale = _ref.scale, xscale = _ref.xscale, yscale = _ref.yscale, base = _ref.base;
     i = -1;
     polygons = arranged.map(function (_arg) {
       var points, scaled_points, scaled_points_closed, xmax, xmin;
@@ -26,7 +27,7 @@ module.exports = (function () {
       ]);
       scaled_points_closed = points.map(scale);
       i += 1;
-      return {
+      return O.enhance(options.compute, {
         item: options.data[i],
         line: Polygon({
           points: scaled_points,
@@ -36,8 +37,8 @@ module.exports = (function () {
           points: scaled_points_closed,
           closed: true
         }),
-        color: colors(i)
-      };
+        index: i
+      });
     });
     return {
       curves: polygons,

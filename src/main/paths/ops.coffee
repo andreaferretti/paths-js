@@ -18,11 +18,10 @@ define [
   on_circle = (r, angle) ->
     times(r, [Math.sin(angle), -Math.cos(angle)])
 
-  random_int = (max) ->
-    Math.floor(Math.random() * max)
-
-  random_colors = ->
-    "rgb(#{ random_int(256) }, #{ random_int(256) }, #{ random_int(256) })"
+  enhance = (compute, curve) ->
+    for key, method of compute or {}
+      curve[key] = method(curve.index, curve.item)
+    curve
 
   sum: sum
   min: min
@@ -32,5 +31,4 @@ define [
   times: times
   average: average
   on_circle: on_circle
-  random_int: random_int
-  random_colors: random_colors
+  enhance: enhance

@@ -10,11 +10,8 @@ Linear = require('./linear'),
 
 module.exports = (function () {
   return function (_arg) {
-    var R, accessor, center, colors, curves, data, i, item, r, s, scale, t, value, values, _i, _len;
-    data = _arg.data, accessor = _arg.accessor, center = _arg.center, r = _arg.r, R = _arg.R, colors = _arg.colors;
-    if (colors == null) {
-      colors = O.random_colors;
-    }
+    var R, accessor, center, compute, curves, data, i, item, r, s, scale, t, value, values, _i, _len;
+    data = _arg.data, accessor = _arg.accessor, center = _arg.center, r = _arg.r, R = _arg.R, compute = _arg.compute;
     values = function () {
       var _i, _len, _results;
       _results = [];
@@ -37,9 +34,9 @@ module.exports = (function () {
     for (i = _i = 0, _len = data.length; _i < _len; i = ++_i) {
       item = data[i];
       value = values[i];
-      curves.push({
+      curves.push(O.enhance(compute, {
         item: item,
-        color: colors(i),
+        index: i,
         sector: Sector({
           center: center,
           r: r,
@@ -47,7 +44,7 @@ module.exports = (function () {
           start: scale(t),
           end: scale(t + value)
         })
-      });
+      }));
       t += value;
     }
     return { curves: curves };

@@ -32,7 +32,7 @@ describe 'bar chart', ->
     expect(bar.curves[13].item).to.be(data[3][2])
     expect(bar.curves[22].item).to.be(data[2][4])
 
-  it 'should allow custom color functions', ->
+  it 'should allow custom computations', ->
     constant_color = ->
       "#ffbb22"
 
@@ -41,7 +41,8 @@ describe 'bar chart', ->
       width: 300
       height: 400
       gutter: 15
-      colors: constant_color
+      compute:
+        color: constant_color
     expect(bar1.curves[14].color).to.be("#ffbb22")
 
 describe 'bar chart scale', ->

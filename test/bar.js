@@ -36,7 +36,7 @@
       expect(bar.curves[13].item).to.be(data[3][2]);
       return expect(bar.curves[22].item).to.be(data[2][4]);
     });
-    return it('should allow custom color functions', function() {
+    return it('should allow custom computations', function() {
       var bar1, constant_color;
       constant_color = function() {
         return "#ffbb22";
@@ -46,7 +46,9 @@
         width: 300,
         height: 400,
         gutter: 15,
-        colors: constant_color
+        compute: {
+          color: constant_color
+        }
       });
       return expect(bar1.curves[14].color).to.be("#ffbb22");
     });

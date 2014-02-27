@@ -32,7 +32,7 @@ describe 'pie chart', ->
   it 'should give access to the original items', ->
     expect(pie.curves[2].item).to.be(data[2])
 
-  it 'should allow custom color functions', ->
+  it 'should allow custom computations', ->
     constant_color = ->
       "#ffbb22"
 
@@ -42,5 +42,6 @@ describe 'pie chart', ->
       center: [1, 1]
       r: 10
       R: 20
-      colors: constant_color
+      compute:
+        color: constant_color
     expect(pie1.curves[2].color).to.be("#ffbb22")

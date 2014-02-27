@@ -225,7 +225,7 @@
     it('should give access to the original items', function() {
       return expect(chart.curves[1].item).to.be(data[1]);
     });
-    return it('should allow custom color functions', function() {
+    return it('should allow custom computations', function() {
       var chart1, constant_color;
       constant_color = function() {
         return "#ffbb22";
@@ -238,7 +238,9 @@
         },
         width: 300,
         height: 200,
-        colors: constant_color
+        compute: {
+          color: constant_color
+        }
       });
       return expect(chart1.curves[1].color).to.be("#ffbb22");
     });

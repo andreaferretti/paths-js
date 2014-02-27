@@ -5,7 +5,7 @@ define [
 ], (Bezier, O, comp)->
 
   (options) ->
-    { arranged, scale, xscale, yscale, colors, base } = comp(options)
+    { arranged, scale, xscale, yscale, base } = comp(options)
     i = -1
 
     lines = arranged.map ({ points, xmin, xmax }) ->
@@ -23,10 +23,11 @@ define [
             scale([xmax, base])
           ])
 
-      item: options.data[i]
-      line: line
-      area: area
-      color: colors(i)
+      O.enhance options.compute,
+        item: options.data[i]
+        line: line
+        area: area
+        index: i
 
     curves: lines
     xscale: xscale

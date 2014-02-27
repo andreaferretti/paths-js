@@ -95,22 +95,4 @@
     });
   });
 
-  describe('random int', function() {
-    it('should be between 0 and max', function() {
-      expect(O.random_int(100)).to.be.above(0);
-      return expect(O.random_int(357)).to.be.below(357);
-    });
-    return it('should be an integer', function() {
-      var num;
-      num = O.random_int(100);
-      return expect(num).to.be(round(num));
-    });
-  });
-
-  describe('random color', function() {
-    return it('should generate an rgb string', function() {
-      return expect(O.random_colors()).to.match(/rgb\([\d]+, [\d]+, [\d]+\)/);
-    });
-  });
-
 }).call(this);

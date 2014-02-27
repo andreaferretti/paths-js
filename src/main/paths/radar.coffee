@@ -24,9 +24,8 @@ define [
       O.max(vals)
     O.max(maxs)
 
-  ({data, accessor, center, r, max, rings, colors}) ->
+  ({data, accessor, center, r, max, rings, compute}) ->
     rings ?= 3
-    colors ?= O.random_colors
     accessor ?= key_accessor(collect_keys(data))
     keys = Object.keys accessor
     sides = keys.length
@@ -43,11 +42,12 @@ define [
     polygons = data.map (d) ->
       i += 1
 
-      polygon: SemiRegularPolygon
-        center: center
-        radii: keys.map (k) -> r * accessor[k](d) / max
-      item: d
-      color: colors(i)
+      O.enhance compute,
+        polygon: SemiRegularPolygon
+          center: center
+          radii: keys.map (k) -> r * accessor[k](d) / max
+        item: d
+        index: i
 
     curves: polygons
     rings: ring_paths

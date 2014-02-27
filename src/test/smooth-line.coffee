@@ -95,7 +95,7 @@ describe 'smooth line chart', ->
   it 'should give access to the original items', ->
     expect(chart.curves[1].item).to.be(data[1])
 
-  it 'should allow custom color functions', ->
+  it 'should allow custom computations', ->
     constant_color = ->
       "#ffbb22"
 
@@ -105,7 +105,8 @@ describe 'smooth line chart', ->
       yaccessor: (d) -> d.value
       width: 300
       height: 200
-      colors: constant_color
+      compute:
+        color: constant_color
     expect(chart1.curves[1].color).to.be("#ffbb22")
 
 describe 'smooth line chart scales', ->
