@@ -33,17 +33,16 @@ describe 'bar chart', ->
     expect(bar.curves[22].item).to.be(data[2][4])
 
   it 'should allow custom computations', ->
-    constant_color = ->
-      "#ffbb22"
-
     bar1 = Bar
       data: data
       width: 300
       height: 400
       gutter: 15
       compute:
-        color: constant_color
-    expect(bar1.curves[14].color).to.be("#ffbb22")
+        myitem: (i, d) -> d
+        myindex: (i, d) -> i
+    expect(bar1.curves[14].myitem).to.be(bar1.curves[14].item)
+    expect(bar1.curves[14].myindex).to.be(bar1.curves[14].index)
 
 describe 'bar chart scale', ->
   it 'should take into account all data involved', ->

@@ -79,9 +79,6 @@ describe 'stock chart', ->
     expect(stock.curves[1].item).to.be(data[1])
 
   it 'should allow custom computations', ->
-    constant_color = ->
-      "#ffbb22"
-
     stock1 = Stock
       data: data
       xaccessor: date
@@ -89,8 +86,10 @@ describe 'stock chart', ->
       width: 300
       height: 200
       compute:
-        color: constant_color
-    expect(stock1.curves[1].color).to.be("#ffbb22")
+        myitem: (i, d) -> d
+        myindex: (i, d) -> i
+    expect(stock1.curves[1].myitem).to.be(stock1.curves[1].item)
+    expect(stock1.curves[1].myindex).to.be(stock1.curves[1].index)
 
   it 'should allow not to include 0 as a baseline for area paths', ->
     points = stock.curves[0].area.path.points().map (v) -> round_vector(v)

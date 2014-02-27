@@ -89,10 +89,7 @@
       return expect(pie.curves[2].item).to.be(data[2]);
     });
     return it('should allow custom computations', function() {
-      var constant_color, pie1;
-      constant_color = function() {
-        return "#ffbb22";
-      };
+      var pie1;
       pie1 = Pie({
         data: data,
         accessor: function(x) {
@@ -102,10 +99,16 @@
         r: 10,
         R: 20,
         compute: {
-          color: constant_color
+          myitem: function(i, d) {
+            return d;
+          },
+          myindex: function(i, d) {
+            return i;
+          }
         }
       });
-      return expect(pie1.curves[2].color).to.be("#ffbb22");
+      expect(pie1.curves[2].myitem).to.be(pie1.curves[2].item);
+      return expect(pie1.curves[2].myindex).to.be(pie1.curves[2].index);
     });
   });
 

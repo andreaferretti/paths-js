@@ -96,9 +96,6 @@ describe 'smooth line chart', ->
     expect(chart.curves[1].item).to.be(data[1])
 
   it 'should allow custom computations', ->
-    constant_color = ->
-      "#ffbb22"
-
     chart1 = SmoothLine
       data: data
       xaccessor: date
@@ -106,8 +103,10 @@ describe 'smooth line chart', ->
       width: 300
       height: 200
       compute:
-        color: constant_color
-    expect(chart1.curves[1].color).to.be("#ffbb22")
+        myitem: (i, d) -> d
+        myindex: (i, d) -> i
+    expect(chart1.curves[1].myitem).to.be(chart1.curves[1].item)
+    expect(chart1.curves[1].myindex).to.be(chart1.curves[1].index)
 
 describe 'smooth line chart scales', ->
   it 'should take into account all data involved', ->

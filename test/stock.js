@@ -198,10 +198,7 @@
       return expect(stock.curves[1].item).to.be(data[1]);
     });
     it('should allow custom computations', function() {
-      var constant_color, stock1;
-      constant_color = function() {
-        return "#ffbb22";
-      };
+      var stock1;
       stock1 = Stock({
         data: data,
         xaccessor: date,
@@ -211,10 +208,16 @@
         width: 300,
         height: 200,
         compute: {
-          color: constant_color
+          myitem: function(i, d) {
+            return d;
+          },
+          myindex: function(i, d) {
+            return i;
+          }
         }
       });
-      return expect(stock1.curves[1].color).to.be("#ffbb22");
+      expect(stock1.curves[1].myitem).to.be(stock1.curves[1].item);
+      return expect(stock1.curves[1].myindex).to.be(stock1.curves[1].index);
     });
     it('should allow not to include 0 as a baseline for area paths', function() {
       var points;

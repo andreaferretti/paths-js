@@ -56,16 +56,15 @@ describe 'radar chart', ->
     expect(radar.curves[3].item).to.be(data[3])
 
   it 'should allow custom computations', ->
-    constant_color = ->
-      "#ffbb22"
-
     radar = Radar
       data: data
       center: [1, 1]
       r: 10
       compute:
-        color: constant_color
-    expect(radar.curves[3].color).to.be("#ffbb22")
+        myitem: (i, d) -> d
+        myindex: (i, d) -> i
+    expect(radar.curves[3].myitem).to.be(radar.curves[3].item)
+    expect(radar.curves[3].myindex).to.be(radar.curves[3].index)
 
 describe 'radar chart rings', ->
   it 'should be as many as specified', ->

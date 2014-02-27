@@ -37,20 +37,23 @@
       return expect(bar.curves[22].item).to.be(data[2][4]);
     });
     return it('should allow custom computations', function() {
-      var bar1, constant_color;
-      constant_color = function() {
-        return "#ffbb22";
-      };
+      var bar1;
       bar1 = Bar({
         data: data,
         width: 300,
         height: 400,
         gutter: 15,
         compute: {
-          color: constant_color
+          myitem: function(i, d) {
+            return d;
+          },
+          myindex: function(i, d) {
+            return i;
+          }
         }
       });
-      return expect(bar1.curves[14].color).to.be("#ffbb22");
+      expect(bar1.curves[14].myitem).to.be(bar1.curves[14].item);
+      return expect(bar1.curves[14].myindex).to.be(bar1.curves[14].index);
     });
   });
 

@@ -33,9 +33,6 @@ describe 'pie chart', ->
     expect(pie.curves[2].item).to.be(data[2])
 
   it 'should allow custom computations', ->
-    constant_color = ->
-      "#ffbb22"
-
     pie1 = Pie
       data: data
       accessor: (x) -> x.hp
@@ -43,5 +40,7 @@ describe 'pie chart', ->
       r: 10
       R: 20
       compute:
-        color: constant_color
-    expect(pie1.curves[2].color).to.be("#ffbb22")
+        myitem: (i, d) -> d
+        myindex: (i, d) -> i
+    expect(pie1.curves[2].myitem).to.be(pie1.curves[2].item)
+    expect(pie1.curves[2].myindex).to.be(pie1.curves[2].index)

@@ -226,10 +226,7 @@
       return expect(chart.curves[1].item).to.be(data[1]);
     });
     return it('should allow custom computations', function() {
-      var chart1, constant_color;
-      constant_color = function() {
-        return "#ffbb22";
-      };
+      var chart1;
       chart1 = SmoothLine({
         data: data,
         xaccessor: date,
@@ -239,10 +236,16 @@
         width: 300,
         height: 200,
         compute: {
-          color: constant_color
+          myitem: function(i, d) {
+            return d;
+          },
+          myindex: function(i, d) {
+            return i;
+          }
         }
       });
-      return expect(chart1.curves[1].color).to.be("#ffbb22");
+      expect(chart1.curves[1].myitem).to.be(chart1.curves[1].item);
+      return expect(chart1.curves[1].myindex).to.be(chart1.curves[1].index);
     });
   });
 
