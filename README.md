@@ -219,13 +219,13 @@ High level API (graphs)
 
 Based on the shapes above, we can construct more complex graphs. At this level, the API assume one has a collection of data that has to be shown on a graph, and take care of normalizing the data, so that for instance if you display multiple line graphs on the same chart, the scales are normalized.
 
-All graph objects - that is, objects returned by some graph functions - have the field `curves` that contains an array, and possibly more fields, depending on the graph. Each element of `curves` has the properties `item`, which is a reference to the corresponding data item, `color`, and one or more field containing shape objects, for instance `sector` in the case of the pie graph, or `line` and `area` for the line charts. Thus, a graph object has the shape
+All graph objects - that is, objects returned by some graph functions - have the field `curves` that contains an array, and possibly more fields, depending on the graph. Each element of `curves` has the properties `item`, which is a reference to the corresponding data item, `index`, and one or more field containing shape objects, for instance `sector` in the case of the pie graph, or `line` and `area` for the line charts. Thus, a graph object has the shape
 
     {
       curves: [
         {
           item: <datum>,
-          color: <color>,
+          index: <index>,
           <label>: <shape object>,
           ...
         },
@@ -233,6 +233,20 @@ All graph objects - that is, objects returned by some graph functions - have the
       ],
       ...
     }
+
+All of the following graph APIs accept a parameter named `compute` which is a hash table of functions that should be evaluated for each curve to be drawn. A typical use would be to compute a color based on the index or the data item, like
+
+    {
+      compute: {
+        color: function(i, item) {
+          ...
+        }
+      }
+    }
+
+All curves in the `curves` array will contain the corresponding properties in addition to `index` and `item`; for instance in the example above each curve will have the `color` property.
+
+This feature is useful if the resulting graph will be rendered with a somewhat static template engine, such as Mustache, that needs to have all fields precomputed. More flexbile template engines, such as the one in Ractive, allow custom expressions to be evaluated in templates, so there will be generally no need for the `compute` parameter.
 
 ### Pie graph ###
 
@@ -248,7 +262,9 @@ The `Pie` graph can be used as follows:
         { name: 'Japan', population: 127290000 }
       ],
       accessor: function(x) { return x.population; },
-      colors: function(i) { return somePalette[i]; },
+      compute: {
+        color: function(i) { return somePalette[i]; }
+      },
       center: [20, 15],
       r: 30,
       R: 50
@@ -259,9 +275,9 @@ Parameters:
 * `center`, `r`, `R`: have the same geometric meaning as in the `Sector` function
 * `data`: contains an array with the data to plot. The precise form of the data is not important, because the actual value of the data will be extracted by the `accessor` function.
 * `accessor`: a function that is applied to each datum in `data` to extract a numeric value
-* `colors` (optional): a function that assign to an index its color.
+* `compute` (optional): see the introduction.
 
-The object returned by the `Pie` function contains the `curves` array, on which one can iterate to draw the sectors. Each member of this array has the properties `sector`, `color` and `item`, the latter containing the actual datum associated to the sector.
+The object returned by the `Pie` function contains the `curves` array, on which one can iterate to draw the sectors. Each member of this array has the properties `sector`, `index` and `item`, the latter containing the actual datum associated to the sector.
 
 ### Bar graph ###
 
@@ -286,7 +302,9 @@ The `Bar` graph can be used as follows:
         ]
       ],
       accessor: function(x) { return x.population; },
-      colors: function(i) { return somePalette[i]; },
+      compute: {
+        color: function(i) { return somePalette[i]; }
+      },
       width: 500,
       height: 400,
       gutter: 10
@@ -295,10 +313,10 @@ The `Bar` graph can be used as follows:
 Parameters:
 
 * `width`, `height`: have the obvious geometric meaning
-* `data`: contains an array of arrays with the data to plot. The precise form of the data is not important, because the actual value of the data will be extracted by the `accessor` function. Each array will be represented by a series of bars with the same color.
+* `data`: contains an array of arrays with the data to plot. The precise form of the data is not important, because the actual value of the data will be extracted by the `accessor` function. Each array will be represented by a series of bars with the same index.
 * `accessor`: a function that is applied to each datum inside each item in `data` to extract a numeric value
 * `gutter` (optional): the space to leave between each group of bars
-* `colors` (optional): a function that assign to a sector index its color.
+* `compute` (optional): see the introduction.
 
 The bar chart allows multiple histograms to be drawn side by side. If you just have one series to be plotted, put it inside an array of length one anyway, like this:
 
@@ -307,7 +325,7 @@ The bar chart allows multiple histograms to be drawn side by side. If you just h
       ...
     });
 
-The object returned by the `Bar` function contains the `curves` array, on which one can iterate to draw the rectangles. Each member of this array has the properties `line`, `color` and `item`, the latter containing the actual datum associated to the rectangle.
+The object returned by the `Bar` function contains the `curves` array, on which one can iterate to draw the rectangles. Each member of this array has the properties `line`, `index` and `item`, the latter containing the actual datum associated to the rectangle.
 
 ### Stock graph ###
 
@@ -340,7 +358,9 @@ The `Stock` graph is used to represent one or more line charts. It can be used a
       yaccessor: function(d) { return d.value; },
       width: 300,
       height: 200,
-      colors: function(i) { return somePalette[i]; },
+      compute: {
+        color: function(i) { return somePalette[i]; }
+      },
       closed: true
     });
 
@@ -350,9 +370,9 @@ Parameters:
 * `data`: contains the actual data to plot. It should be an array of arrays, each internal array representing a time series to be plotted. The actual format of the data in the time series is not important; the actual abscissa and ordinate of the point are extracted by the `xaccessor` and `yaccessor` function.
 * `xaccessor`, `yaccessor`: two functions that extract from each datum its x and y cordinates. They default to `function(d) { return d[0] }` and `function(d) { return d[1] }` respectively, so if `data` is passed as an array of arrays of arrays of 2 elements, the accessor functions are optional.
 * `closed` (optional, default `false`): a boolean used to decide how to construct the paths for the area plots. If `closed` is set to true, these will be stretched to include part of the x axis, even if the data are not around 0. Use this if you want to be sure that the area paths touch the horizontal axis
-* `colors` (optional): a function that assign to a line index its color.
+* `compute` (optional): see the introduction.
 
-The `Stock` function will then return an object with the properties `curves`, `xscale` and `yscale`. Under `curves` it contains an array of objects, each having the properties `line`, `area`, `item` and `color`. `line` and `area` are two polygon objects, as in the previous paragraph; the first one holds the polygon for the line chart, while the second one is a closed polygon that can be used to draw the area fill. Under `item` one finds the original element in the data.
+The `Stock` function will then return an object with the properties `curves`, `xscale` and `yscale`. Under `curves` it contains an array of objects, each having the properties `line`, `area`, `item` and `index`. `line` and `area` are two polygon objects, as in the previous paragraph; the first one holds the polygon for the line chart, while the second one is a closed polygon that can be used to draw the area fill. Under `item` one finds the original element in the data.
 
 Finally, `xscale` and `yscale` are the scales used to represent the data on the given width and height. They can be used to find the coordinates of the axis and draw them.
 
@@ -378,7 +398,9 @@ The radar graph can be used as follows:
         defense: function(x) { return x.defense; },
         speed: function(x) { return x.speed; }
       },
-      colors: function(i) { return somePalette[i]; },
+      compute: {
+        color: function(i) { return somePalette[i]; }
+      },
       max: 100,
       center: [20, 15],
       r: 30,
@@ -392,9 +414,9 @@ Parameters:
 * `max`: represents the ideal maximum of each feature. `max` is optional; if it is left out, it is computed as the actual maximum of each feature, but one may want to override the computed value, for instance for constancy of scale during an animation.
 * `r` and `center`: the radius and the center of the figure, respectively. So, the whole figure is scaled in such a way that a feature with value `max` will be sent to a distance `r` from the `center`.
 * `rings` (optional, default `3`): the number of polygonal rings that shall appear in the chart.
-* `colors` (optional): a function that assign to a polygon index its color.
+* `compute` (optional): see the introduction.
 
-The return value from `Radar` is an object with the properties `curves` and `rings`. `curves` is an array of objects, each one having the properties `polygon`, `item` and `color`, where `polygon` contains the actual path object. `rings` is an array of path objects, representing concentric regular polygons of increasing radius.
+The return value from `Radar` is an object with the properties `curves` and `rings`. `curves` is an array of objects, each one having the properties `polygon`, `item` and `index`, where `polygon` contains the actual path object. `rings` is an array of path objects, representing concentric regular polygons of increasing radius.
 
 Miscellaneous
 -------------
