@@ -1,5 +1,6 @@
 define [
   './bar'
+  './connector'
   './bezier'
   './linear'
   './ops'
@@ -12,11 +13,13 @@ define [
   './semi-regular-polygon'
   './smooth-line'
   './stock'
-], (Bar, Bezier, Linear, Ops, Path, Pie, Polygon, Radar, Rectangle, Sector, SemiRegularPolygon, SmoothLine, Stock)->
+  './tree'
+], (Bar, Bezier, Connector, Linear, Ops, Path, Pie, Polygon, Radar, Rectangle, Sector, SemiRegularPolygon, SmoothLine, Stock, Tree)->
 
   window.paths =
     Bar: Bar
     Bezier: Bezier
+    Connector: Connector
     Linear: Linear
     Ops: Ops
     Path: Path
@@ -28,3 +31,4 @@ define [
     SemiRegularPolygon: SemiRegularPolygon
     SmoothLine: SmoothLine
     Stock: Stock
+    Tree: Tree
