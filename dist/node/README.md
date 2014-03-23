@@ -62,7 +62,7 @@ to install it and then
 
 ### Standalone script ###
 
-If you want to use Paths.js in the browser, but you do not want to use AMD modules, there is the possibility to include it in the global object. To do this, just include the file `dist/global/paths.js` in a page, and then access the various APIs globally as `paths.Pie`, `paths.Polygon` and so on. Paths.js at version 0.1.0 weighs only 9.3kB minified and 3.2kB minified and gzipped, but of course if you choose the AMD version, you get to include exactly the modules you need.
+If you want to use Paths.js in the browser, but you do not want to use AMD modules, there is the possibility to include it in the global object. To do this, just include the file `dist/global/paths.js` in a page, and then access the various APIs globally as `paths.Pie`, `paths.Polygon` and so on. Paths.js at version 0.2.1 weighs only 10.8kB minified and 3.9kB minified and gzipped, but of course if you choose the AMD version, you get to include exactly the modules you need.
 
 Low level API
 -------------
@@ -213,6 +213,18 @@ A circular sector can be defined with `paths.sector`:
     });
 
 The `Sector` function takes as input an object having the following properties. `center` contains the coordinates of the center of the circles defining the sector; `r` and `R` are the internal and external radii; `start` and `end` are the start and end angle in radians. One can put `r = 0` to get a degenerate sector.
+
+### Connector ###
+
+A connector is an S-shaped path between two given points and lives in `paths.connector`:
+
+    var Connector = require('paths/connector');
+    var connector = Connector({
+      start: [1, 12],
+      end: [6, 3]
+    });
+
+The `Connector` function takes as input an object having the `start` and `end` properties, both of which are points in the plane.
 
 High level API (graphs)
 -----------------------
