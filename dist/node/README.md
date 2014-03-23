@@ -5,8 +5,6 @@ This library helps generating [SVG paths] [1] with a high level API. These paths
 
 Paths.js offers three APIs, of increasing abstraction. The lowest level is a chainable API to generate an arbitrary SVG path. On top of this, paths for simple geometric shapes such as polygons or circle sectors are defined. At the highest level, there is an API to generate some simple graphs (pie, line chart, radar...) for a collection of data, assembling the simple shapes.
 
-> Note that the API is still in flux and may not stabilize until version 0.2.0.
-
 Table of contents
 -----------------
 
@@ -429,6 +427,52 @@ Parameters:
 * `compute` (optional): see the introduction.
 
 The return value from `Radar` is an object with the properties `curves` and `rings`. `curves` is an array of objects, each one having the properties `polygon`, `item` and `index`, where `polygon` contains the actual path object. `rings` is an array of path objects, representing concentric regular polygons of increasing radius.
+
+### Tree graph ###
+
+The tree graph can be used as follows:
+
+    var Tree = require('paths/tree');
+    var data = {
+      name: 1,
+      descendants: [
+        {
+          name: 2,
+          descendants: [
+            {
+              name: 4,
+              descendants: [{
+                name: 6,
+                descendants: [{ name: 7 }]
+              }]
+            },
+            { name: 5 }
+          ]
+        },
+        {
+          name: 3,
+          descendants: [{ name: 8 }, { name: 9 }]
+        }
+      ]
+    };
+    var tree = Tree({
+      data: data,
+      children: function(x) { return x.descendants; },
+      compute: {
+        color: function(i) { return somePalette[i]; }
+      },
+      width: 400,
+      height: 300
+    });
+
+Parameters:
+
+* `data`: contains a tree-like structure with the data to be plotted.
+* `width` and `height`: the dimensions of the graph
+* `children` (optional): a function that returns the list of children of the given node. Defaults to `function(x) { return x.children; }`
+* `compute` (optional): see the introduction.
+
+The return value from `Tree` is an object with the properties `curves` and `nodes`. `curves` is an array of objects, each one having the properties `connector`, `item` and `index`, where `connector` contains the actual path object. `nodes` is an array of objects, each one having the properties `point` and `item`, representing the nodes of the tree.
 
 Miscellaneous
 -------------
