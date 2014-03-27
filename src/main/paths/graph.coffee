@@ -59,8 +59,8 @@ define [
       bodies = bh.bodies(nodes_positions)
       root = bh.root(width, height)
       tree = bh.tree(bodies, root)
-      attractions = attractive_forces(links_, nodes_positions, attraction)
-      repulsions = bh.forces(tree, repulsion, threshold)
+      attractions = attractive_forces(links_, nodes_positions, attraction / 1000)
+      repulsions = bh.forces(tree, repulsion * 1000, threshold)
       for id, position of nodes_positions
         f1 = attractions[id] or [0, 0]
         f2 = repulsions[id] or [0, 0]
