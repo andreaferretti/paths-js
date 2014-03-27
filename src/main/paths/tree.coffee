@@ -11,24 +11,26 @@ define [
     hspace = width / (levels - 1)
     hscale = Linear([0, levels - 1], [0, width])
     vscales = [0..levels - 1].map (level) ->
-      available_height = level * height / (levels - 1)
+      available_height = Math.sqrt(level / (levels - 1)) * height
       top = (height - available_height) / 2
       bottom = top + available_height
-      max_height = max_heights[level]
+      max_height = if level > 0
+        max_heights[level] + max_heights[level-1]
+      else max_heights[level]
       if max_height == 0
         (x) -> height / 2
       else
-        Linear([0, max_heights[level]], [bottom, top])
+        Linear([0, max_height], [top, bottom])
 
     position = (node) ->
       level = node.level
       vscale = vscales[level]
-      [hscale(level), vscale(node.height)]
+      [hscale(level), vscale(node.height_)]
 
     i = -1
     connectors = u.collect tree, (parent, child) ->
       i += 1
-
+      child.height_ = child.height + parent.height
       connector: Connector
         start: position(parent)
         end: position(child)
