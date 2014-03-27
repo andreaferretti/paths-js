@@ -36,10 +36,10 @@ module.exports = (function () {
       return _results;
     }.apply(this).map(function (level) {
       var available_height, bottom, max_height, top;
-      available_height = level * height / (levels - 1);
+      available_height = Math.sqrt(level / (levels - 1)) * height;
       top = (height - available_height) / 2;
       bottom = top + available_height;
-      max_height = max_heights[level];
+      max_height = level > 0 ? max_heights[level] + max_heights[level - 1] : max_heights[level];
       if (max_height === 0) {
         return function (x) {
           return height / 2;
@@ -47,10 +47,10 @@ module.exports = (function () {
       } else {
         return Linear([
           0,
-          max_heights[level]
+          max_height
         ], [
-          bottom,
-          top
+          top,
+          bottom
         ]);
       }
     });
@@ -60,12 +60,13 @@ module.exports = (function () {
       vscale = vscales[level];
       return [
         hscale(level),
-        vscale(node.height)
+        vscale(node.height_)
       ];
     };
     i = -1;
     connectors = u.collect(tree, function (parent, child) {
       i += 1;
+      child.height_ = child.height + parent.height;
       return {
         connector: Connector({
           start: position(parent),
