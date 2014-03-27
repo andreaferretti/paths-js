@@ -122,7 +122,7 @@
         return body_force_on(leaf.body, tree.body, repulsion);
       } else if (tree.point) {
         s = box_width(tree.box);
-        d = length(O.minus(leaf.body.point, tree.point));
+        d = O.length(O.minus(leaf.body.point, tree.point));
         if (s / d < threshold) {
           return body_force_on(leaf.body, tree, repulsion);
         } else {
