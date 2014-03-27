@@ -12,6 +12,12 @@ define [
   inside = (w, h) -> ([x, y]) ->
     [cap(w, x), cap(h, y)]
 
+  map_objects = (obj, f) ->
+    result = []
+    for k, v of obj
+      result.push f(k, v)
+    result
+
   attractive_forces = (links, positions, attraction) ->
     forces = {}
     for id, { start, end, weight } of links
@@ -24,19 +30,22 @@ define [
       forces[end] = O.plus(forces[end], force)
     forces
 
-  ({ data, nodeaccessor, linkaccessor, width, height, attraction, repulsion }) ->
+  ({ data, nodeaccessor, linkaccessor, width, height, attraction, repulsion, threshold }) ->
     nodeaccessor ?= (n) -> n
     linkaccessor ?= (l) -> l
     attraction ?= 0.01
     repulsion ?= 1000
+    threshold ?= 0.5
+    bound = inside(width, height)
+
     { nodes, links } = data
     nodes_positions = {}
+    nodes_ = {}
     for node in nodes
       id = nodeaccessor(node)
       nodes_positions[id] = random_position(width, height)
-    i = -1
+      nodes_[id] = node
 
-    bound = inside(width, height)
     links_ = {}
     for link in links
       { start, end, weight } = linkaccessor(link)
@@ -51,7 +60,7 @@ define [
       root = bh.root(width, height)
       tree = bh.tree(bodies, root)
       attractions = attractive_forces(links_, nodes_positions, attraction)
-      repulsions = bh.forces(tree, repulsion)
+      repulsions = bh.forces(tree, repulsion, threshold)
       for id, position of nodes_positions
         f1 = attractions[id] or [0, 0]
         f2 = repulsions[id] or [0, 0]
@@ -62,9 +71,9 @@ define [
     graph = { tick: tick }
 
     recompute = ->
-      graph.curves = links.map (link) ->
+      i = -1
+      graph.curves = map_objects links_, (id, { start, end, link }) ->
         i += 1
-        { start, end, weight } = linkaccessor(link)
         p = nodes_positions[start]
         q = nodes_positions[end]
 
@@ -72,11 +81,10 @@ define [
         item: link
         index: i
 
-      graph.nodes = nodes.map (node) ->
-        id = nodeaccessor(node)
-
+      graph.nodes = map_objects nodes_, (id, node) ->
         point: nodes_positions[id]
         item: node
 
+      graph
+
     recompute()
-    graph

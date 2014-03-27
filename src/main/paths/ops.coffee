@@ -12,6 +12,10 @@ define [
 
   times = (k, [a, b]) -> [k * a, k * b]
 
+  length = ([a, b]) -> Math.sqrt(a * a + b * b)
+
+  sum_vectors = (xs) -> xs.reduce ((v, w) -> plus(v, w)), [0, 0]
+
   average = (points) ->
     times (1 / points.length), points.reduce plus
 
@@ -29,6 +33,8 @@ define [
   plus: plus
   minus: minus
   times: times
+  length: length
+  sum_vectors: sum_vectors
   average: average
   on_circle: on_circle
   enhance: enhance

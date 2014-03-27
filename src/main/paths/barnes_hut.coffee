@@ -74,35 +74,28 @@ define [
       for child in tree.children
         walk_leaves child, f
 
-  length = ([a, b]) ->
-    Math.sqrt(a * a + b * b)
-
   body_force_on = (b1, b2, repulsion) ->
     segment = O.minus(b1.point, b2.point)
-    d = length(segment)
+    d = O.length(segment)
     O.times(repulsion * b1.mass * b2.mass / (d * d * d), segment)
 
   box_width = ({ top, bottom, left, right }) ->
-    length([top - bottom, right - left])
+    O.length([top - bottom, right - left])
 
-  sum = (vectors) ->
-    vectors.reduce ((v, w) -> O.plus(v, w)), [0, 0]
-
-  force_on = (leaf, tree, repulsion) ->
-    threshold = 0.5
+  force_on = (leaf, tree, repulsion, threshold) ->
     if tree == leaf then [0, 0]
     else if tree.body then body_force_on(leaf.body, tree.body, repulsion)
     else if tree.point
       s = box_width(tree.box)
       d = length(O.minus(leaf.body.point, tree.point))
       if s / d < threshold then body_force_on(leaf.body, tree, repulsion)
-      else if tree.children then sum(tree.children.map (c) -> force_on(leaf, c, repulsion))
+      else O.sum_vectors(tree.children.map (c) -> force_on(leaf, c, repulsion, threshold))
     else [0, 0]
 
-  repulsive_forces = (tree, repulsion) ->
+  repulsive_forces = (tree, repulsion, threshold) ->
     forces = {}
     walk_leaves tree, (leaf) ->
-      forces[leaf.body.id] = force_on(leaf, tree, repulsion)
+      forces[leaf.body.id] = force_on(leaf, tree, repulsion, threshold)
     forces
 
   tree: make_tree

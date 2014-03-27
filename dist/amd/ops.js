@@ -1,6 +1,6 @@
 (function() {
   define([], function() {
-    var average, enhance, max, min, minus, on_circle, plus, sum, times;
+    var average, enhance, length, max, min, minus, on_circle, plus, sum, sum_vectors, times;
     sum = function(xs) {
       return xs.reduce((function(a, b) {
         return a + b;
@@ -33,6 +33,16 @@
       a = _arg[0], b = _arg[1];
       return [k * a, k * b];
     };
+    length = function(_arg) {
+      var a, b;
+      a = _arg[0], b = _arg[1];
+      return Math.sqrt(a * a + b * b);
+    };
+    sum_vectors = function(xs) {
+      return xs.reduce((function(v, w) {
+        return plus(v, w);
+      }), [0, 0]);
+    };
     average = function(points) {
       return times(1 / points.length, points.reduce(plus));
     };
@@ -55,6 +65,8 @@
       plus: plus,
       minus: minus,
       times: times,
+      length: length,
+      sum_vectors: sum_vectors,
       average: average,
       on_circle: on_circle,
       enhance: enhance

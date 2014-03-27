@@ -9,7 +9,7 @@ Polygon = require('./polygon'),
     bh = require('./barnes_hut');
 
 module.exports = (function () {
-  var attractive_forces, cap, inside, random_position;
+  var attractive_forces, cap, inside, map_objects, random_position;
   random_position = function (w, h) {
     return [
       Math.random() * w,
@@ -28,6 +28,15 @@ module.exports = (function () {
         cap(h, y)
       ];
     };
+  };
+  map_objects = function (obj, f) {
+    var k, result, v;
+    result = [];
+    for (k in obj) {
+      v = obj[k];
+      result.push(f(k, v));
+    }
+    return result;
   };
   attractive_forces = function (links, positions, attraction) {
     var end, force, forces, id, pos1, pos2, start, weight, _ref;
@@ -55,8 +64,8 @@ module.exports = (function () {
     return forces;
   };
   return function (_arg) {
-    var attraction, bound, data, end, graph, height, i, id, link, linkaccessor, links, links_, node, nodeaccessor, nodes, nodes_positions, recompute, repulsion, start, tick, weight, width, _i, _j, _len, _len1, _ref;
-    data = _arg.data, nodeaccessor = _arg.nodeaccessor, linkaccessor = _arg.linkaccessor, width = _arg.width, height = _arg.height, attraction = _arg.attraction, repulsion = _arg.repulsion;
+    var attraction, bound, data, end, graph, height, id, link, linkaccessor, links, links_, node, nodeaccessor, nodes, nodes_, nodes_positions, recompute, repulsion, start, threshold, tick, weight, width, _i, _j, _len, _len1, _ref;
+    data = _arg.data, nodeaccessor = _arg.nodeaccessor, linkaccessor = _arg.linkaccessor, width = _arg.width, height = _arg.height, attraction = _arg.attraction, repulsion = _arg.repulsion, threshold = _arg.threshold;
     if (nodeaccessor == null) {
       nodeaccessor = function (n) {
         return n;
@@ -73,15 +82,19 @@ module.exports = (function () {
     if (repulsion == null) {
       repulsion = 1000;
     }
+    if (threshold == null) {
+      threshold = 0.5;
+    }
+    bound = inside(width, height);
     nodes = data.nodes, links = data.links;
     nodes_positions = {};
+    nodes_ = {};
     for (_i = 0, _len = nodes.length; _i < _len; _i++) {
       node = nodes[_i];
       id = nodeaccessor(node);
       nodes_positions[id] = random_position(width, height);
+      nodes_[id] = node;
     }
-    i = -1;
-    bound = inside(width, height);
     links_ = {};
     for (_j = 0, _len1 = links.length; _j < _len1; _j++) {
       link = links[_j];
@@ -99,7 +112,7 @@ module.exports = (function () {
       root = bh.root(width, height);
       tree = bh.tree(bodies, root);
       attractions = attractive_forces(links_, nodes_positions, attraction);
-      repulsions = bh.forces(tree, repulsion);
+      repulsions = bh.forces(tree, repulsion, threshold);
       for (id in nodes_positions) {
         position = nodes_positions[id];
         f1 = attractions[id] || [
@@ -117,10 +130,12 @@ module.exports = (function () {
     };
     graph = { tick: tick };
     recompute = function () {
-      graph.curves = links.map(function (link) {
-        var p, q, _ref1;
+      var i;
+      i = -1;
+      graph.curves = map_objects(links_, function (id, _arg1) {
+        var end, link, p, q, start;
+        start = _arg1.start, end = _arg1.end, link = _arg1.link;
         i += 1;
-        _ref1 = linkaccessor(link), start = _ref1.start, end = _ref1.end, weight = _ref1.weight;
         p = nodes_positions[start];
         q = nodes_positions[end];
         return {
@@ -135,16 +150,15 @@ module.exports = (function () {
           index: i
         };
       });
-      return graph.nodes = nodes.map(function (node) {
-        id = nodeaccessor(node);
+      graph.nodes = map_objects(nodes_, function (id, node) {
         return {
           point: nodes_positions[id],
           item: node
         };
       });
+      return graph;
     };
-    recompute();
-    return graph;
+    return recompute();
   };
 }).call(this);
 

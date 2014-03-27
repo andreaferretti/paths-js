@@ -7,7 +7,7 @@ var __isAMD = !!(typeof define === 'function' && define.amd),
 O = require('./ops');
 
 module.exports = (function () {
-  var add_body, average, body_force_on, box_width, force_on, length, locate, make_bodies, make_quadrant, make_root, make_tree, repulsive_forces, subdivide, sum, walk_leaves;
+  var add_body, average, body_force_on, box_width, force_on, locate, make_bodies, make_quadrant, make_root, make_tree, repulsive_forces, subdivide, walk_leaves;
   average = function (body1, body2) {
     var mass, point;
     mass = body1.mass + body2.mass;
@@ -133,36 +133,22 @@ module.exports = (function () {
       return _results;
     }
   };
-  length = function (_arg) {
-    var a, b;
-    a = _arg[0], b = _arg[1];
-    return Math.sqrt(a * a + b * b);
-  };
   body_force_on = function (b1, b2, repulsion) {
     var d, segment;
     segment = O.minus(b1.point, b2.point);
-    d = length(segment);
+    d = O.length(segment);
     return O.times(repulsion * b1.mass * b2.mass / (d * d * d), segment);
   };
   box_width = function (_arg) {
     var bottom, left, right, top;
     top = _arg.top, bottom = _arg.bottom, left = _arg.left, right = _arg.right;
-    return length([
+    return O.length([
       top - bottom,
       right - left
     ]);
   };
-  sum = function (vectors) {
-    return vectors.reduce(function (v, w) {
-      return O.plus(v, w);
-    }, [
-      0,
-      0
-    ]);
-  };
-  force_on = function (leaf, tree, repulsion) {
-    var d, s, threshold;
-    threshold = 0.5;
+  force_on = function (leaf, tree, repulsion, threshold) {
+    var d, s;
     if (tree === leaf) {
       return [
         0,
@@ -175,9 +161,9 @@ module.exports = (function () {
       d = length(O.minus(leaf.body.point, tree.point));
       if (s / d < threshold) {
         return body_force_on(leaf.body, tree, repulsion);
-      } else if (tree.children) {
-        return sum(tree.children.map(function (c) {
-          return force_on(leaf, c, repulsion);
+      } else {
+        return O.sum_vectors(tree.children.map(function (c) {
+          return force_on(leaf, c, repulsion, threshold);
         }));
       }
     } else {
@@ -187,11 +173,11 @@ module.exports = (function () {
       ];
     }
   };
-  repulsive_forces = function (tree, repulsion) {
+  repulsive_forces = function (tree, repulsion, threshold) {
     var forces;
     forces = {};
     walk_leaves(tree, function (leaf) {
-      return forces[leaf.body.id] = force_on(leaf, tree, repulsion);
+      return forces[leaf.body.id] = force_on(leaf, tree, repulsion, threshold);
     });
     return forces;
   };
