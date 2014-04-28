@@ -1,13 +1,20 @@
 0.3
 ===
 
-* Cumulative versions of bar and line charts
-* New shape: Poincaré arc
-* New chart: Circos
+* New chart: Waterfall
+* New chart: Graph layout (not optimized)
 * New chart: Tree
 * Code snippets visible from the demo application
 
 0.4
+===
+
+* Cumulative versions of bar and line charts
+* New shape: Poincaré arc
+* New chart: Circos
+* Optimize Graph chart
+
+0.5
 ===
 
 * Allow relative coordinates in low-level API
@@ -15,12 +22,11 @@
 * Fancier animations in demo application
 * Example demo with React.js?
 
-0.5
+0.6
 ===
 
 More complex layouts:
 
-* force-directed graphs
 * Voronoi cells
 * circle packing
 * ...

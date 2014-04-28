@@ -15,7 +15,8 @@ define [
   './smooth-line'
   './stock'
   './tree'
-], (Bar, Bezier, Connector, Graph, Linear, Ops, Path, Pie, Polygon, Radar, Rectangle, Sector, SemiRegularPolygon, SmoothLine, Stock, Tree)->
+  './waterfall'
+], (Bar, Bezier, Connector, Graph, Linear, Ops, Path, Pie, Polygon, Radar, Rectangle, Sector, SemiRegularPolygon, SmoothLine, Stock, Tree, Waterfall)->
 
   window.paths =
     Bar: Bar
@@ -34,3 +35,4 @@ define [
     SmoothLine: SmoothLine
     Stock: Stock
     Tree: Tree
+    Waterfall: Waterfall
