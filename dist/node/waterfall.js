@@ -11,7 +11,7 @@ O = require('./ops'),
 module.exports = (function () {
   return function (_arg) {
     var M, absolute, accessor, bar_width, bottom, compute, curves, d, data, data_, gutter, height, high, i, last, left, line, low, m, max, min, n, right, scale, top, value, width, _i, _j, _len, _len1, _ref, _ref1;
-    data = _arg.data, accessor = _arg.accessor, width = _arg.width, height = _arg.height, gutter = _arg.gutter, compute = _arg.compute;
+    data = _arg.data, accessor = _arg.accessor, width = _arg.width, height = _arg.height, gutter = _arg.gutter, compute = _arg.compute, min = _arg.min, max = _arg.max;
     if (accessor == null) {
       accessor = function (x) {
         return x;
@@ -20,8 +20,12 @@ module.exports = (function () {
     if (gutter == null) {
       gutter = 0;
     }
-    min = 0;
-    max = 0;
+    if (min == null) {
+      min = 0;
+    }
+    if (max == null) {
+      max = 0;
+    }
     last = 0;
     data_ = [];
     for (_i = 0, _len = data.length; _i < _len; _i++) {

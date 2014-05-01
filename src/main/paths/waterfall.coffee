@@ -3,11 +3,11 @@ define [
   './linear'
   './rectangle'
 ], (O, Linear, Rectangle)->
-  ({data, accessor, width, height, gutter, compute}) ->
+  ({data, accessor, width, height, gutter, compute, min, max}) ->
     accessor ?= (x) -> x
     gutter ?= 0
-    min = 0
-    max = 0
+    min ?= 0
+    max ?= 0
     last = 0
     data_ = []
 
