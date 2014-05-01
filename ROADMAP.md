@@ -13,6 +13,7 @@
 * New shape: Poincaré arc
 * New chart: Circos
 * Optimize Graph chart
+* Coordinate changes
 
 0.5
 ===
