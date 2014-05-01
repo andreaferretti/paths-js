@@ -474,6 +474,66 @@ Parameters:
 
 The return value from `Tree` is an object with the properties `curves` and `nodes`. `curves` is an array of objects, each one having the properties `connector`, `item` and `index`, where `connector` contains the actual path object. `nodes` is an array of objects, each one having the properties `point` and `item`, representing the nodes of the tree.
 
+### Waterfall graph ###
+
+The `Waterfall` graph is a nice way to represent some values on a bar chart, together with other values that add up to their difference. A typical use would be breaking incomes or expenses into pieces. Since a picture is worth a thousand word, make sure to have a look at the demo. It can be used as follows:
+
+    var Waterfall = require('paths/waterfall');
+    var waterfall = Waterfall({
+      data: [
+        {
+          name: 'Gross income',
+          value: 30,
+          absolute: true
+        }
+        {
+          name: 'Transport',
+          value: -6
+        }
+        {
+          name: 'Distribution',
+          value: -3
+        }
+        {
+          name: 'Detail income'
+          absolute: true
+        }
+        {
+          name: 'Taxes',
+          value: -8
+        }
+        {
+          name: 'Net income'
+          absolute: true
+        }
+      ],
+      compute: {
+        color: function(i, item) {
+          if (item.absolute) return 'green';
+          else return 'red';
+        }
+      },
+      width: 500,
+      height: 400,
+      gutter: 10
+    });
+
+Parameters:
+
+* `width`, `height`: have the obvious geometric meaning
+* `data`: contains an array with the data to plot. The precise form of the data is not important, because the actual value of the data will be extracted by the `accessor` function.
+* `accessor`: a function that is applied to each datum inside each item in `data` to extract its value. It should return an object with either the `absolute` or `value` property, or both. `value` represents the height of the current bar. `absolute` should be `true` if the bar should stand on its own, rather than appearing as the difference between consecutive bars.
+* `max`, `min` (optional): maximum and minimum values represented on the chart. They are computed if they are not given explicitly, but setting them explicitly can be useful to draw more than one chart on the same scale.
+* `gutter` (optional): the space to leave between each bar
+* `compute` (optional): see the introduction.
+
+The first item in the waterfall chart should have the `value` property and `absolute` set to `true`. The subsequent bars will usually have either `value` or `absolute` but not both. If they have `value`, this is considered relative to the previous bar. If they have `absolute` set to `true`, the value will be computed by summing all relative values up to that point.
+
+For instance, the height of `Detail income` in the example is `21 = 30 - 6 - 3`, while the height of `Net income` is `13 = 21 - 8`.
+
+The object returned by the `Waterfall` function contains the `curves` array, on which one can iterate to draw the rectangles. Each member of this array has the properties `line`, `index` and `item`, the latter containing the actual datum associated to the rectangle.
+
+
 Miscellaneous
 -------------
 
