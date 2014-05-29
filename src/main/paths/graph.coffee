@@ -33,17 +33,18 @@ define [
   ({ data, nodeaccessor, linkaccessor, width, height, attraction, repulsion, threshold }) ->
     nodeaccessor ?= (n) -> n
     linkaccessor ?= (l) -> l
-    attraction ?= 0.01
-    repulsion ?= 1000
+    attraction ?= 1
+    repulsion ?= 1
     threshold ?= 0.5
     bound = inside(width, height)
 
-    { nodes, links } = data
+    { nodes, links, constraints } = data
+    constraints ?= {}
     nodes_positions = {}
     nodes_ = {}
     for node in nodes
       id = nodeaccessor(node)
-      nodes_positions[id] = random_position(width, height)
+      nodes_positions[id] = constraints[id] or random_position(width, height)
       nodes_[id] = node
 
     links_ = {}
@@ -62,13 +63,25 @@ define [
       attractions = attractive_forces(links_, nodes_positions, attraction / 1000)
       repulsions = bh.forces(tree, repulsion * 1000, threshold)
       for id, position of nodes_positions
-        f1 = attractions[id] or [0, 0]
-        f2 = repulsions[id] or [0, 0]
-        f = O.plus(f1, f2)
-        nodes_positions[id] = bound(O.plus(position, f))
+        if constraints[id]
+          nodes_positions[id] = constraints[id]
+        else
+          f1 = attractions[id] or [0, 0]
+          f2 = repulsions[id] or [0, 0]
+          f = O.plus(f1, f2)
+          nodes_positions[id] = bound(O.plus(position, f))
       recompute()
 
-    graph = { tick: tick }
+    constrain = (id, position) ->
+      constraints[id] = position
+
+    unconstrain = (id) ->
+      delete constraints[id]
+
+    graph =
+      tick: tick
+      constrain: constrain
+      unconstrain: unconstrain
 
     recompute = ->
       i = -1

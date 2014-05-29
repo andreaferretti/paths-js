@@ -64,7 +64,7 @@ module.exports = (function () {
     return forces;
   };
   return function (_arg) {
-    var attraction, bound, data, end, graph, height, id, link, linkaccessor, links, links_, node, nodeaccessor, nodes, nodes_, nodes_positions, recompute, repulsion, start, threshold, tick, weight, width, _i, _j, _len, _len1, _ref;
+    var attraction, bound, constrain, constraints, data, end, graph, height, id, link, linkaccessor, links, links_, node, nodeaccessor, nodes, nodes_, nodes_positions, recompute, repulsion, start, threshold, tick, unconstrain, weight, width, _i, _j, _len, _len1, _ref;
     data = _arg.data, nodeaccessor = _arg.nodeaccessor, linkaccessor = _arg.linkaccessor, width = _arg.width, height = _arg.height, attraction = _arg.attraction, repulsion = _arg.repulsion, threshold = _arg.threshold;
     if (nodeaccessor == null) {
       nodeaccessor = function (n) {
@@ -77,22 +77,25 @@ module.exports = (function () {
       };
     }
     if (attraction == null) {
-      attraction = 0.01;
+      attraction = 1;
     }
     if (repulsion == null) {
-      repulsion = 1000;
+      repulsion = 1;
     }
     if (threshold == null) {
       threshold = 0.5;
     }
     bound = inside(width, height);
-    nodes = data.nodes, links = data.links;
+    nodes = data.nodes, links = data.links, constraints = data.constraints;
+    if (constraints == null) {
+      constraints = {};
+    }
     nodes_positions = {};
     nodes_ = {};
     for (_i = 0, _len = nodes.length; _i < _len; _i++) {
       node = nodes[_i];
       id = nodeaccessor(node);
-      nodes_positions[id] = random_position(width, height);
+      nodes_positions[id] = constraints[id] || random_position(width, height);
       nodes_[id] = node;
     }
     links_ = {};
@@ -115,20 +118,34 @@ module.exports = (function () {
       repulsions = bh.forces(tree, repulsion * 1000, threshold);
       for (id in nodes_positions) {
         position = nodes_positions[id];
-        f1 = attractions[id] || [
-          0,
-          0
-        ];
-        f2 = repulsions[id] || [
-          0,
-          0
-        ];
-        f = O.plus(f1, f2);
-        nodes_positions[id] = bound(O.plus(position, f));
+        if (constraints[id]) {
+          nodes_positions[id] = constraints[id];
+        } else {
+          f1 = attractions[id] || [
+            0,
+            0
+          ];
+          f2 = repulsions[id] || [
+            0,
+            0
+          ];
+          f = O.plus(f1, f2);
+          nodes_positions[id] = bound(O.plus(position, f));
+        }
       }
       return recompute();
     };
-    graph = { tick: tick };
+    constrain = function (id, position) {
+      return constraints[id] = position;
+    };
+    unconstrain = function (id) {
+      return delete constraints[id];
+    };
+    graph = {
+      tick: tick,
+      constrain: constrain,
+      unconstrain: unconstrain
+    };
     recompute = function () {
       var i;
       i = -1;
