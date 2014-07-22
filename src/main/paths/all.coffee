@@ -1,7 +1,7 @@
 define [
   './bar'
-  './connector'
   './bezier'
+  './connector'
   './graph'
   './linear'
   './ops'
