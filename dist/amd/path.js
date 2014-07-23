@@ -136,7 +136,7 @@
           }
           return ps;
         },
-        rawInstructions: function() {
+        instructions: function() {
           return instructions.slice(0, instructions.length);
         }
       };

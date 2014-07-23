@@ -14,6 +14,7 @@ describe 'path', ->
     path = Path()
     expect(path).to.have.property('points')
     expect(path).to.have.property('print')
+    expect(path).to.have.property('instructions')
 
   it 'should have methods corresponding the SVG path spec', ->
     path = Path()

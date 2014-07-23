@@ -87,7 +87,7 @@ define [
           if p then ps.push p
       ps
 
-    rawInstructions: ->
+    instructions: ->
       instructions[0...instructions.length]
 
   -> Path()

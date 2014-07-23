@@ -22,7 +22,8 @@
       var path;
       path = Path();
       expect(path).to.have.property('points');
-      return expect(path).to.have.property('print');
+      expect(path).to.have.property('print');
+      return expect(path).to.have.property('instructions');
     });
     it('should have methods corresponding the SVG path spec', function() {
       var path;
