@@ -90,5 +90,4 @@ define [
     rawInstructions: ->
       instructions[0...instructions.length]
 
-
   -> Path()

@@ -240,6 +240,9 @@ module.exports = (function () {
           _fn();
         }
         return ps;
+      },
+      rawInstructions: function () {
+        return instructions.slice(0, instructions.length);
       }
     };
   };
