@@ -8,6 +8,9 @@ define [
       copy.push el
       copy
 
+    areEqualPoints = (p1, p2) ->
+      p1[0] == p2[0] and p1[1] == p2[1]
+
     printInstrunction = ({ command, params }) ->
       "#{ command } #{ params.join ' ' }"
 
@@ -89,5 +92,21 @@ define [
 
     instructions: ->
       instructions[0...instructions.length]
+
+    connect: (path) ->
+      last = @points()[-1..][0]
+      first = path.points()[0]
+      if not areEqualPoints(last,first)
+        p = @lineto(first[0],first[1])
+        oldInstructions = p.instructions()
+      else
+        oldInstructions = @instructions()
+
+      newInstructions = path.instructions()[1..]
+
+      newInstructions.forEach((instruction) ->
+        oldInstructions.push(instruction)
+      )
+      Path(oldInstructions)
 
   -> Path()

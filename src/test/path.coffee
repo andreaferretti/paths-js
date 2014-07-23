@@ -10,11 +10,12 @@ describe 'node module import', ->
     expect(Path).to.be.a('function')
 
 describe 'path', ->
-  it 'should have methods to get the points and the printed string', ->
+  it 'should have methods to get the points, the printed string, a copy of instructions and a method to connect paths', ->
     path = Path()
     expect(path).to.have.property('points')
     expect(path).to.have.property('print')
     expect(path).to.have.property('instructions')
+    expect(path).to.have.property('connect')
 
   it 'should have methods corresponding the SVG path spec', ->
     path = Path()
@@ -28,6 +29,16 @@ describe 'path', ->
     expect(path).to.have.property('smoothcurveto')
     expect(path).to.have.property('smoothqcurveto')
     expect(path).to.have.property('arc')
+
+  it 'should skip the move instruction if the end point is first point of next path', ->
+    path = Path().moveto(0,0).lineto(2,20)
+    path2 = Path().moveto(2,20).lineto(3,40)
+    expect(path.connect(path2).points()).to.eql([[0,0],[2,20],[3,40]])
+
+  it 'should connect the end point with the first point of next path', ->
+    path = Path().moveto(0,0).lineto(1,20)
+    path2 = Path().moveto(2,20).lineto(3,40)
+    expect(path.connect(path2).points()).to.eql([[0,0],[1,20],[2,20],[3,40]])
 
   it 'should ignore constructor arguments', ->
     path = Path([{command: 'L', params: [2, 3]}])

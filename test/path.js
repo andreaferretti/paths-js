@@ -18,12 +18,13 @@
   });
 
   describe('path', function() {
-    it('should have methods to get the points and the printed string', function() {
+    it('should have methods to get the points, the printed string, a copy of instructions and a method to connect paths', function() {
       var path;
       path = Path();
       expect(path).to.have.property('points');
       expect(path).to.have.property('print');
-      return expect(path).to.have.property('instructions');
+      expect(path).to.have.property('instructions');
+      return expect(path).to.have.property('connect');
     });
     it('should have methods corresponding the SVG path spec', function() {
       var path;
@@ -38,6 +39,18 @@
       expect(path).to.have.property('smoothcurveto');
       expect(path).to.have.property('smoothqcurveto');
       return expect(path).to.have.property('arc');
+    });
+    it('should skip the move instruction if the end point is first point of next path', function() {
+      var path, path2;
+      path = Path().moveto(0, 0).lineto(2, 20);
+      path2 = Path().moveto(2, 20).lineto(3, 40);
+      return expect(path.connect(path2).points()).to.eql([[0, 0], [2, 20], [3, 40]]);
+    });
+    it('should connect the end point with the first point of next path', function() {
+      var path, path2;
+      path = Path().moveto(0, 0).lineto(1, 20);
+      path2 = Path().moveto(2, 20).lineto(3, 40);
+      return expect(path.connect(path2).points()).to.eql([[0, 0], [1, 20], [2, 20], [3, 40]]);
     });
     it('should ignore constructor arguments', function() {
       var path;
