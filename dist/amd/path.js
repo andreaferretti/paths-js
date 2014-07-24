@@ -2,13 +2,16 @@
   define([], function() {
     var Path;
     Path = function(init) {
-      var instructions, plus, point, printInstrunction, push, verbosify;
+      var areEqualPoints, instructions, plus, point, printInstrunction, push, verbosify;
       instructions = init || [];
       push = function(arr, el) {
         var copy;
         copy = arr.slice(0, arr.length);
         copy.push(el);
         return copy;
+      };
+      areEqualPoints = function(p1, p2) {
+        return p1[0] === p2[0] && p1[1] === p2[1];
       };
       printInstrunction = function(_arg) {
         var command, params;
@@ -135,6 +138,24 @@
             _fn();
           }
           return ps;
+        },
+        instructions: function() {
+          return instructions.slice(0, instructions.length);
+        },
+        connect: function(path) {
+          var first, last, newInstructions;
+          last = this.points().slice(-1)[0];
+          first = path.points()[0];
+          newInstructions = path.instructions().slice(1);
+          if (!areEqualPoints(last, first)) {
+            newInstructions.unshift({
+              command: "L",
+              params: first
+            });
+          }
+          return newInstructions.reduce((function(oldpath, instruction) {
+            return Path(push(oldpath.instructions(), instruction));
+          }), this);
         }
       };
     };

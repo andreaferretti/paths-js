@@ -10,10 +10,12 @@ describe 'node module import', ->
     expect(Path).to.be.a('function')
 
 describe 'path', ->
-  it 'should have methods to get the points and the printed string', ->
+  it 'should have methods to get the points, the printed string, a copy of instructions and a method to connect paths', ->
     path = Path()
     expect(path).to.have.property('points')
     expect(path).to.have.property('print')
+    expect(path).to.have.property('instructions')
+    expect(path).to.have.property('connect')
 
   it 'should have methods corresponding the SVG path spec', ->
     path = Path()
@@ -117,6 +119,29 @@ describe 'print method', ->
   it 'should report the expected points for arc commands', ->
     path = Path().moveto(0, 1).arc(3, 3, 2, 0, 1, 6, -3).curveto(2, 1, 3, 1, -1, 17)
     expect(labels path).to.eql(['M', 'A', 'C'])
+
+describe 'connect method', ->
+  it 'should skip the move instruction in the second path if the end point of the first path is first point of second one', ->
+    path = Path().moveto(0,0).lineto(2,20)
+    path2 = Path().moveto(2,20).lineto(3,40)
+    expect(path.connect(path2).points()).to.eql([[0,0],[2,20],[3,40]])
+
+  it 'should connect the end point with the first point of next path', ->
+    path = Path().moveto(0,0).lineto(1,20)
+    path2 = Path().moveto(2,20).lineto(3,40)
+    expect(path.connect(path2).points()).to.eql([[0,0],[1,20],[2,20],[3,40]])
+
+  it 'should leave first path as is', ->
+    path = Path().moveto(0,0).lineto(2,20)
+    path2 = Path().moveto(2,20).lineto(3,40)
+    path3 = path.connect(path2).points()
+    expect(path.points()).to.eql([[0,0],[2,20]])
+
+  it 'should leave second path as is', ->
+    path = Path().moveto(0,0).lineto(2,20)
+    path2 = Path().moveto(2,20).lineto(3,40)
+    path3 = path.connect(path2).points()
+    expect(path2.points()).to.eql([[2,20],[3,40]])
 
 describe 'verbose api', ->
   it 'should work the same as the short one', ->
