@@ -25,6 +25,7 @@ define [
         item: d
         low: low
         high: high
+        value: if value? then value else high
 
     n = data_.length
     bar_width = (width - gutter * (n - 1)) / n
@@ -40,6 +41,7 @@ define [
       curves.push O.enhance compute,
         item: d.item
         line: line
+        value: d.value
         index: i
 
     curves: curves

@@ -535,7 +535,7 @@ The first item in the waterfall chart should have the `value` property and `abso
 
 For instance, the height of `Detail income` in the example is `21 = 30 - 6 - 3`, while the height of `Net income` is `13 = 21 - 8`.
 
-The object returned by the `Waterfall` function contains the `curves` array, on which one can iterate to draw the rectangles. Each member of this array has the properties `line`, `index` and `item`, the latter containing the actual datum associated to the rectangle.
+The object returned by the `Waterfall` function contains the `curves` array, on which one can iterate to draw the rectangles. Each member of this array has the properties `line`, `index`, `value` and `item`, the latter containing the actual datum associated to the rectangle. `value` instead contains the height computed for this rectangle: it coincides with `item.value` whenever this is present, and otherwise it is equal to the cumulative value computed. For instance, `value` would be `21` for the `Detail Income` rectangle in the example above.
 
 
 Miscellaneous

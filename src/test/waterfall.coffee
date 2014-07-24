@@ -52,6 +52,10 @@ describe 'waterfall chart', ->
     expect(waterfall.curves[1].item.name).to.be('Transport')
     expect(waterfall.curves[3].item.name).to.be('Detail income')
 
+  it 'should give access to the original or computed value', ->
+    expect(waterfall.curves[1].value).to.be(-6)
+    expect(waterfall.curves[3].value).to.be(21)
+
   it 'should allow custom computations', ->
     expect(waterfall.curves[4].myitem).to.be(waterfall.curves[4].item)
     expect(waterfall.curves[4].myindex).to.be(waterfall.curves[4].index)

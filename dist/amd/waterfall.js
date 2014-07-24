@@ -31,7 +31,8 @@
         data_.push({
           item: d,
           low: low,
-          high: high
+          high: high,
+          value: value != null ? value : high
         });
       }
       n = data_.length;
@@ -53,6 +54,7 @@
         curves.push(O.enhance(compute, {
           item: d.item,
           line: line,
+          value: d.value,
           index: i
         }));
       }
