@@ -248,20 +248,19 @@ module.exports = (function () {
         return instructions.slice(0, instructions.length);
       },
       connect: function (path) {
-        var first, last, newInstructions, oldInstructions, p;
+        var first, last, newInstructions;
         last = this.points().slice(-1)[0];
         first = path.points()[0];
-        if (!areEqualPoints(last, first)) {
-          p = this.lineto(first[0], first[1]);
-          oldInstructions = p.instructions();
-        } else {
-          oldInstructions = this.instructions();
-        }
         newInstructions = path.instructions().slice(1);
-        newInstructions.forEach(function (instruction) {
-          return oldInstructions.push(instruction);
-        });
-        return Path(oldInstructions);
+        if (!areEqualPoints(last, first)) {
+          newInstructions.unshift({
+            command: "L",
+            params: first
+          });
+        }
+        return newInstructions.reduce(function (oldpath, instruction) {
+          return Path(push(oldpath.instructions(), instruction));
+        }, this);
       }
     };
   };

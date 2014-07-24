@@ -96,17 +96,10 @@ define [
     connect: (path) ->
       last = @points()[-1..][0]
       first = path.points()[0]
-      if not areEqualPoints(last,first)
-        p = @lineto(first[0],first[1])
-        oldInstructions = p.instructions()
-      else
-        oldInstructions = @instructions()
-
       newInstructions = path.instructions()[1..]
-
-      newInstructions.forEach((instruction) ->
-        oldInstructions.push(instruction)
-      )
-      Path(oldInstructions)
+      if not areEqualPoints(last,first)
+        newInstructions.unshift({command:"L", params: first})
+      newInstructions.reduce ((oldpath, instruction) -> 
+        Path(push oldpath.instructions(), instruction)), @
 
   -> Path()
