@@ -120,7 +120,7 @@ describe 'print method', ->
     path = Path().moveto(0, 1).arc(3, 3, 2, 0, 1, 6, -3).curveto(2, 1, 3, 1, -1, 17)
     expect(labels path).to.eql(['M', 'A', 'C'])
 
-describe 'points method', ->
+describe 'connect method', ->
   it 'should skip the move instruction in the second path if the end point of the first path is first point of second one', ->
     path = Path().moveto(0,0).lineto(2,20)
     path2 = Path().moveto(2,20).lineto(3,40)

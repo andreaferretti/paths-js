@@ -168,7 +168,7 @@
     });
   });
 
-  describe('points method', function() {
+  describe('connect method', function() {
     it('should skip the move instruction in the second path if the end point of the first path is first point of second one', function() {
       var path, path2;
       path = Path().moveto(0, 0).lineto(2, 20);

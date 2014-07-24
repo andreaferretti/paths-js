@@ -84,7 +84,7 @@ Other than methods to compose other paths, path objects have the methods `print`
 
 The `points` method returns the array of points through which the path passes. This case be useful, for instance, to place labels near the endpoints.
 
-The `instructions` method returns the array of instructions to buile the path. This is used to access progammatically the single instructions and to join paths.
+The `instructions` method returns the array of instructions to build the path. This is used to access progammatically the single instructions and to join paths.
 
 The `connect` method, applied to another path, adds the second path to the first one: if the end point of the first path is different from the start point of the second path, they are joined by a straight line.
 
