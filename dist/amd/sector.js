@@ -3,13 +3,14 @@
 
   define(['./path', './ops'], function(Path, O) {
     return function(_arg) {
-      var R, a, b, c, center, centroid, d, end, mid_angle, mid_radius, path, r, start, _ref, _ref1, _ref2, _ref3;
+      var R, a, b, c, center, centroid, d, end, large, mid_angle, mid_radius, path, r, start, _ref, _ref1, _ref2, _ref3;
       center = _arg.center, r = _arg.r, R = _arg.R, start = _arg.start, end = _arg.end;
       a = O.plus(center, O.on_circle(R, start));
       b = O.plus(center, O.on_circle(R, end));
       c = O.plus(center, O.on_circle(r, end));
       d = O.plus(center, O.on_circle(r, start));
-      path = (_ref = (_ref1 = (_ref2 = (_ref3 = Path()).moveto.apply(_ref3, a)).arc.apply(_ref2, [R, R, 0, 0, 1].concat(__slice.call(b)))).lineto.apply(_ref1, c)).arc.apply(_ref, [r, r, 0, 0, 0].concat(__slice.call(d))).closepath();
+      large = end - start > Math.PI ? 1 : 0;
+      path = (_ref = (_ref1 = (_ref2 = (_ref3 = Path()).moveto.apply(_ref3, a)).arc.apply(_ref2, [R, R, 0, large, 1].concat(__slice.call(b)))).lineto.apply(_ref1, c)).arc.apply(_ref, [r, r, 0, large, 0].concat(__slice.call(d))).closepath();
       mid_angle = (start + end) / 2;
       mid_radius = (r + R) / 2;
       centroid = O.plus(center, O.on_circle(mid_radius, mid_angle));

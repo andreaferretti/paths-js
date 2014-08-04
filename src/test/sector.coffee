@@ -46,3 +46,12 @@ describe 'sector function', ->
       start: 1
       end: 2
     expect(sector.path.points().filter (x) -> x[0] == 3 and x[1] == 16).to.have.length(2)
+
+  it 'should have the expected large arc flag', ->
+    sector = Sector
+      r: 0
+      R: 3
+      center: [0, 0]
+      start: 0
+      end: 3 / 2 * Math.PI
+    expect(sector.path.print()).to.match(/A 3 3 0 1 1 -3/)
