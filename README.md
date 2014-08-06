@@ -27,7 +27,7 @@ Is it for me?
 
 It depends. If what you need are some ready-made widgets and charts, probably not. In this case, libraries such as [Flotcharts] [9] or [Dimple] [10] may be a better fit. On the other hand, if you want to create your own charts, possibly with custom styling, interactions or animations, it may be a better idea to use a data-binding library and generate the SVG elements yourself. In this case, you will probably need to write some SVG paths, and Paths.js is designed to do exactly this. Another situation where you may want to deal directly with SVG elements is the case where you need to generate the graphics server side with Node.js. In this case you can couple Paths.js with any templating library of your choice, since Paths.js does not make use of any browser API (or any API outside the core ES5, actually).
 
-The philosophy behind Paths.js is well explained in [this blog post](http://mlarocca.github.io/01-22-2014/pathsjs_ractive.html) by Marcello La Rocca.
+The philosophy behind Paths.js is well explained in [this blog post](http://mlarocca.github.io/01-22-2014/pathsjs_ractive.html) by Marcello La Rocca. Also, check the slides from [my talk at MilanoJS user group](https://github.com/andreaferretti/paths-talk-slides), together with the [examples](https://github.com/andreaferretti/paths-talk-examples).
 
 Installation and usage
 ----------------------
