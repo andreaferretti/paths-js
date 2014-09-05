@@ -35,7 +35,7 @@ module.exports = (function () {
     });
     spacing_groups = (width - rect_width) / (data.nodes.length - 1);
     name_values = {};
-    data.nodes.reduce(function (a, b) {
+    nodes_.reduce(function (a, b) {
       return a.concat(b);
     }).forEach(function (name) {
       return name_values[name] = {
@@ -61,14 +61,14 @@ module.exports = (function () {
       }, 0);
       name_values[name]["value"] = Math.max(vals_in, vals_out);
     }
-    height_of_groups = data.nodes.map(function (group) {
+    height_of_groups = nodes_.map(function (group) {
       return group.map(function (name) {
         return name_values[name]["value"];
       }).reduce(function (x, y) {
         return x + y;
       });
     });
-    space_for_each_group = data.nodes.map(function (group) {
+    space_for_each_group = nodes_.map(function (group) {
       return height - (group.length - 1) * gutter;
     });
     scale = height_of_groups.map(function (height_of_group, idx) {
@@ -82,7 +82,7 @@ module.exports = (function () {
     }
     rects = [];
     node_idx = -1;
-    data.nodes.forEach(function (group, idg) {
+    nodes_.forEach(function (group, idg) {
       var first_top, h_group, previous_bottom, vertical_spacing;
       h_group = group.reduce(function (x, y) {
         return x + name_values[y]["scaled_value"];

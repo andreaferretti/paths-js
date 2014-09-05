@@ -20,7 +20,7 @@ define [
     name_values = {}
 
     #initialize the informations about nodes
-    data.nodes.reduce((a,b) -> a.concat b).forEach((name) ->
+    nodes_.reduce((a,b) -> a.concat b).forEach((name) ->
       name_values[name] = {
         value: 0
         currently_used_in: 0
@@ -40,13 +40,13 @@ define [
     # and take the minimum. Use this as scale factor.
 
     #compute height of staked rectangles in a group
-    height_of_groups = data.nodes.map((group) ->
+    height_of_groups = nodes_.map((group) ->
       group.map((name) -> 
         name_values[name]["value"]).reduce((x,y) -> x + y)
     )
 
     #compute the available height for each group (height - gutters)
-    space_for_each_group = data.nodes.map((group) ->
+    space_for_each_group = nodes_.map((group) ->
       height - (group.length - 1)*gutter
     )
 
@@ -63,7 +63,7 @@ define [
     rects = []
     node_idx = -1
 
-    data.nodes.forEach((group, idg) ->
+    nodes_.forEach((group, idg) ->
       h_group = group.reduce(((x,y) -> x + name_values[y]["scaled_value"]), 0) + (group.length - 1)*gutter
       vertical_spacing = (height - h_group)/2
       first_top = vertical_spacing
