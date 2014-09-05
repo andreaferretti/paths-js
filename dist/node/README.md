@@ -542,7 +542,7 @@ The object returned by the `Waterfall` function contains the `curves` array, on 
 Sankey diagrams are a specific type of flow diagram, in which the arrows are proportional to the flow quantity. They are classically used to visualize energy accounts or material flow on a regional or national level, but they can represent any kind of quantitative flow, from source (to the left) to target (to the right). They are also closely related to "Alluvial diagrams". It can be used as follows:
 
     var Sankey = require('paths/sankey');
-    var Sankey = Sankey({
+    var sankey = Sankey({
       data: {
         nodes:[
           [{id:"pippo"},{id:"pluto"},{id:"paperino"}]
@@ -577,9 +577,10 @@ Parameters:
 
 * `width`, `height`: have the obvious geometric meaning
 * `data`: contains an object with nodes and links. The precise form of the data is not important, because the actual value of the data will be extracted by the `accessor` function.
-* `accessor`: a function that is applied to each datum inside each item in `data` to extract its value. It should return an object with either the `absolute` or `value` property, or both. `value` represents the height of the current bar. `absolute` should be `true` if the bar should stand on its own, rather than appearing as the difference between consecutive bars.
-* `gutter` (optional): the space to leave between each bar
-* `rect_width` (optional): the widht of each bar
+* `node_accessor`: a function that is applied to each datum inside each item in `data.nodes` to extract its id.
+* `link_accessor`: a function that is applied to each datum inside each item in `data.links`.
+* `gutter` (optional, default 10): the space to leave between each bar
+* `rect_width` (optional, default 10): the widht of each bar
 * `compute` (optional): see the introduction.
 
 The `nodes` is a list of lists of objects. Each list represent a level of the diagram; each element in a list is an object which contains at least an id for the links. Id's should be unique to avoid wrong associations.
