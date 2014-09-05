@@ -59,7 +59,7 @@
       });
       return expect(sector.path.print()).to.match(/Z/);
     });
-    return it('should pass through the center when r = 0', function() {
+    it('should pass through the center when r = 0', function() {
       var sector;
       sector = Sector({
         r: 0,
@@ -71,6 +71,17 @@
       return expect(sector.path.points().filter(function(x) {
         return x[0] === 3 && x[1] === 16;
       })).to.have.length(2);
+    });
+    return it('should have the expected large arc flag', function() {
+      var sector;
+      sector = Sector({
+        r: 0,
+        R: 3,
+        center: [0, 0],
+        start: 0,
+        end: 3 / 2 * Math.PI
+      });
+      return expect(sector.path.print()).to.match(/A 3 3 0 1 1 -3/);
     });
   });
 

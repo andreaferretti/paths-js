@@ -8,17 +8,19 @@ define [
     b = O.plus(center, O.on_circle(R, end))
     c = O.plus(center, O.on_circle(r, end))
     d = O.plus(center, O.on_circle(r, start))
-      
+
+    large = if end - start > Math.PI then 1 else 0
+
     path = Path()
       .moveto(a...)
-      .arc(R, R, 0, 0, 1, b...)
+      .arc(R, R, 0, large, 1, b...)
       .lineto(c...)
-      .arc(r, r, 0, 0, 0, d...)
+      .arc(r, r, 0, large, 0, d...)
       .closepath()
 
     mid_angle = (start + end) / 2
     mid_radius = (r + R) / 2
     centroid = O.plus(center, O.on_circle(mid_radius, mid_angle))
-    
+
     path: path
     centroid: centroid
