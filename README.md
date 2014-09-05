@@ -537,6 +537,58 @@ For instance, the height of `Detail income` in the example is `21 = 30 - 6 - 3`,
 
 The object returned by the `Waterfall` function contains the `curves` array, on which one can iterate to draw the rectangles. Each member of this array has the properties `line`, `index`, `value` and `item`, the latter containing the actual datum associated to the rectangle. `value` instead contains the height computed for this rectangle: it coincides with `item.value` whenever this is present, and otherwise it is equal to the cumulative value computed. For instance, `value` would be `21` for the `Detail Income` rectangle in the example above.
 
+### Sankey Diagram ###
+
+Sankey diagrams are a specific type of flow diagram, in which the arrows are proportional to the flow quantity. They are classically used to visualize energy accounts or material flow on a regional or national level, but they can represent any kind of quantitative flow, from source (to the left) to target (to the right). They are also closely related to "Alluvial diagrams". It can be used as follows:
+
+    var Sankey = require('paths/sankey');
+    var sankey = Sankey({
+      data: {
+        nodes:[
+          [{id:"pippo"},{id:"pluto"},{id:"paperino"}]
+          [{id:"qui"},{id:"quo"},{id:"qua"}]
+          [{id:"nonna papera"},{id:"ciccio"}]
+        ]
+        links:[
+          {start:"pippo", end:"quo", weight:10}
+          {start:"pippo", end:"qua", weight:30}
+          {start:"pluto", end:"nonna papera", weight:10}
+          {start:"pluto", end:"qui", weight:10}
+          {start:"pluto", end:"quo", weight:10}
+          {start:"paperino", end:"ciccio", weight:100}
+          {start:"qui", end:"ciccio", weight: 20}
+          {start:"quo", end:"ciccio", weight: 10}
+          {start:"qua", end:"nonna papera", weight: 30}
+        ]
+      }
+      compute: {
+        color: function(i, item) {
+          return "red"
+        }
+      },
+      node_accessor: function (x) { return x.id }
+      width: 500,
+      height: 400,
+      gutter: 10,
+      rect_width: 10
+    });
+
+Parameters:
+
+* `width`, `height`: have the obvious geometric meaning
+* `data`: contains an object with nodes and links. The precise form of the data is not important, because the actual value of the data will be extracted by the `accessor` function.
+* `node_accessor`: a function that is applied to each datum inside each item in `data.nodes` to extract its id.
+* `link_accessor`: a function that is applied to each datum inside each item in `data.links`.
+* `gutter` (optional, default 10): the space to leave between each bar
+* `rect_width` (optional, default 10): the widht of each bar
+* `compute` (optional): see the introduction.
+
+The `nodes` is a list of lists of objects. Each list represent a level of the diagram; each element in a list is an object which contains at least an id for the links. Id's should be unique to avoid wrong associations.
+
+The `links` is a list of objects. Each object contains a `start` and an `end` (by id) and a weight, which represents how much flow is going from `start` to `end`; `start` should be on the left of `end` and you should avoid circles (which is automatic if you respect the previous rule!). You don't need to have `start` and `end` in two consecutive levels.
+
+The object returned by the `Sankey` function contains the `curvedRectangles` array, on which one can iterate to draw the flows, and the `rectangles` array, on which one can iterate to draw the rectangles. Each member of this arrays has the properties `curve`, `index`, `item`, the latter containing the actual datum associated to the node/link. You can add more properties by passing them within the `compute` object.
+
 
 Miscellaneous
 -------------
