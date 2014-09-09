@@ -16,7 +16,7 @@ define [
 
     #compute the spacing between groups of rectangles; takes care of rects width
     spacing_groups = (width - rect_width)/(data.nodes.length - 1)
-    
+
     name_values = {}
 
     #initialize the informations about nodes
@@ -41,7 +41,7 @@ define [
 
     #compute height of staked rectangles in a group
     height_of_groups = nodes_.map((group) ->
-      group.map((name) -> 
+      group.map((name) ->
         name_values[name]["value"]).reduce((x,y) -> x + y)
     )
 
@@ -84,6 +84,7 @@ define [
           curve: Rectangle(att)
           item: data.nodes[idg][idn]
           index: node_idx
+          group: idg
       )
     )
 
@@ -103,8 +104,8 @@ define [
       }
       name_values[source]["currently_used_out"] = name_values[source]["currently_used_out"] + scaled_weight
       name_values[target]["currently_used_in"] = name_values[target]["currently_used_in"] + scaled_weight
-      
-      O.enhance compute, 
+
+      O.enhance compute,
         curve: CurvedRectangle(curved_rect)
         item: data.links[i]
         index: i

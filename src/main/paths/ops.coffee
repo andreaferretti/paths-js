@@ -24,7 +24,7 @@ define [
 
   enhance = (compute, curve) ->
     for key, method of compute or {}
-      curve[key] = method(curve.index, curve.item)
+      curve[key] = method(curve.index, curve.item, curve.group)
     curve
 
   sum: sum

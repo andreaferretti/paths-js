@@ -8,12 +8,20 @@
   expect = require('expect.js');
 
   data = {
-    nodes: [["pippo"], ["pluto"]],
+    nodes: [["pippo", "paperino"], ["pluto", "ciccio", "nonna papera"], ["minnie", "gastone"]],
     links: [
       {
         start: "pippo",
         end: "pluto",
         weight: 100
+      }, {
+        start: "pippo",
+        end: "minnie",
+        weight: 50
+      }, {
+        start: "paperino",
+        end: "gastone",
+        weight: 60
       }
     ]
   };
@@ -43,21 +51,29 @@
       myitem: function(i, d) {
         return d;
       },
-      myindex: function(i, d) {
+      myindex: function(i) {
         return i;
+      },
+      mygroup: function(i, d, g) {
+        return g;
       }
     }
   });
 
   describe('sankey diagram', function() {
     it('should generate as many rectangles as data nodes', function() {
-      return expect(sankey.rectangles).to.have.length(2);
+      return expect(sankey.rectangles).to.have.length(7);
     });
     it('should generate as many curved rectangles as data links', function() {
-      return expect(sankey.curvedRectangles).to.have.length(1);
+      return expect(sankey.curvedRectangles).to.have.length(3);
     });
-    return it('coincide with a single curved rect if there is only one link', function() {
-      return expect(sankey.curvedRectangles[0].curve.path.print()).to.be(c_rect.path.print());
+    it('should include the group number', function() {
+      return expect(sankey.rectangles[4].group).to.be(1);
+    });
+    return it('should allow custom computations', function() {
+      expect(sankey.rectangles[2].myitem).to.be(sankey.rectangles[2].item);
+      expect(sankey.curvedRectangles[2].myindex).to.be(sankey.curvedRectangles[2].index);
+      return expect(sankey.rectangles[5].mygroup).to.be(sankey.rectangles[5].group);
     });
   });
 

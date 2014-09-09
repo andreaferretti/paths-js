@@ -4,16 +4,18 @@
 * New chart: Waterfall
 * New chart: Graph layout (not optimized)
 * New chart: Tree
+* New chart: Sankey diagram
 * Code snippets visible from the demo application
 
 0.4
 ===
 
+* Coordinate changes
 * Cumulative versions of bar and line charts
 * New shape: Poincaré arc
 * New chart: Circos
 * Optimize Graph chart
-* Coordinate changes
+* Improve layout of trees and Sankey diagrams
 
 0.5
 ===

@@ -153,9 +153,7 @@
               params: first
             });
           }
-          return newInstructions.reduce((function(oldpath, instruction) {
-            return Path(push(oldpath.instructions(), instruction));
-          }), this);
+          return Path(this.instructions().concat(newInstructions));
         }
       };
     };

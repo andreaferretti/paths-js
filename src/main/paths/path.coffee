@@ -99,7 +99,6 @@ define [
       newInstructions = path.instructions()[1..]
       if not areEqualPoints(last,first)
         newInstructions.unshift({command:"L", params: first})
-      newInstructions.reduce ((oldpath, instruction) -> 
-        Path(push oldpath.instructions(), instruction)), @
+      Path(@instructions().concat(newInstructions))
 
   -> Path()

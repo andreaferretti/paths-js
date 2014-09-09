@@ -95,7 +95,8 @@
           return rects.push(O.enhance(compute, {
             curve: Rectangle(att),
             item: data.nodes[idg][idn],
-            index: node_idx
+            index: node_idx,
+            group: idg
           }));
         });
       });

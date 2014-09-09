@@ -258,7 +258,7 @@ All of the following graph APIs accept a parameter named `compute` which is a ha
       }
     }
 
-All curves in the `curves` array will contain the corresponding properties in addition to `index` and `item`; for instance in the example above each curve will have the `color` property.
+All curves in the `curves` array will contain the corresponding properties in addition to `index` and `item`; for instance in the example above each curve will have the `color` property. Each function in the `compute` hash receives two parameters `index` and `item`; where it makes sense it also receives a third parameter `group` containing a group index (for items that are clustered).
 
 This feature is useful if the resulting graph will be rendered with a somewhat static template engine, such as Mustache, that needs to have all fields precomputed. More flexbile template engines, such as the one in Ractive, allow custom expressions to be evaluated in templates, so there will be generally no need for the `compute` parameter.
 
@@ -581,7 +581,7 @@ Parameters:
 * `link_accessor`: a function that is applied to each datum inside each item in `data.links`.
 * `gutter` (optional, default 10): the space to leave between each bar
 * `rect_width` (optional, default 10): the widht of each bar
-* `compute` (optional): see the introduction.
+* `compute` (optional): see the introduction. Each function here has three parameters: `index`, `item` and `group`, where the third one represents the outer index in the `nodes` array.
 
 The `nodes` is a list of lists of objects. Each list represent a level of the diagram; each element in a list is an object which contains at least an id for the links. Id's should be unique to avoid wrong associations.
 

@@ -54,7 +54,7 @@
       _ref = compute || {};
       for (key in _ref) {
         method = _ref[key];
-        curve[key] = method(curve.index, curve.item);
+        curve[key] = method(curve.index, curve.item, curve.group);
       }
       return curve;
     };
