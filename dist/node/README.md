@@ -29,6 +29,8 @@ It depends. If what you need are some ready-made widgets and charts, probably no
 
 The philosophy behind Paths.js is well explained in [this blog post](http://mlarocca.github.io/01-22-2014/pathsjs_ractive.html) by Marcello La Rocca. Also, check the slides from [my talk at MilanoJS user group](https://github.com/andreaferretti/paths-talk-slides), together with the [examples](https://github.com/andreaferretti/paths-talk-examples).
 
+Another [presentation](http://mlarocca.github.io/graphicalweb2014/) by Marcello goes in detail over the state of graphics in the browser, covering various approaches, including Paths.js.
+
 Installation and usage
 ----------------------
 
@@ -537,6 +539,108 @@ For instance, the height of `Detail income` in the example is `21 = 30 - 6 - 3`,
 
 The object returned by the `Waterfall` function contains the `curves` array, on which one can iterate to draw the rectangles. Each member of this array has the properties `line`, `index`, `value` and `item`, the latter containing the actual datum associated to the rectangle. `value` instead contains the height computed for this rectangle: it coincides with `item.value` whenever this is present, and otherwise it is equal to the cumulative value computed. For instance, `value` would be `21` for the `Detail Income` rectangle in the example above.
 
+### Force-directed graphs ###
+
+Force-directed graphs are still an **experimental component** of Paths.js. They work as advertised, but the performance is currently very bad. In the next iterations we will improve and optimize the layout algorithm, while leaving the API unchanged. In this way, graphs drawn today will still work, just with a smoother experience and possibly a nicer layout of nodes.
+
+A graph is layed out with a physical simulation, where nodes repel each other, but nodes connected via links are attracted. The use of graphs is more complicated than other Paths.js APIs since we must be able to support server-side rendering, as well as client-side animations and drag and drop interaction.
+
+The usage is as follows:
+
+    var Graph = require('paths/graph');
+    var graph = Graph({
+      data: {
+        nodes:[
+          {id:"pippo"},
+          {id:"pluto"},
+          {id:"paperino"}
+          {id:"qui"},
+          {id:"quo"},
+          {id:"qua"}
+          {id:"nonna papera"},
+          {id:"ciccio"}
+        ],
+        links:[
+          {start:"pippo", end:"quo", weight:10},
+          {start:"pippo", end:"qua", weight:30},
+          {start:"pluto", end:"nonna papera", weight:10},
+          {start:"pluto", end:"qui", weight:10},
+          {start:"pluto", end:"quo", weight:10},
+          {start:"paperino", end:"ciccio", weight:100},
+          {start:"qui", end:"ciccio", weight: 20},
+          {start:"quo", end:"ciccio", weight: 10},
+          {start:"qua", end:"nonna papera", weight: 30}
+        ]
+      },
+      compute: {
+        color: function(i) { return somePalette[i]; }
+      },
+      node_accessor: function (x) { return x.id; },
+      width: 500,
+      height: 400,
+      attraction: 1.1,
+      repulsion: 1.3,
+      threshold: 0.6
+    });
+
+Parameters:
+
+* `width`, `height`: have the obvious geometric meaning
+* `data`: contains an object with nodes and links. The precise form of the data is not important, because the actual value of the data will be extracted by the `node_accessor` and `link_accessor` functions.
+* `node_accessor` (optional, default identity): a function that is applied to each datum inside each item in `data.nodes` to extract its id.
+* `link_accessor` (optional, default identity): a function that is applied to each datum inside each item in `data.links`.
+* `attraction` (optional, default 1): a physical parameter: increasing it will make the links stronger
+* `repulsion` (optional, default 1): a physical parameter: increasing it will make nodes repel each other more strongly
+* `threshold` (optional, default 0.5): a parameter between `0` and `1`: higher values will lead to more accurate layouts but slower rendering
+* `compute` (optional): see the introduction
+
+`nodes` is a list of objects; each element in a list is an object from which we can extract an id with the `node_accessor` function. Ids should be unique to avoid wrong associations.
+
+`links` is a list of objects. Applying the `link_accessor` function, we should extract something which contains a `start` and `end` properties (ids of nodes) and a `weight`,
+
+The object returned by the `Graph` function contains two arrays `curves` and `nodes`. One can iterate on `curves` to draw the links and on `nodes` to draw the points. Each member of `curves` has the properties `link`, `index`, `item`, the latter containing the actual datum associated to the link. Each memeber of `nodes` has the properties `point` and `item`. You can add more properties by passing them within the `compute` object.
+
+Finally, there is a significant difference between `Graph` and the other Paths.js APIs. A force-directed graph is meant to be animated, where the layout is computed in steps by a physical simulation. The object we have described above is static, but it has a method `tick`. The result of `tick` is the next step of the graph. An excerpt of its use in the demo application looks like
+
+    var moving = true;
+    function step() {
+      ractive.set({graph: graph.tick()});
+      if (moving) requestAnimationFrame(step);
+    }
+
+    requestAnimationFrame(step);
+    setTimeout(function() { moving = false; }, 10000);
+
+It makes use of Ractive.js, but it should be easy to understand: on each animation frame we update the graph using `graph.tick` and then render it.
+
+If you make use of `Graph` on the server side, you will need to perform a number of ticks before returning the graph to display.
+
+Graph objects also have to other methods, `constrain` and `unconstrain`. One can use `graph.constrain(id, coordinates)` to guarantee that the node represented by `id` will be stuck at `coordinates` regardless of the layout algorithm (starting from next tick), and `graph.unconstrain(id)` to release the node. This can be used to enable drag and drop of the nodes, as in this example:
+
+    var svgX, svgY = null; // coordinates of the SVG frame
+    var following = null;
+    ractive.on('constrain', function(event) { // runs on mousedown
+      moving = true;
+      target = event.original.target;
+      svgX = event.original.clientX - target.cx.baseVal.value;
+      svgY = event.original.clientY - target.cy.baseVal.value;
+      following = event.index.num // node id
+      requestAnimationFrame(step); // reenable the animation if it was stopped
+    }
+
+    ractive.on('move', function(event) { // runs on mousemove
+      if (!following) return null;
+      if (event.original.button != 0) return null;
+      coordinates = [event.original.clientX - svgX, event.original.clientY - svgY];
+      graph.constrain(following, coordinates);
+    }
+
+    ractive.on('unconstrain', function(event) { // runs on mouseup
+      graph.unconstrain(following);
+      following = null;
+      setTimeout(function() { moving = false; }, 10000);
+    }
+
 ### Sankey Diagram ###
 
 Sankey diagrams are a specific type of flow diagram, in which the arrows are proportional to the flow quantity. They are classically used to visualize energy accounts or material flow on a regional or national level, but they can represent any kind of quantitative flow, from source (to the left) to target (to the right). They are also closely related to "Alluvial diagrams". It can be used as follows:
@@ -545,28 +649,26 @@ Sankey diagrams are a specific type of flow diagram, in which the arrows are pro
     var sankey = Sankey({
       data: {
         nodes:[
-          [{id:"pippo"},{id:"pluto"},{id:"paperino"}]
-          [{id:"qui"},{id:"quo"},{id:"qua"}]
+          [{id:"pippo"},{id:"pluto"},{id:"paperino"}],
+          [{id:"qui"},{id:"quo"},{id:"qua"}],
           [{id:"nonna papera"},{id:"ciccio"}]
-        ]
+        ],
         links:[
-          {start:"pippo", end:"quo", weight:10}
-          {start:"pippo", end:"qua", weight:30}
-          {start:"pluto", end:"nonna papera", weight:10}
-          {start:"pluto", end:"qui", weight:10}
-          {start:"pluto", end:"quo", weight:10}
-          {start:"paperino", end:"ciccio", weight:100}
-          {start:"qui", end:"ciccio", weight: 20}
-          {start:"quo", end:"ciccio", weight: 10}
+          {start:"pippo", end:"quo", weight:10},
+          {start:"pippo", end:"qua", weight:30},
+          {start:"pluto", end:"nonna papera", weight:10},
+          {start:"pluto", end:"qui", weight:10},
+          {start:"pluto", end:"quo", weight:10},
+          {start:"paperino", end:"ciccio", weight:100},
+          {start:"qui", end:"ciccio", weight: 20},
+          {start:"quo", end:"ciccio", weight: 10},
           {start:"qua", end:"nonna papera", weight: 30}
         ]
-      }
-      compute: {
-        color: function(i, item) {
-          return "red"
-        }
       },
-      node_accessor: function (x) { return x.id }
+      compute: {
+        color: function(i) { return somePalette[i]; }
+      },
+      node_accessor: function (x) { return x.id; },
       width: 500,
       height: 400,
       gutter: 10,
@@ -576,16 +678,16 @@ Sankey diagrams are a specific type of flow diagram, in which the arrows are pro
 Parameters:
 
 * `width`, `height`: have the obvious geometric meaning
-* `data`: contains an object with nodes and links. The precise form of the data is not important, because the actual value of the data will be extracted by the `accessor` function.
-* `node_accessor`: a function that is applied to each datum inside each item in `data.nodes` to extract its id.
-* `link_accessor`: a function that is applied to each datum inside each item in `data.links`.
+* `data`: contains an object with nodes and links. The precise form of the data is not important, because the actual value of the data will be extracted by the `node_accessor` and `link_accessor` functions.
+* `node_accessor` (optional, default identity): a function that is applied to each datum inside each item in `data.nodes` to extract its id.
+* `link_accessor` (optional, default identity): a function that is applied to each datum inside each item in `data.links`.
 * `gutter` (optional, default 10): the space to leave between each bar
 * `rect_width` (optional, default 10): the widht of each bar
 * `compute` (optional): see the introduction. Each function here has three parameters: `index`, `item` and `group`, where the third one represents the outer index in the `nodes` array.
 
-The `nodes` is a list of lists of objects. Each list represent a level of the diagram; each element in a list is an object which contains at least an id for the links. Id's should be unique to avoid wrong associations.
+`nodes` is a list of lists of objects. Each list represent a level of the diagram; each element in a list is an object from which we can extract an id with the `node_accessor` function. Ids should be unique to avoid wrong associations.
 
-The `links` is a list of objects. Each object contains a `start` and an `end` (by id) and a weight, which represents how much flow is going from `start` to `end`; `start` should be on the left of `end` and you should avoid circles (which is automatic if you respect the previous rule!). You don't need to have `start` and `end` in two consecutive levels.
+`links` is a list of objects. Applying the `link_accessor` function, we should extract something which contains a `start` and `end` properties (ids of nodes) and a `weight`, which represents how much flow is going from `start` to `end`; `start` should be on the left of `end` and you should avoid circles (which is automatic if you respect the previous rule!). You don't need to have `start` and `end` in two consecutive levels.
 
 The object returned by the `Sankey` function contains the `curvedRectangles` array, on which one can iterate to draw the flows, and the `rectangles` array, on which one can iterate to draw the rectangles. Each member of this arrays has the properties `curve`, `index`, `item`, the latter containing the actual datum associated to the node/link. You can add more properties by passing them within the `compute` object.
 

@@ -1,12 +1,3 @@
-0.3
-===
-
-* New chart: Waterfall
-* New chart: Graph layout (not optimized)
-* New chart: Tree
-* New chart: Sankey diagram
-* Code snippets visible from the demo application
-
 0.4
 ===
 

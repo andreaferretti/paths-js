@@ -15,3 +15,12 @@ First version with
 * Removed dependency on a Require.js shim in the built version
 * New shape: Rectangle
 * New chart: Bar Chart
+
+0.3
+===
+
+* New chart: Waterfall
+* New chart: Graph layout (not optimized)
+* New chart: Tree (in collaboration with pazqo)
+* New chart: Sankey diagram (thanks to pazqo)
+* Code snippets visible from the demo application
