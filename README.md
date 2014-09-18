@@ -8,7 +8,7 @@ Paths.js offers three APIs, of increasing abstraction. The lowest level is a cha
 Table of contents
 -----------------
 
-- [How does it look like?](#how-does-it-look-like)
+- [What does it look like?](#what-does-it-look-like)
 - [Is it for me?](#is-it-for-me)
 - [Installation and usage](#installation-and-usage)
 - [Low level API](#low-level-api)
