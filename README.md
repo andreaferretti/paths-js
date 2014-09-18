@@ -17,8 +17,8 @@ Table of contents
 - [Miscellaneous](#miscellaneous)
 - [Browser support](#browser-support)
 
-How does it look like?
-----------------------
+What does it look like?
+-----------------------
 
 Well, it depends on how you style the graphics, because the actual drawing of the SVG is left to you. Anyway, [here] [7] is a demo application; a live version can be seen [here] [8].
 
