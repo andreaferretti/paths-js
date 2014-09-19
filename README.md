@@ -86,7 +86,7 @@ Other than methods to compose other paths, path objects have the methods `print`
 
 The `points` method returns the array of points through which the path passes. This case be useful, for instance, to place labels near the endpoints.
 
-The `instructions` method returns the array of instructions to build the path. This is used to access progammatically the single instructions and to join paths.
+The `instructions` method returns the array of instructions to build the path. This is used to access programmatically the single instructions and to join paths.
 
 The `connect` method, applied to another path, adds the second path to the first one: if the end point of the first path is different from the start point of the second path, they are joined by a straight line.
 
@@ -262,7 +262,7 @@ All of the following graph APIs accept a parameter named `compute` which is a ha
 
 All curves in the `curves` array will contain the corresponding properties in addition to `index` and `item`; for instance in the example above each curve will have the `color` property. Each function in the `compute` hash receives two parameters `index` and `item`; where it makes sense it also receives a third parameter `group` containing a group index (for items that are clustered).
 
-This feature is useful if the resulting graph will be rendered with a somewhat static template engine, such as Mustache, that needs to have all fields precomputed. More flexbile template engines, such as the one in Ractive, allow custom expressions to be evaluated in templates, so there will be generally no need for the `compute` parameter.
+This feature is useful if the resulting graph will be rendered with a somewhat static template engine, such as Mustache, that needs to have all fields precomputed. More flexible template engines, such as the one in Ractive, allow custom expressions to be evaluated in templates, so there will be generally no need for the `compute` parameter.
 
 ### Pie graph ###
 
@@ -384,7 +384,7 @@ Parameters:
 
 * `width` and `height`: have the obvious geometric meaning; data will be rescaled to fit into a rectangle of these dimensions
 * `data`: contains the actual data to plot. It should be an array of arrays, each internal array representing a time series to be plotted. The actual format of the data in the time series is not important; the actual abscissa and ordinate of the point are extracted by the `xaccessor` and `yaccessor` function.
-* `xaccessor`, `yaccessor`: two functions that extract from each datum its x and y cordinates. They default to `function(d) { return d[0] }` and `function(d) { return d[1] }` respectively, so if `data` is passed as an array of arrays of arrays of 2 elements, the accessor functions are optional.
+* `xaccessor`, `yaccessor`: two functions that extract from each datum its x and y coordinates. They default to `function(d) { return d[0] }` and `function(d) { return d[1] }` respectively, so if `data` is passed as an array of arrays of arrays of 2 elements, the accessor functions are optional.
 * `closed` (optional, default `false`): a boolean used to decide how to construct the paths for the area plots. If `closed` is set to true, these will be stretched to include part of the x axis, even if the data are not around 0. Use this if you want to be sure that the area paths touch the horizontal axis
 * `compute` (optional): see the introduction.
 
@@ -543,7 +543,7 @@ The object returned by the `Waterfall` function contains the `curves` array, on 
 
 Force-directed graphs are still an **experimental component** of Paths.js. They work as advertised, but the performance is currently very bad. In the next iterations we will improve and optimize the layout algorithm, while leaving the API unchanged. In this way, graphs drawn today will still work, just with a smoother experience and possibly a nicer layout of nodes.
 
-A graph is layed out with a physical simulation, where nodes repel each other, but nodes connected via links are attracted. The use of graphs is more complicated than other Paths.js APIs since we must be able to support server-side rendering, as well as client-side animations and drag and drop interaction.
+A graph is laid out with a physical simulation, where nodes repel each other, but nodes connected via links are attracted. The use of graphs is more complicated than other Paths.js APIs since we must be able to support server-side rendering, as well as client-side animations and drag and drop interaction.
 
 The usage is as follows:
 
@@ -598,7 +598,7 @@ Parameters:
 
 `links` is a list of objects. Applying the `link_accessor` function, we should extract something which contains a `start` and `end` properties (ids of nodes) and a `weight`,
 
-The object returned by the `Graph` function contains two arrays `curves` and `nodes`. One can iterate on `curves` to draw the links and on `nodes` to draw the points. Each member of `curves` has the properties `link`, `index`, `item`, the latter containing the actual datum associated to the link. Each memeber of `nodes` has the properties `point` and `item`. You can add more properties by passing them within the `compute` object.
+The object returned by the `Graph` function contains two arrays `curves` and `nodes`. One can iterate on `curves` to draw the links and on `nodes` to draw the points. Each member of `curves` has the properties `link`, `index`, `item`, the latter containing the actual datum associated to the link. Each member of `nodes` has the properties `point` and `item`. You can add more properties by passing them within the `compute` object.
 
 Finally, there is a significant difference between `Graph` and the other Paths.js APIs. A force-directed graph is meant to be animated, where the layout is computed in steps by a physical simulation. The object we have described above is static, but it has a method `tick`. The result of `tick` is the next step of the graph. An excerpt of its use in the demo application looks like
 
@@ -682,7 +682,7 @@ Parameters:
 * `node_accessor` (optional, default identity): a function that is applied to each datum inside each item in `data.nodes` to extract its id.
 * `link_accessor` (optional, default identity): a function that is applied to each datum inside each item in `data.links`.
 * `gutter` (optional, default 10): the space to leave between each bar
-* `rect_width` (optional, default 10): the widht of each bar
+* `rect_width` (optional, default 10): the width of each bar
 * `compute` (optional): see the introduction. Each function here has three parameters: `index`, `item` and `group`, where the third one represents the outer index in the `nodes` array.
 
 `nodes` is a list of lists of objects. Each list represent a level of the diagram; each element in a list is an object from which we can extract an id with the `node_accessor` function. Ids should be unique to avoid wrong associations.
