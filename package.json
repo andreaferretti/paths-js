@@ -7,6 +7,10 @@
 	"license": "Apache-2.0",
 	"homepage": "https://github.com/andreaferretti/paths-js",
 	"keywords": ["svg", "path", "chart"],
+	"repository" : {
+		"type" : "git",
+		"url" : "https://github.com/andreaferretti/paths-js.git"
+	},
 	"dependencies": {},
 	"devDependencies": {
 		"grunt": "~0.4.1",
