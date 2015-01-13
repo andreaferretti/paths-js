@@ -29,6 +29,7 @@
 		"node": ">=0.8.0"
 	},
 	"scripts":{
-		"test": "mocha ./test/*.js"
+		"test": "mocha ./test/*.js",
+		"postinstall": "grunt build"
 	}
 }
