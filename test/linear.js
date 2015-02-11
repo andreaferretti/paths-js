@@ -25,4 +25,21 @@
     });
   });
 
+  describe('linear scale inverse', function() {
+    it('should compute the inverse of the original map', function() {
+      var linear1, linear2;
+      linear1 = Linear([-1, 3], [2, 17]);
+      linear2 = linear1.inverse();
+      expect(linear2(2)).to.be(-1);
+      return expect(linear2(17)).to.be(3);
+    });
+    return it('should allow to recover the original points', function() {
+      var linear1, linear2;
+      linear1 = Linear([0, 3], [5, 14]);
+      linear2 = linear1.inverse();
+      expect(linear1(linear2(2))).to.be(2);
+      return expect(linear2(linear1(7))).to.be(7);
+    });
+  });
+
 }).call(this);

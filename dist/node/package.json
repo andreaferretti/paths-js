@@ -1,12 +1,16 @@
 {
 	"name": "paths-js",
-	"version": "0.3.0",
+	"version": "0.3.1",
 	"author": {
 		"name": "Andrea Ferretti"
 	},
 	"license": "Apache-2.0",
 	"homepage": "https://github.com/andreaferretti/paths-js",
 	"keywords": ["svg", "path", "chart"],
+	"repository" : {
+		"type" : "git",
+		"url" : "https://github.com/andreaferretti/paths-js.git"
+	},
 	"dependencies": {},
 	"devDependencies": {
 		"grunt": "~0.4.1",
@@ -23,5 +27,8 @@
 	},
 	"engines": {
 		"node": ">=0.8.0"
+	},
+	"scripts":{
+		"test": "mocha ./test/*.js"
 	}
 }

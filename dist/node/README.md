@@ -8,7 +8,7 @@ Paths.js offers three APIs, of increasing abstraction. The lowest level is a cha
 Table of contents
 -----------------
 
-- [How does it look like?](#how-does-it-look-like)
+- [What does it look like?](#what-does-it-look-like)
 - [Is it for me?](#is-it-for-me)
 - [Installation and usage](#installation-and-usage)
 - [Low level API](#low-level-api)
@@ -17,8 +17,8 @@ Table of contents
 - [Miscellaneous](#miscellaneous)
 - [Browser support](#browser-support)
 
-How does it look like?
-----------------------
+What does it look like?
+-----------------------
 
 Well, it depends on how you style the graphics, because the actual drawing of the SVG is left to you. Anyway, [here] [7] is a demo application; a live version can be seen [here] [8].
 
@@ -67,7 +67,7 @@ If you want to use Paths.js in the browser, but you do not want to use AMD modul
 Low level API
 -------------
 
-At the heart of the library there is a very simple API to compose SVG paths by method chaining. At this level, we do not try to abstract away the specification of SVG paths, and the parameters mimic exactly the ones in the specification. An empty path object is created with the function `Path()` and complex path objects can be obtained from the empty one by chaining path methods. Thus, one can produce a path like
+At the heart of the library there is a very simple API to compose SVG paths by method chaining. At this level, we do not try to abstract away the specification of SVG paths, and the parameters mimic exactly the ones in the specification. An empty path object is created with the function `Path()` and complex path objects can be obtained from the empty one by chaining path methods. Thus, one can produce a path like:
 
     var Path = require('paths/path');
     var path = Path()
@@ -77,7 +77,7 @@ At the heart of the library there is a very simple API to compose SVG paths by m
       .qcurveto(27, 30, 32, 27)
       .closepath();
 
-Other than methods to compose other paths, path objects have the methods `print` and `points`. The `print` method will give the textual representation of the path, that can be used inside an SVG figure like
+Other than methods to compose other paths, path objects have the methods `print` and `points`. The `print` method will give the textual representation of the path, that can be used inside an SVG figure like:
 
     <!-- inside a template -->
     <svg width=300 height=300>
@@ -86,7 +86,7 @@ Other than methods to compose other paths, path objects have the methods `print`
 
 The `points` method returns the array of points through which the path passes. This case be useful, for instance, to place labels near the endpoints.
 
-The `instructions` method returns the array of instructions to build the path. This is used to access progammatically the single instructions and to join paths.
+The `instructions` method returns the array of instructions to build the path. This is used to access programmatically the single instructions and to join paths.
 
 The `connect` method, applied to another path, adds the second path to the first one: if the end point of the first path is different from the start point of the second path, they are joined by a straight line.
 
@@ -94,7 +94,7 @@ All methods except `print` and `points` produce a new path (paths are immutable)
 
 ### Verbose API ###
 
-It is also possible to use a more verbose API, where the parameters to the path methods are named. To do so, just pass an object to the path methods. The names of the parameters are the same as in the SVG specification. Hence
+It is also possible to use a more verbose API, where the parameters to the path methods are named. To do so, just pass an object to the path methods. The names of the parameters are the same as in the SVG specification. Hence:
 
     Path()
       .moveto(2, 10)
@@ -108,7 +108,7 @@ It is also possible to use a more verbose API, where the parameters to the path 
       .arc(3, 3, 2, 0, 1, 6, -3)
       .closepath()
 
-is equivalent to
+is equivalent to:
 
     Path()
       .moveto({x: 2, y: 10})
@@ -122,7 +122,7 @@ is equivalent to
       .arc({rx: 3, ry: 3, xrot: 2, large_arc_flag: 0, sweep_flag: 1, x: 6, y: -3})
       .closepath()
 
-The verbose API can be freely mixed with the shorter one, so for instance
+The verbose API can be freely mixed with the shorter one, so for instance:
 
     Path()
       .moveto(2, 10)
@@ -136,7 +136,7 @@ is perfectly valid.
 Mid level API (shapes)
 ----------------------
 
-At a higher level of abstraction, we have some simple shapes. A module for a shape defines a function that takes as input some geometric data and returns a shape object. Shape objects have the two properties `path` and `centroid`. The first one contains a `Path`, in the sense of the previous paragraph, while the second one is a point that is somehow central to the figure - for instance, it can be used to place a label. Thus a shape object has the structure
+At a higher level of abstraction, we have some simple shapes. A module for a shape defines a function that takes as input some geometric data and returns a shape object. Shape objects have the two properties `path` and `centroid`. The first one contains a `Path`, in the sense of the previous paragraph, while the second one is a point that is somehow central to the figure - for instance, it can be used to place a label. Thus a shape object has the structure:
 
     {
       path: <path object>
@@ -160,7 +160,7 @@ As shown in the example, it expects as input an object with the property `points
 
 A special case of the above is a polygon whose points are placed on half-lines starting from a fixed center and forming constant angles between each other; we call these kinds of polygons semi-regular. In the even more special case where all points have the same distance from the center, the polygon is regular.
 
-A semi-regular polygon is defined by its center and the distance of each of its points from the center, like
+A semi-regular polygon is defined by its center and the distance of each of its points from the center, like:
 
     var SemiRegularPolygon = require('paths/semi-regular-polygon');
     var polygon = SemiRegularPolygon({
@@ -176,7 +176,7 @@ In the above example, `polygon` is semi-regular and centered at the origin, whil
 
 ### Rectangle ###
 
-Another special case of `Polygon` is a rectangle having sides parallel to the axes. It can be generated with
+Another special case of `Polygon` is a rectangle having sides parallel to the axes. It can be generated with:
 
     var Rectangle = require('paths/rectangle');
     var rectangle = Rectangle({
@@ -192,7 +192,7 @@ The SVG spec includes `<rect>` elements, so usually there is no need to use a `<
 
 Similar to `paths.polygon`, the module `paths.bezier` defines a curve that passes through a given list of vertices, but does so with a line that interpolates smoothly between the data points. Unlike polygons, curves produced in this way are always open.
 
-An example is
+An example is:
 
     var Bezier = require('paths/bezier');
     var points = [[1, 3], [2, 5], [3, 4], [4, 0]];
@@ -235,7 +235,7 @@ High level API (graphs)
 
 Based on the shapes above, we can construct more complex graphs. At this level, the API assume one has a collection of data that has to be shown on a graph, and take care of normalizing the data, so that for instance if you display multiple line graphs on the same chart, the scales are normalized.
 
-All graph objects - that is, objects returned by some graph functions - have the field `curves` that contains an array, and possibly more fields, depending on the graph. Each element of `curves` has the properties `item`, which is a reference to the corresponding data item, `index`, and one or more field containing shape objects, for instance `sector` in the case of the pie graph, or `line` and `area` for the line charts. Thus, a graph object has the shape
+All graph objects - that is, objects returned by some graph functions - have the field `curves` that contains an array, and possibly more fields, depending on the graph. Each element of `curves` has the properties `item`, which is a reference to the corresponding data item, `index`, and one or more field containing shape objects, for instance `sector` in the case of the pie graph, or `line` and `area` for the line charts. Thus, a graph object has the shape:
 
     {
       curves: [
@@ -250,7 +250,7 @@ All graph objects - that is, objects returned by some graph functions - have the
       ...
     }
 
-All of the following graph APIs accept a parameter named `compute` which is a hash table of functions that should be evaluated for each curve to be drawn. A typical use would be to compute a color based on the index or the data item, like
+All of the following graph APIs accept a parameter named `compute` which is a hash table of functions that should be evaluated for each curve to be drawn. A typical use would be to compute a color based on the index or the data item, like:
 
     {
       compute: {
@@ -262,7 +262,7 @@ All of the following graph APIs accept a parameter named `compute` which is a ha
 
 All curves in the `curves` array will contain the corresponding properties in addition to `index` and `item`; for instance in the example above each curve will have the `color` property. Each function in the `compute` hash receives two parameters `index` and `item`; where it makes sense it also receives a third parameter `group` containing a group index (for items that are clustered).
 
-This feature is useful if the resulting graph will be rendered with a somewhat static template engine, such as Mustache, that needs to have all fields precomputed. More flexbile template engines, such as the one in Ractive, allow custom expressions to be evaluated in templates, so there will be generally no need for the `compute` parameter.
+This feature is useful if the resulting graph will be rendered with a somewhat static template engine, such as Mustache, that needs to have all fields precomputed. More flexible template engines, such as the one in Ractive, allow custom expressions to be evaluated in templates, so there will be generally no need for the `compute` parameter.
 
 ### Pie graph ###
 
@@ -384,7 +384,7 @@ Parameters:
 
 * `width` and `height`: have the obvious geometric meaning; data will be rescaled to fit into a rectangle of these dimensions
 * `data`: contains the actual data to plot. It should be an array of arrays, each internal array representing a time series to be plotted. The actual format of the data in the time series is not important; the actual abscissa and ordinate of the point are extracted by the `xaccessor` and `yaccessor` function.
-* `xaccessor`, `yaccessor`: two functions that extract from each datum its x and y cordinates. They default to `function(d) { return d[0] }` and `function(d) { return d[1] }` respectively, so if `data` is passed as an array of arrays of arrays of 2 elements, the accessor functions are optional.
+* `xaccessor`, `yaccessor`: two functions that extract from each datum its x and y coordinates. They default to `function(d) { return d[0] }` and `function(d) { return d[1] }` respectively, so if `data` is passed as an array of arrays of arrays of 2 elements, the accessor functions are optional.
 * `closed` (optional, default `false`): a boolean used to decide how to construct the paths for the area plots. If `closed` is set to true, these will be stretched to include part of the x axis, even if the data are not around 0. Use this if you want to be sure that the area paths touch the horizontal axis
 * `compute` (optional): see the introduction.
 
@@ -543,7 +543,7 @@ The object returned by the `Waterfall` function contains the `curves` array, on 
 
 Force-directed graphs are still an **experimental component** of Paths.js. They work as advertised, but the performance is currently very bad. In the next iterations we will improve and optimize the layout algorithm, while leaving the API unchanged. In this way, graphs drawn today will still work, just with a smoother experience and possibly a nicer layout of nodes.
 
-A graph is layed out with a physical simulation, where nodes repel each other, but nodes connected via links are attracted. The use of graphs is more complicated than other Paths.js APIs since we must be able to support server-side rendering, as well as client-side animations and drag and drop interaction.
+A graph is laid out with a physical simulation, where nodes repel each other, but nodes connected via links are attracted. The use of graphs is more complicated than other Paths.js APIs since we must be able to support server-side rendering, as well as client-side animations and drag and drop interaction.
 
 The usage is as follows:
 
@@ -598,9 +598,9 @@ Parameters:
 
 `links` is a list of objects. Applying the `link_accessor` function, we should extract something which contains a `start` and `end` properties (ids of nodes) and a `weight`,
 
-The object returned by the `Graph` function contains two arrays `curves` and `nodes`. One can iterate on `curves` to draw the links and on `nodes` to draw the points. Each member of `curves` has the properties `link`, `index`, `item`, the latter containing the actual datum associated to the link. Each memeber of `nodes` has the properties `point` and `item`. You can add more properties by passing them within the `compute` object.
+The object returned by the `Graph` function contains two arrays `curves` and `nodes`. One can iterate on `curves` to draw the links and on `nodes` to draw the points. Each member of `curves` has the properties `link`, `index`, `item`, the latter containing the actual datum associated to the link. Each member of `nodes` has the properties `point` and `item`. You can add more properties by passing them within the `compute` object.
 
-Finally, there is a significant difference between `Graph` and the other Paths.js APIs. A force-directed graph is meant to be animated, where the layout is computed in steps by a physical simulation. The object we have described above is static, but it has a method `tick`. The result of `tick` is the next step of the graph. An excerpt of its use in the demo application looks like
+Finally, there is a significant difference between `Graph` and the other Paths.js APIs. A force-directed graph is meant to be animated, where the layout is computed in steps by a physical simulation. The object we have described above is static, but it has a method `tick`. The result of `tick` is the next step of the graph. An excerpt of its use in the demo application looks like:
 
     var moving = true;
     function step() {
@@ -682,7 +682,7 @@ Parameters:
 * `node_accessor` (optional, default identity): a function that is applied to each datum inside each item in `data.nodes` to extract its id.
 * `link_accessor` (optional, default identity): a function that is applied to each datum inside each item in `data.links`.
 * `gutter` (optional, default 10): the space to leave between each bar
-* `rect_width` (optional, default 10): the widht of each bar
+* `rect_width` (optional, default 10): the width of each bar
 * `compute` (optional): see the introduction. Each function here has three parameters: `index`, `item` and `group`, where the third one represents the outer index in the `nodes` array.
 
 `nodes` is a list of lists of objects. Each list represent a level of the diagram; each element in a list is an object from which we can extract an id with the `node_accessor` function. Ids should be unique to avoid wrong associations.
@@ -700,6 +700,11 @@ Other than the modules mentioned above, Paths.js has the `linear` and `ops` modu
     var Linear = require('paths/linear');
     var scale = Linear([0, 3], [10, 40]);
     var x = scale(2); // yields 30
+
+It can be also useful to invert linear scales, say to map coordinates on the screen to data points. This is done with the `invert` method on a linear scale. Continuing the example above
+
+    var inverse = scale.inverse();
+    var y = inverse(30); // yields 2
 
 The `ops` module contains various utility functions that are used internally. It is not meant for external use, hence it is not documented, but curious folks can have a look at its tests.
 

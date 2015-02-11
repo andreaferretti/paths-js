@@ -701,6 +701,11 @@ Other than the modules mentioned above, Paths.js has the `linear` and `ops` modu
     var scale = Linear([0, 3], [10, 40]);
     var x = scale(2); // yields 30
 
+It can be also useful to invert linear scales, say to map coordinates on the screen to data points. This is done with the `invert` method on a linear scale. Continuing the example above
+
+    var inverse = scale.inverse();
+    var y = inverse(30); // yields 2
+
 The `ops` module contains various utility functions that are used internally. It is not meant for external use, hence it is not documented, but curious folks can have a look at its tests.
 
 Browser support
