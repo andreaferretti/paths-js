@@ -16,6 +16,7 @@ Table of contents
 - [High level API (graphs)](#high-level-api-graphs)
 - [Miscellaneous](#miscellaneous)
 - [Browser support](#browser-support)
+- [Using Paths.js with the Canvas API](#using-pathsjs-with-the-canvas-api)
 
 Let me see it
 -------------
