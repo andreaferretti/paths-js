@@ -1,15 +1,15 @@
 (function() {
   define(['./rectangle', './curved-rectangle', './ops'], function(Rectangle, CurvedRectangle, O) {
     return function(_arg) {
-      var compute, curved_rects, data, gutter, height, height_of_groups, link_accessor, links_, name, name_values, node_accessor, node_idx, nodes_, rect_width, rects, scale, space_for_each_group, spacing_groups, val, vals_in, vals_out, width;
-      data = _arg.data, node_accessor = _arg.node_accessor, link_accessor = _arg.link_accessor, width = _arg.width, height = _arg.height, gutter = _arg.gutter, rect_width = _arg.rect_width, compute = _arg.compute;
-      if (node_accessor == null) {
-        node_accessor = function(x) {
+      var compute, curved_rects, data, gutter, height, height_of_groups, linkaccessor, links_, name, name_values, node_idx, nodeaccessor, nodes_, rect_width, rects, scale, space_for_each_group, spacing_groups, val, vals_in, vals_out, width;
+      data = _arg.data, nodeaccessor = _arg.nodeaccessor, linkaccessor = _arg.linkaccessor, width = _arg.width, height = _arg.height, gutter = _arg.gutter, rect_width = _arg.rect_width, compute = _arg.compute;
+      if (nodeaccessor == null) {
+        nodeaccessor = function(x) {
           return x;
         };
       }
-      if (link_accessor == null) {
-        link_accessor = function(x) {
+      if (linkaccessor == null) {
+        linkaccessor = function(x) {
           return x;
         };
       }
@@ -19,9 +19,9 @@
       if (rect_width == null) {
         rect_width = 10;
       }
-      links_ = data.links.map(link_accessor);
+      links_ = data.links.map(linkaccessor);
       nodes_ = data.nodes.map(function(level) {
-        return level.map(node_accessor);
+        return level.map(nodeaccessor);
       });
       spacing_groups = (width - rect_width) / (data.nodes.length - 1);
       name_values = {};

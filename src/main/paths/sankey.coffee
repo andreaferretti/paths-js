@@ -3,15 +3,15 @@ define [
   './curved-rectangle'
   './ops'
 ], (Rectangle, CurvedRectangle, O)->
-  ({data, node_accessor, link_accessor, width, height, gutter, rect_width, compute}) ->
-    node_accessor ?= (x) -> x
-    link_accessor ?= (x) -> x
+  ({data, nodeaccessor, linkaccessor, width, height, gutter, rect_width, compute}) ->
+    nodeaccessor ?= (x) -> x
+    linkaccessor ?= (x) -> x
     gutter ?= 10
     rect_width ?= 10
 
-    links_ = data.links.map(link_accessor)
+    links_ = data.links.map(linkaccessor)
     nodes_ = data.nodes.map((level) ->
-      level.map(node_accessor)
+      level.map(nodeaccessor)
     )
 
     #compute the spacing between groups of rectangles; takes care of rects width
