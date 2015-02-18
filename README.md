@@ -13,6 +13,7 @@ Table of contents
 - [Documentation](#documentation)
 - [Browser support](#browser-support)
 - [Using Paths.js with the Canvas API](#using-pathsjs-with-the-canvas-api)
+- [Contributing](#contributing)
 
 Let me see it
 -------------
