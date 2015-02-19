@@ -13,6 +13,7 @@ Table of contents
 - [Documentation](#documentation)
 - [Browser support](#browser-support)
 - [Using Paths.js with the Canvas API](#using-pathsjs-with-the-canvas-api)
+- [Using Paths.js with Scala.js](#using-pathsjs-with-scalajs)
 - [Contributing](#contributing)
 
 Let me see it
@@ -52,6 +53,8 @@ Paths.js offers three APIs, of increasing abstraction. The lowest level is a cha
 - [High level API (graphs)](https://github.com/andreaferretti/paths-js/wiki/High-level-API)
 - [Miscellaneous](https://github.com/andreaferretti/paths-js/wiki/Miscellaneous)
 
+Those users who prefer explicit typed interfaces can [browse the API](https://github.com/andreaferretti/paths-scala-js) of the Scala.js bindings.
+
 Browser support
 ---------------
 
@@ -63,6 +66,11 @@ Using Paths.js with the Canvas API
 ----------------------------------
 
 Paths.js does not directly support the [canvas element](http://en.wikipedia.org/wiki/Canvas_element), essentially because there is no need to do so. The [canvg](https://github.com/gabelerner/canvg) project allows to draw SVG paths on a `<canvas>` element, and it seems that canvas [will be able](http://lists.w3.org/Archives/Public/public-whatwg-archive/2012Mar/0269.html) to support SVG paths natively. Of course, canvas-based solutions limit the possibilities offered by data binding libraries for interaction, but they could be used as a fallback on less recent browsers.
+
+Using Paths.js with Scala.js
+----------------------------
+
+It is possible to use Paths.js with [Scala.js](http://www.scala-js.org/) - [this library](https://github.com/andreaferretti/paths-scala-js) defines the bindings.
 
 Contributing
 ------------
