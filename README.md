@@ -53,7 +53,7 @@ Paths.js offers three APIs, of increasing abstraction. The lowest level is a cha
 - [High level API (graphs)](https://github.com/andreaferretti/paths-js/wiki/High-level-API)
 - [Miscellaneous](https://github.com/andreaferretti/paths-js/wiki/Miscellaneous)
 
-Those users who prefer explicit typed interfaces can [browse the API](https://github.com/andreaferretti/paths-scala-js) of the Scala.js bindings.
+Those users who prefer explicit typed interfaces can [browse the API](http://andreaferretti.github.io/paths-scala-js) of the Scala.js bindings.
 
 Browser support
 ---------------
