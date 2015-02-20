@@ -21,6 +21,8 @@ Let me see it
 
 Of course, when judging a chart library, this is a very reasonable request. But Paths.js is different: it provides the components, and you draw the charts. That said, there is a [demo application](http://andreaferretti.github.io/paths-js-demo/) to show some features - [here](https://github.com/andreaferretti/paths-js-demo) you find the source.
 
+Another demo, using Facebook React instead of Ractive.js, is in progress [here](http://andreaferretti.github.io/paths-js-react-demo/) ([source here](https://github.com/andreaferretti/paths-js-react-demo)).
+
 Philosophy
 ----------
 
