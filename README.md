@@ -11,6 +11,7 @@ Table of contents
 - [Let me see it](#let-me-see-it)
 - [Philosophy](#philosophy)
 - [Documentation](#documentation)
+- [Resources](#resources)
 - [Browser support](#browser-support)
 - [Using Paths.js with the Canvas API](#using-pathsjs-with-the-canvas-api)
 - [Using Paths.js with Scala.js](#using-pathsjs-with-scalajs)
