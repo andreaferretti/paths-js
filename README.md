@@ -11,6 +11,7 @@ Table of contents
 - [Let me see it](#let-me-see-it)
 - [Philosophy](#philosophy)
 - [Documentation](#documentation)
+- [Resources](#resources)
 - [Browser support](#browser-support)
 - [Using Paths.js with the Canvas API](#using-pathsjs-with-the-canvas-api)
 - [Using Paths.js with Scala.js](#using-pathsjs-with-scalajs)
@@ -38,9 +39,6 @@ In designing Paths.js, I have tried to follow a few principles:
 * and that they work on Node.js as well
 * it should be easy to integrate Paths.js into various frameworks
 
-For a more detailed exposition of the philosophy behind Paths.js, see [this blog post](http://mlarocca.github.io/01-22-2014/pathsjs_ractive.html) by Marcello La Rocca. Also, check the slides from [my talk at MilanoJS user group](https://github.com/andreaferretti/paths-talk-slides), together with the [examples](https://github.com/andreaferretti/paths-talk-examples).
-
-Another [presentation](http://mlarocca.github.io/graphicalweb2014/) by Marcello goes in detail over the state of graphics in the browser, covering various approaches, including Paths.js.
 
 Documentation
 -------------
@@ -56,6 +54,17 @@ Paths.js offers three APIs, of increasing abstraction. The lowest level is a cha
 - [Miscellaneous](https://github.com/andreaferretti/paths-js/wiki/Miscellaneous)
 
 Those users who prefer explicit typed interfaces can [browse the API](http://andreaferretti.github.io/paths-scala-js) of the Scala.js bindings.
+
+Resources
+---------
+
+These resources give a more detailed exposition of the philosophy behind Paths.js:
+
+* [Reactive SVG charts with Ractive.js and Paths.js](http://mlarocca.github.io/01-22-2014/pathsjs_ractive.html) by Marcello La Rocca
+* [My talk at MilanoJS user group](https://github.com/andreaferretti/paths-talk-slides), together with the [examples](https://github.com/andreaferretti/paths-talk-examples)
+* [Reactive SVG charts with Ractive.js](http://mlarocca.github.io/graphicalweb2014/)
+* [Visualization is for Sharing: Using React for Portable Data Visualization](http://viget.com/extend/visualization-is-for-sharing-using-react-for-portable-data-visualization) by Nate Hunzaker
+* [How to Create Performant, Template-based Charts with Paths.js](http://www.sitepoint.com/create-performant-template-based-charts-paths-js/)
 
 Browser support
 ---------------
