@@ -1,8 +1,8 @@
 (function() {
   define(['./ops', './linear', './rectangle'], function(O, Linear, Rectangle) {
-    return function(_arg) {
-      var accessor, bottom, compute, curves, d, data, el, g, group_width, groups, gutter, height, i, j, left, line, max, min, n, right, scale, shift, top, val, w, width, _i, _j, _k, _l, _len, _len1, _len2, _len3;
-      data = _arg.data, accessor = _arg.accessor, width = _arg.width, height = _arg.height, gutter = _arg.gutter, compute = _arg.compute;
+    return function(arg) {
+      var accessor, bottom, compute, curves, d, data, el, g, group_width, groups, gutter, height, i, j, k, l, left, len, len1, len2, len3, line, m, max, min, n, o, right, scale, shift, top, val, w, width;
+      data = arg.data, accessor = arg.accessor, width = arg.width, height = arg.height, gutter = arg.gutter, compute = arg.compute;
       if (accessor == null) {
         accessor = function(x) {
           return x;
@@ -14,9 +14,9 @@
       groups = [];
       min = 0;
       max = 0;
-      for (i = _i = 0, _len = data.length; _i < _len; i = ++_i) {
+      for (i = k = 0, len = data.length; k < len; i = ++k) {
         d = data[i];
-        for (j = _j = 0, _len1 = d.length; _j < _len1; j = ++_j) {
+        for (j = l = 0, len1 = d.length; l < len1; j = ++l) {
           el = d[j];
           val = accessor(el);
           if (val < min) {
@@ -35,11 +35,11 @@
       group_width = (width - gutter * (n - 1)) / n;
       curves = [];
       scale = Linear([min, max], [height, 0]);
-      for (i = _k = 0, _len2 = groups.length; _k < _len2; i = ++_k) {
+      for (i = m = 0, len2 = groups.length; m < len2; i = ++m) {
         g = groups[i];
         w = group_width / g.length;
         shift = (group_width + gutter) * i;
-        for (j = _l = 0, _len3 = g.length; _l < _len3; j = ++_l) {
+        for (j = o = 0, len3 = g.length; o < len3; j = ++o) {
           el = g[j];
           left = shift + w * j;
           right = left + w;

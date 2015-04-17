@@ -11,8 +11,10 @@ define [
     mid1 = [a + length, b]
     mid2 = [c - length, d]
 
-    path: Path().moveto(start...)
-      .lineto(mid1...)
-      .curveto(a + 5 * length, b, c - 5 * length, d, c - length, d)
-      .lineto(end...)
-    centroid: O.average([start, end])
+    {
+      path: Path().moveto(start...)
+        .lineto(mid1...)
+        .curveto(a + 5 * length, b, c - 5 * length, d, c - length, d)
+        .lineto(end...)
+      centroid: O.average([start, end])
+    }

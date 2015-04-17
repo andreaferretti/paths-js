@@ -66,16 +66,16 @@
   ];
 
   key_accessor = function(keys) {
-    var a, key, _fn, _i, _len;
+    var a, fn, j, key, len;
     a = {};
-    _fn = function(k) {
+    fn = function(k) {
       return a[k] = function(o) {
         return o[k];
       };
     };
-    for (_i = 0, _len = keys.length; _i < _len; _i++) {
-      key = keys[_i];
-      _fn(key);
+    for (j = 0, len = keys.length; j < len; j++) {
+      key = keys[j];
+      fn(key);
     }
     return a;
   };

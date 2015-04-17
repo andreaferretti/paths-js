@@ -8,9 +8,9 @@
       return Math.min(Math.max(x, 0), bound);
     };
     inside = function(w, h) {
-      return function(_arg) {
+      return function(arg) {
         var x, y;
-        x = _arg[0], y = _arg[1];
+        x = arg[0], y = arg[1];
         return [cap(w, x), cap(h, y)];
       };
     };
@@ -24,10 +24,10 @@
       return result;
     };
     attractive_forces = function(links, positions, attraction) {
-      var end, force, forces, id, pos1, pos2, start, weight, _ref;
+      var end, force, forces, id, pos1, pos2, ref, start, weight;
       forces = {};
       for (id in links) {
-        _ref = links[id], start = _ref.start, end = _ref.end, weight = _ref.weight;
+        ref = links[id], start = ref.start, end = ref.end, weight = ref.weight;
         pos1 = positions[start];
         pos2 = positions[end];
         force = O.times(attraction * weight, O.minus(pos1, pos2));
@@ -42,9 +42,9 @@
       }
       return forces;
     };
-    return function(_arg) {
-      var attraction, bound, constrain, constraints, data, end, graph, height, id, link, linkaccessor, links, links_, node, nodeaccessor, nodes, nodes_, nodes_positions, recompute, repulsion, start, threshold, tick, unconstrain, weight, width, _i, _j, _len, _len1, _ref;
-      data = _arg.data, nodeaccessor = _arg.nodeaccessor, linkaccessor = _arg.linkaccessor, width = _arg.width, height = _arg.height, attraction = _arg.attraction, repulsion = _arg.repulsion, threshold = _arg.threshold;
+    return function(arg) {
+      var attraction, bound, constrain, constraints, data, end, graph, height, id, j, len, len1, link, linkaccessor, links, links_, m, node, nodeaccessor, nodes, nodes_, nodes_positions, recompute, ref, repulsion, start, threshold, tick, unconstrain, weight, width;
+      data = arg.data, nodeaccessor = arg.nodeaccessor, linkaccessor = arg.linkaccessor, width = arg.width, height = arg.height, attraction = arg.attraction, repulsion = arg.repulsion, threshold = arg.threshold;
       if (nodeaccessor == null) {
         nodeaccessor = function(n) {
           return n;
@@ -71,17 +71,17 @@
       }
       nodes_positions = {};
       nodes_ = {};
-      for (_i = 0, _len = nodes.length; _i < _len; _i++) {
-        node = nodes[_i];
+      for (j = 0, len = nodes.length; j < len; j++) {
+        node = nodes[j];
         id = nodeaccessor(node);
         nodes_positions[id] = constraints[id] || random_position(width, height);
         nodes_[id] = node;
       }
       links_ = {};
-      for (_j = 0, _len1 = links.length; _j < _len1; _j++) {
-        link = links[_j];
-        _ref = linkaccessor(link), start = _ref.start, end = _ref.end, weight = _ref.weight;
-        links_["" + start + "|" + end] = {
+      for (m = 0, len1 = links.length; m < len1; m++) {
+        link = links[m];
+        ref = linkaccessor(link), start = ref.start, end = ref.end, weight = ref.weight;
+        links_[start + "|" + end] = {
           weight: weight,
           start: start,
           end: end,
@@ -122,9 +122,9 @@
       recompute = function() {
         var i;
         i = -1;
-        graph.curves = map_objects(links_, function(id, _arg1) {
+        graph.curves = map_objects(links_, function(id, arg1) {
           var end, link, p, q, start;
-          start = _arg1.start, end = _arg1.end, link = _arg1.link;
+          start = arg1.start, end = arg1.end, link = arg1.link;
           i += 1;
           p = nodes_positions[start];
           q = nodes_positions[end];

@@ -1,5 +1,6 @@
 define [
 ], ()->
+
   Path = (init) ->
     instructions = init || []
 
@@ -11,8 +12,20 @@ define [
     areEqualPoints = (p1, p2) ->
       p1[0] == p2[0] and p1[1] == p2[1]
 
+    trimZeros = (string, char) ->
+      l = string.length
+      while (string.charAt(l - 1) == '0')
+        l -= 1
+      if string.charAt(l - 1) == '.' then l -= 1
+      string.substr(0, l)
+
+    round = (number, digits) ->
+      str = number.toFixed(digits)
+      trimZeros(str)
+
     printInstrunction = ({ command, params }) ->
-      "#{ command } #{ params.join ' ' }"
+      numbers =  (round(param, 6) for param in params)
+      "#{ command } #{ numbers.join ' ' }"
 
     point = ({ command, params }, [prev_x, prev_y]) ->
       switch command

@@ -11,14 +11,18 @@ Table of contents
 - [Let me see it](#let-me-see-it)
 - [Philosophy](#philosophy)
 - [Documentation](#documentation)
+- [Resources](#resources)
 - [Browser support](#browser-support)
 - [Using Paths.js with the Canvas API](#using-pathsjs-with-the-canvas-api)
+- [Using Paths.js with Scala.js](#using-pathsjs-with-scalajs)
 - [Contributing](#contributing)
 
 Let me see it
 -------------
 
 Of course, when judging a chart library, this is a very reasonable request. But Paths.js is different: it provides the components, and you draw the charts. That said, there is a [demo application](http://andreaferretti.github.io/paths-js-demo/) to show some features - [here](https://github.com/andreaferretti/paths-js-demo) you find the source.
+
+Another demo, using Facebook React instead of Ractive.js, is in progress [here](http://andreaferretti.github.io/paths-js-react-demo/) ([source here](https://github.com/andreaferretti/paths-js-react-demo)).
 
 Philosophy
 ----------
@@ -35,9 +39,6 @@ In designing Paths.js, I have tried to follow a few principles:
 * and that they work on Node.js as well
 * it should be easy to integrate Paths.js into various frameworks
 
-For a more detailed exposition of the philosophy behind Paths.js, see [this blog post](http://mlarocca.github.io/01-22-2014/pathsjs_ractive.html) by Marcello La Rocca. Also, check the slides from [my talk at MilanoJS user group](https://github.com/andreaferretti/paths-talk-slides), together with the [examples](https://github.com/andreaferretti/paths-talk-examples).
-
-Another [presentation](http://mlarocca.github.io/graphicalweb2014/) by Marcello goes in detail over the state of graphics in the browser, covering various approaches, including Paths.js.
 
 Documentation
 -------------
@@ -52,6 +53,19 @@ Paths.js offers three APIs, of increasing abstraction. The lowest level is a cha
 - [High level API (graphs)](https://github.com/andreaferretti/paths-js/wiki/High-level-API)
 - [Miscellaneous](https://github.com/andreaferretti/paths-js/wiki/Miscellaneous)
 
+Those users who prefer explicit typed interfaces can [browse the API](http://andreaferretti.github.io/paths-scala-js) of the Scala.js bindings.
+
+Resources
+---------
+
+These resources give a more detailed exposition of the philosophy behind Paths.js:
+
+* [Reactive SVG charts with Ractive.js and Paths.js](http://mlarocca.github.io/01-22-2014/pathsjs_ractive.html) by Marcello La Rocca
+* [My talk at MilanoJS user group](https://github.com/andreaferretti/paths-talk-slides), together with the [examples](https://github.com/andreaferretti/paths-talk-examples)
+* [Reactive SVG charts with Ractive.js](http://mlarocca.github.io/graphicalweb2014/)
+* [Visualization is for Sharing: Using React for Portable Data Visualization](http://viget.com/extend/visualization-is-for-sharing-using-react-for-portable-data-visualization) by Nate Hunzaker
+* [How to Create Performant, Template-based Charts with Paths.js](http://www.sitepoint.com/create-performant-template-based-charts-paths-js/)
+
 Browser support
 ---------------
 
@@ -63,6 +77,11 @@ Using Paths.js with the Canvas API
 ----------------------------------
 
 Paths.js does not directly support the [canvas element](http://en.wikipedia.org/wiki/Canvas_element), essentially because there is no need to do so. The [canvg](https://github.com/gabelerner/canvg) project allows to draw SVG paths on a `<canvas>` element, and it seems that canvas [will be able](http://lists.w3.org/Archives/Public/public-whatwg-archive/2012Mar/0269.html) to support SVG paths natively. Of course, canvas-based solutions limit the possibilities offered by data binding libraries for interaction, but they could be used as a fallback on less recent browsers.
+
+Using Paths.js with Scala.js
+----------------------------
+
+It is possible to use Paths.js with [Scala.js](http://www.scala-js.org/) - [this library](https://github.com/andreaferretti/paths-scala-js) defines the bindings.
 
 Contributing
 ------------

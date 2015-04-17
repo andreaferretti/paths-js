@@ -1,8 +1,8 @@
 (function() {
   define(['./path', './connector', './ops'], function(Path, Connector, O) {
-    return function(_arg) {
+    return function(arg) {
       var bottomCurve, bottomleft, bottomright, centroid, path, topCurve, topleft, topright;
-      topleft = _arg.topleft, topright = _arg.topright, bottomleft = _arg.bottomleft, bottomright = _arg.bottomright;
+      topleft = arg.topleft, topright = arg.topright, bottomleft = arg.bottomleft, bottomright = arg.bottomright;
       topCurve = Connector({
         start: topleft,
         end: topright

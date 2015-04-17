@@ -1,20 +1,20 @@
 (function() {
-  var build_tree, collect, expect, set_height, substrings, tree_height, _ref;
+  var build_tree, collect, expect, ref, set_height, substrings, tree_height;
 
-  _ref = require('../dist/node/tree_utils.js'), tree_height = _ref.tree_height, build_tree = _ref.build_tree, collect = _ref.collect, set_height = _ref.set_height;
+  ref = require('../dist/node/tree_utils.js'), tree_height = ref.tree_height, build_tree = ref.build_tree, collect = ref.collect, set_height = ref.set_height;
 
   expect = require('expect.js');
 
   substrings = function(word) {
-    var l, _i, _results;
+    var j, l, results;
     l = word.length - 1;
     if (l === 0) {
       return [];
     } else {
       return (function() {
-        _results = [];
-        for (var _i = 0; 0 <= l ? _i <= l : _i >= l; 0 <= l ? _i++ : _i--){ _results.push(_i); }
-        return _results;
+        results = [];
+        for (var j = 0; 0 <= l ? j <= l : j >= l; 0 <= l ? j++ : j--){ results.push(j); }
+        return results;
       }).apply(this).map(function(i) {
         if (i === 0) {
           return word.slice(1);
@@ -152,13 +152,13 @@
       pairs = collect(tree, function(p, c) {
         return [c.level, c.height];
       });
-      heights_at_level_2 = pairs.filter(function(_arg) {
+      heights_at_level_2 = pairs.filter(function(arg) {
         var h, l;
-        l = _arg[0], h = _arg[1];
+        l = arg[0], h = arg[1];
         return l === 2;
-      }).map(function(_arg) {
+      }).map(function(arg) {
         var h, l;
-        l = _arg[0], h = _arg[1];
+        l = arg[0], h = arg[1];
         return h;
       });
       return expect(heights_at_level_2).to.eql([0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19]);

@@ -30,7 +30,7 @@
       return result;
     };
     set_height = function(root, level, max_heights) {
-      var child, _i, _len, _ref;
+      var child, j, len, ref;
       if (max_heights == null) {
         max_heights = [];
       }
@@ -44,19 +44,19 @@
         max_heights[level] = 0;
         root.height = 0;
       }
-      _ref = root.children || [];
-      for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-        child = _ref[_i];
+      ref = root.children || [];
+      for (j = 0, len = ref.length; j < len; j++) {
+        child = ref[j];
         set_height(child, level + 1, max_heights);
       }
       return max_heights;
     };
     collect = function(root, f) {
-      var child, result, _i, _len, _ref;
+      var child, j, len, ref, result;
       result = [];
-      _ref = root.children || [];
-      for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-        child = _ref[_i];
+      ref = root.children || [];
+      for (j = 0, len = ref.length; j < len; j++) {
+        child = ref[j];
         result.push(f(root, child));
         result = result.concat(collect(child, f));
       }

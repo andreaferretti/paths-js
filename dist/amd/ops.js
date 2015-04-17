@@ -16,26 +16,26 @@
         return Math.max(a, b);
       });
     };
-    plus = function(_arg, _arg1) {
+    plus = function(arg, arg1) {
       var a, b, c, d;
-      a = _arg[0], b = _arg[1];
-      c = _arg1[0], d = _arg1[1];
+      a = arg[0], b = arg[1];
+      c = arg1[0], d = arg1[1];
       return [a + c, b + d];
     };
-    minus = function(_arg, _arg1) {
+    minus = function(arg, arg1) {
       var a, b, c, d;
-      a = _arg[0], b = _arg[1];
-      c = _arg1[0], d = _arg1[1];
+      a = arg[0], b = arg[1];
+      c = arg1[0], d = arg1[1];
       return [a - c, b - d];
     };
-    times = function(k, _arg) {
+    times = function(k, arg) {
       var a, b;
-      a = _arg[0], b = _arg[1];
+      a = arg[0], b = arg[1];
       return [k * a, k * b];
     };
-    length = function(_arg) {
+    length = function(arg) {
       var a, b;
-      a = _arg[0], b = _arg[1];
+      a = arg[0], b = arg[1];
       return Math.sqrt(a * a + b * b);
     };
     sum_vectors = function(xs) {
@@ -50,10 +50,10 @@
       return times(r, [Math.sin(angle), -Math.cos(angle)]);
     };
     enhance = function(compute, curve) {
-      var key, method, _ref;
-      _ref = compute || {};
-      for (key in _ref) {
-        method = _ref[key];
+      var key, method, ref;
+      ref = compute || {};
+      for (key in ref) {
+        method = ref[key];
         curve[key] = method(curve.index, curve.item, curve.group);
       }
       return curve;

@@ -1,10 +1,10 @@
 (function() {
   define([], function() {
     var linear;
-    linear = function(_arg, _arg1) {
+    linear = function(arg, arg1) {
       var a, b, c, d, f;
-      a = _arg[0], b = _arg[1];
-      c = _arg1[0], d = _arg1[1];
+      a = arg[0], b = arg[1];
+      c = arg1[0], d = arg1[1];
       f = function(x) {
         return c + (d - c) * (x - a) / (b - a);
       };

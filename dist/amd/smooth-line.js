@@ -1,19 +1,19 @@
 (function() {
   define(['./bezier', './ops', './line-chart-comp'], function(Bezier, O, comp) {
     return function(options) {
-      var arranged, base, i, lines, scale, xscale, yscale, _ref;
-      _ref = comp(options), arranged = _ref.arranged, scale = _ref.scale, xscale = _ref.xscale, yscale = _ref.yscale, base = _ref.base;
+      var arranged, base, i, lines, ref, scale, xscale, yscale;
+      ref = comp(options), arranged = ref.arranged, scale = ref.scale, xscale = ref.xscale, yscale = ref.yscale, base = ref.base;
       i = -1;
-      lines = arranged.map(function(_arg) {
-        var area, line, points, scaled_points, xmax, xmin, _ref1, _ref2;
-        points = _arg.points, xmin = _arg.xmin, xmax = _arg.xmax;
+      lines = arranged.map(function(arg) {
+        var area, line, points, ref1, ref2, scaled_points, xmax, xmin;
+        points = arg.points, xmin = arg.xmin, xmax = arg.xmax;
         scaled_points = points.map(scale);
         i += 1;
         line = Bezier({
           points: scaled_points
         });
         area = {
-          path: (_ref1 = (_ref2 = line.path).lineto.apply(_ref2, scale([xmax, base]))).lineto.apply(_ref1, scale([xmin, base])).closepath(),
+          path: (ref1 = (ref2 = line.path).lineto.apply(ref2, scale([xmax, base]))).lineto.apply(ref1, scale([xmin, base])).closepath(),
           centroid: O.average([line.centroid, scale([xmin, base]), scale([xmax, base])])
         };
         return O.enhance(options.compute, {

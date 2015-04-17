@@ -41,15 +41,15 @@
   };
 
   substrings = function(word) {
-    var l, _i, _results;
+    var j, l, results;
     l = word.length - 1;
     if (l === 0) {
       return [];
     } else {
       return (function() {
-        _results = [];
-        for (var _i = 0; 0 <= l ? _i <= l : _i >= l; 0 <= l ? _i++ : _i--){ _results.push(_i); }
-        return _results;
+        results = [];
+        for (var j = 0; 0 <= l ? j <= l : j >= l; 0 <= l ? j++ : j--){ results.push(j); }
+        return results;
       }).apply(this).map(function(i) {
         if (i === 0) {
           return word.slice(1);

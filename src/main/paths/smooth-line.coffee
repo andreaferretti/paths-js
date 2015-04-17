@@ -12,16 +12,17 @@ define [
       scaled_points = points.map scale
       i += 1
       line = Bezier(points: scaled_points)
-      area =
+      area = {
         path: line.path
           .lineto(scale([xmax, base])...)
           .lineto(scale([xmin, base])...)
-          .closepath()
+          .closepath(),
         centroid: O.average([
             line.centroid,
             scale([xmin, base]),
             scale([xmax, base])
           ])
+      }
 
       O.enhance options.compute,
         item: options.data[i]

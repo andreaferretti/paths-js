@@ -5,15 +5,15 @@
 
   expect = require('expect.js');
 
-  length = function(_arg) {
+  length = function(arg) {
     var x, y;
-    x = _arg[0], y = _arg[1];
+    x = arg[0], y = arg[1];
     return Math.sqrt(x * x + y * y);
   };
 
-  angle = function(_arg) {
+  angle = function(arg) {
     var a, x, y;
-    x = _arg[0], y = _arg[1];
+    x = arg[0], y = arg[1];
     a = Math.atan2(x, -y);
     if (a < 0) {
       return a + 2 * Math.PI;
@@ -51,13 +51,13 @@
       return expect(polygon.path.points().map(length)).to.eql(radii);
     });
     it('should place points at the right angles', function() {
-      var a, angles, polygon, radii, _i, _ref, _results;
+      var a, angles, j, polygon, radii, ref, results;
       radii = [2, 3, 5, 7, 9];
       a = 2 * Math.PI / radii.length;
       angles = (function() {
-        _results = [];
-        for (var _i = 0, _ref = radii.length - 1; 0 <= _ref ? _i <= _ref : _i >= _ref; 0 <= _ref ? _i++ : _i--){ _results.push(_i); }
-        return _results;
+        results = [];
+        for (var j = 0, ref = radii.length - 1; 0 <= ref ? j <= ref : j >= ref; 0 <= ref ? j++ : j--){ results.push(j); }
+        return results;
       }).apply(this).map(function(i) {
         return a * i;
       });
@@ -78,9 +78,9 @@
         center: [0, 0],
         radii: radii
       });
-      shift = function(_arg) {
+      shift = function(arg) {
         var x, y;
-        x = _arg[0], y = _arg[1];
+        x = arg[0], y = arg[1];
         return [x + 1, y + 3];
       };
       return expect(polygon1.path.points()).to.eql(polygon2.path.points().map(shift));

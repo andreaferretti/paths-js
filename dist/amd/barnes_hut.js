@@ -7,21 +7,21 @@
       point = O.times(1 / mass, O.plus(O.times(body1.mass, body1.point), O.times(body2.mass, body2.point)));
       return [point, mass];
     };
-    locate = function(_arg, quadrants) {
-      var bottom, left, q, right, top, x, y, _i, _len, _ref;
-      x = _arg[0], y = _arg[1];
-      for (_i = 0, _len = quadrants.length; _i < _len; _i++) {
-        q = quadrants[_i];
-        _ref = q.box, top = _ref.top, bottom = _ref.bottom, left = _ref.left, right = _ref.right;
+    locate = function(arg, quadrants) {
+      var bottom, i, left, len, q, ref, right, top, x, y;
+      x = arg[0], y = arg[1];
+      for (i = 0, len = quadrants.length; i < len; i++) {
+        q = quadrants[i];
+        ref = q.box, top = ref.top, bottom = ref.bottom, left = ref.left, right = ref.right;
         if (((left <= x && x <= right)) && ((bottom <= y && y <= top))) {
           return q;
         }
       }
     };
-    make_quadrant = function(_arg, _arg1) {
+    make_quadrant = function(arg, arg1) {
       var a, b, bottom, halfway_h, halfway_v, left, right, top;
-      top = _arg.top, bottom = _arg.bottom, left = _arg.left, right = _arg.right;
-      a = _arg1[0], b = _arg1[1];
+      top = arg.top, bottom = arg.bottom, left = arg.left, right = arg.right;
+      a = arg1[0], b = arg1[1];
       halfway_v = (left + right) / 2;
       halfway_h = (top + bottom) / 2;
       return {
@@ -33,13 +33,13 @@
         }
       };
     };
-    subdivide = function(_arg) {
+    subdivide = function(arg) {
       var box;
-      box = _arg.box;
+      box = arg.box;
       return [make_quadrant(box, [0, 0]), make_quadrant(box, [1, 0]), make_quadrant(box, [0, 1]), make_quadrant(box, [1, 1])];
     };
     add_body = function(root, body) {
-      var child, old_body, _ref;
+      var child, old_body, ref;
       if (root.body) {
         old_body = root.body;
         delete root.body;
@@ -49,7 +49,7 @@
       } else {
         if (root.children) {
           child = locate(body.point, root.children);
-          _ref = root.point ? average(root, body) : [body.point, body.mass], root.point = _ref[0], root.mass = _ref[1];
+          ref = root.point ? average(root, body) : [body.point, body.mass], root.point = ref[0], root.mass = ref[1];
           return add_body(child, body);
         } else {
           return root.body = body;
@@ -90,17 +90,17 @@
       };
     };
     walk_leaves = function(tree, f) {
-      var child, _i, _len, _ref, _results;
+      var child, i, len, ref, results;
       if (tree.body) {
         return f(tree);
       } else if (tree.children) {
-        _ref = tree.children;
-        _results = [];
-        for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-          child = _ref[_i];
-          _results.push(walk_leaves(child, f));
+        ref = tree.children;
+        results = [];
+        for (i = 0, len = ref.length; i < len; i++) {
+          child = ref[i];
+          results.push(walk_leaves(child, f));
         }
-        return _results;
+        return results;
       }
     };
     body_force_on = function(b1, b2, repulsion) {
@@ -109,9 +109,9 @@
       d = O.length(segment);
       return O.times(repulsion * b1.mass * b2.mass / (d * d * d), segment);
     };
-    box_width = function(_arg) {
+    box_width = function(arg) {
       var bottom, left, right, top;
-      top = _arg.top, bottom = _arg.bottom, left = _arg.left, right = _arg.right;
+      top = arg.top, bottom = arg.bottom, left = arg.left, right = arg.right;
       return O.length([top - bottom, right - left]);
     };
     force_on = function(leaf, tree, repulsion, threshold) {

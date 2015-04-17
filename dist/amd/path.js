@@ -2,7 +2,7 @@
   define([], function() {
     var Path;
     Path = function(init) {
-      var areEqualPoints, instructions, plus, point, printInstrunction, push, verbosify;
+      var areEqualPoints, instructions, plus, point, printInstrunction, push, round, trimZeros, verbosify;
       instructions = init || [];
       push = function(arr, el) {
         var copy;
@@ -13,15 +13,40 @@
       areEqualPoints = function(p1, p2) {
         return p1[0] === p2[0] && p1[1] === p2[1];
       };
-      printInstrunction = function(_arg) {
-        var command, params;
-        command = _arg.command, params = _arg.params;
-        return "" + command + " " + (params.join(' '));
+      trimZeros = function(string, char) {
+        var l;
+        l = string.length;
+        while (string.charAt(l - 1) === '0') {
+          l -= 1;
+        }
+        if (string.charAt(l - 1) === '.') {
+          l -= 1;
+        }
+        return string.substr(0, l);
       };
-      point = function(_arg, _arg1) {
+      round = function(number, digits) {
+        var str;
+        str = number.toFixed(digits);
+        return trimZeros(str);
+      };
+      printInstrunction = function(arg) {
+        var command, numbers, param, params;
+        command = arg.command, params = arg.params;
+        numbers = (function() {
+          var i, len, results;
+          results = [];
+          for (i = 0, len = params.length; i < len; i++) {
+            param = params[i];
+            results.push(round(param, 6));
+          }
+          return results;
+        })();
+        return command + " " + (numbers.join(' '));
+      };
+      point = function(arg, arg1) {
         var command, params, prev_x, prev_y;
-        command = _arg.command, params = _arg.params;
-        prev_x = _arg1[0], prev_y = _arg1[1];
+        command = arg.command, params = arg.params;
+        prev_x = arg1[0], prev_y = arg1[1];
         switch (command) {
           case 'M':
             return [params[0], params[1]];
@@ -122,10 +147,10 @@
           return instructions.map(printInstrunction).join(' ');
         },
         points: function() {
-          var instruction, prev, ps, _fn, _i, _len;
+          var fn, i, instruction, len, prev, ps;
           ps = [];
           prev = [0, 0];
-          _fn = function() {
+          fn = function() {
             var p;
             p = point(instruction, prev);
             prev = p;
@@ -133,9 +158,9 @@
               return ps.push(p);
             }
           };
-          for (_i = 0, _len = instructions.length; _i < _len; _i++) {
-            instruction = instructions[_i];
-            _fn();
+          for (i = 0, len = instructions.length; i < len; i++) {
+            instruction = instructions[i];
+            fn();
           }
           return ps;
         },

@@ -1,12 +1,12 @@
 (function() {
   define(['./polygon', './line-chart-comp', './ops'], function(Polygon, comp, O) {
     return function(options) {
-      var arranged, base, i, polygons, scale, xscale, yscale, _ref;
-      _ref = comp(options), arranged = _ref.arranged, scale = _ref.scale, xscale = _ref.xscale, yscale = _ref.yscale, base = _ref.base;
+      var arranged, base, i, polygons, ref, scale, xscale, yscale;
+      ref = comp(options), arranged = ref.arranged, scale = ref.scale, xscale = ref.xscale, yscale = ref.yscale, base = ref.base;
       i = -1;
-      polygons = arranged.map(function(_arg) {
+      polygons = arranged.map(function(arg) {
         var points, scaled_points, scaled_points_closed, xmax, xmin;
-        points = _arg.points, xmin = _arg.xmin, xmax = _arg.xmax;
+        points = arg.points, xmin = arg.xmin, xmax = arg.xmax;
         scaled_points = points.map(scale);
         points.push([xmax, base]);
         points.push([xmin, base]);

@@ -1,8 +1,8 @@
 (function() {
   define(['./rectangle', './curved-rectangle', './ops'], function(Rectangle, CurvedRectangle, O) {
-    return function(_arg) {
+    return function(arg) {
       var compute, curved_rects, data, gutter, height, height_of_groups, linkaccessor, links_, name, name_values, node_idx, nodeaccessor, nodes_, rect_width, rects, scale, space_for_each_group, spacing_groups, val, vals_in, vals_out, width;
-      data = _arg.data, nodeaccessor = _arg.nodeaccessor, linkaccessor = _arg.linkaccessor, width = _arg.width, height = _arg.height, gutter = _arg.gutter, rect_width = _arg.rect_width, compute = _arg.compute;
+      data = arg.data, nodeaccessor = arg.nodeaccessor, linkaccessor = arg.linkaccessor, width = arg.width, height = arg.height, gutter = arg.gutter, rect_width = arg.rect_width, compute = arg.compute;
       if (nodeaccessor == null) {
         nodeaccessor = function(x) {
           return x;

@@ -1,7 +1,7 @@
 (function() {
-  var bodies, expect, root, _ref;
+  var bodies, expect, ref, root;
 
-  _ref = require('../dist/node/barnes_hut.js'), root = _ref.root, bodies = _ref.bodies;
+  ref = require('../dist/node/barnes_hut.js'), root = ref.root, bodies = ref.bodies;
 
   expect = require('expect.js');
 

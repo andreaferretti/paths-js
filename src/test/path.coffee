@@ -120,6 +120,10 @@ describe 'print method', ->
     path = Path().moveto(0, 1).arc(3, 3, 2, 0, 1, 6, -3).curveto(2, 1, 3, 1, -1, 17)
     expect(labels path).to.eql(['M', 'A', 'C'])
 
+  it 'should round numbers to a few digits', ->
+    path = Path().moveto(4, 5).qcurveto(0, 1, 1/7, 1/3).curveto(2, 1, 0, -1, -1, 17)
+    expect(path.print()).to.eql('M 4 5 Q 0 1 0.142857 0.333333 C 2 1 0 -1 -1 17')
+
 describe 'connect method', ->
   it 'should skip the move instruction in the second path if the end point of the first path is first point of second one', ->
     path = Path().moveto(0,0).lineto(2,20)

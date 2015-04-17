@@ -1,8 +1,8 @@
 (function() {
   define(['./connector', './linear', './tree_utils'], function(Connector, Linear, u) {
-    return function(_arg) {
-      var child_nodes, children, connectors, data, height, hscale, hspace, i, levels, max_heights, position, root_node, tension, tree, vscales, width, _i, _ref, _results;
-      data = _arg.data, width = _arg.width, height = _arg.height, children = _arg.children, tension = _arg.tension;
+    return function(arg) {
+      var child_nodes, children, connectors, data, height, hscale, hspace, i, j, levels, max_heights, position, ref, results, root_node, tension, tree, vscales, width;
+      data = arg.data, width = arg.width, height = arg.height, children = arg.children, tension = arg.tension;
       if (children == null) {
         children = function(x) {
           return x.children;
@@ -14,9 +14,9 @@
       hspace = width / (levels - 1);
       hscale = Linear([0, levels - 1], [0, width]);
       vscales = (function() {
-        _results = [];
-        for (var _i = 0, _ref = levels - 1; 0 <= _ref ? _i <= _ref : _i >= _ref; 0 <= _ref ? _i++ : _i--){ _results.push(_i); }
-        return _results;
+        results = [];
+        for (var j = 0, ref = levels - 1; 0 <= ref ? j <= ref : j >= ref; 0 <= ref ? j++ : j--){ results.push(j); }
+        return results;
       }).apply(this).map(function(level) {
         var available_height, bottom, max_height, top;
         available_height = Math.sqrt(level / (levels - 1)) * height;
