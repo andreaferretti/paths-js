@@ -1,19 +1,26 @@
 define [
   './linear'
   './ops'
-], (Linear, O)->
+], (Linear, O) ->
+  epsilon = 1e-5
 
   box = (datum, accessor) ->
     points = (accessor item for item in datum)
     sorted = points.sort ([a, b], [c, d]) -> a - c
     ycoords = sorted.map (p) -> p[1]
     l = sorted.length
+    xmin = sorted[0][0]
+    xmax = sorted[l - 1][0]
+    ymin = O.min ycoords
+    ymax = O.max ycoords
+    if xmin == xmax then xmax += epsilon
+    if ymin == ymax then ymax += epsilon
 
     points: sorted
-    xmin: sorted[0][0]
-    xmax: sorted[l - 1][0]
-    ymin: O.min ycoords
-    ymax: O.max ycoords
+    xmin: xmin
+    xmax: xmax
+    ymin: ymin
+    ymax: ymax
 
   ({data, xaccessor, yaccessor, width, height, closed}) ->
     xaccessor ?= ([x, y]) -> x

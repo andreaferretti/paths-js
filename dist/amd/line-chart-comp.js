@@ -1,8 +1,9 @@
 (function() {
   define(['./linear', './ops'], function(Linear, O) {
-    var box;
+    var box, epsilon;
+    epsilon = 1e-5;
     box = function(datum, accessor) {
-      var item, l, points, sorted, ycoords;
+      var item, l, points, sorted, xmax, xmin, ycoords, ymax, ymin;
       points = (function() {
         var j, len, results;
         results = [];
@@ -22,12 +23,22 @@
         return p[1];
       });
       l = sorted.length;
+      xmin = sorted[0][0];
+      xmax = sorted[l - 1][0];
+      ymin = O.min(ycoords);
+      ymax = O.max(ycoords);
+      if (xmin === xmax) {
+        xmax += epsilon;
+      }
+      if (ymin === ymax) {
+        ymax += epsilon;
+      }
       return {
         points: sorted,
-        xmin: sorted[0][0],
-        xmax: sorted[l - 1][0],
-        ymin: O.min(ycoords),
-        ymax: O.max(ycoords)
+        xmin: xmin,
+        xmax: xmax,
+        ymin: ymin,
+        ymax: ymax
       };
     };
     return function(arg) {

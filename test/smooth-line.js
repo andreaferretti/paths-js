@@ -225,7 +225,7 @@
     it('should give access to the original items', function() {
       return expect(chart.curves[1].item).to.be(data[1]);
     });
-    return it('should allow custom computations', function() {
+    it('should allow custom computations', function() {
       var chart1;
       chart1 = SmoothLine({
         data: data,
@@ -246,6 +246,39 @@
       });
       expect(chart1.curves[1].myitem).to.be(chart1.curves[1].item);
       return expect(chart1.curves[1].myindex).to.be(chart1.curves[1].index);
+    });
+    return it('should compute the centroid even if all y values are the same', function() {
+      var chart2;
+      chart2 = SmoothLine({
+        data: [
+          [
+            {
+              year: 2012,
+              month: 1,
+              value: 13
+            }, {
+              year: 2012,
+              month: 2,
+              value: 13
+            }, {
+              year: 2012,
+              month: 3,
+              value: 13
+            }, {
+              year: 2012,
+              month: 4,
+              value: 13
+            }
+          ]
+        ],
+        xaccessor: date,
+        yaccessor: function(d) {
+          return d.value;
+        },
+        width: 300,
+        height: 200
+      });
+      return expect(chart2.curves[0].area.centroid[1]).to.be(200);
     });
   });
 

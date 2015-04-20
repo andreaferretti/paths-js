@@ -228,7 +228,7 @@
         return p[1] === 200;
       })).to.have.length(3);
     });
-    return it('should allow to include 0 as a baseline for area paths', function() {
+    it('should allow to include 0 as a baseline for area paths', function() {
       var points, stock1;
       stock1 = Stock({
         data: data,
@@ -246,6 +246,39 @@
       return expect(points.filter(function(p) {
         return p[1] === 200;
       })).to.have.length(2);
+    });
+    return it('should compute the centroid even if all y values are the same', function() {
+      var stock2;
+      stock2 = Stock({
+        data: [
+          [
+            {
+              year: 2012,
+              month: 1,
+              value: 13
+            }, {
+              year: 2012,
+              month: 2,
+              value: 13
+            }, {
+              year: 2012,
+              month: 3,
+              value: 13
+            }, {
+              year: 2012,
+              month: 4,
+              value: 13
+            }
+          ]
+        ],
+        xaccessor: date,
+        yaccessor: function(d) {
+          return d.value;
+        },
+        width: 300,
+        height: 200
+      });
+      return expect(stock2.curves[0].area.centroid[1]).to.be(200);
     });
   });
 

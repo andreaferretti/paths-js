@@ -111,6 +111,21 @@ describe 'stock chart', ->
     # have y = 200
     expect(points.filter (p) -> p[1] == 200).to.have.length(2)
 
+  it 'should compute the centroid even if all y values are the same', ->
+    stock2 = Stock
+      data: [[
+        { year: 2012, month: 1, value: 13 }
+        { year: 2012, month: 2, value: 13 }
+        { year: 2012, month: 3, value: 13 }
+        { year: 2012, month: 4, value: 13 }
+      ]]
+      xaccessor: date
+      yaccessor: (d) -> d.value
+      width: 300
+      height: 200
+
+    expect(stock2.curves[0].area.centroid[1]).to.be(200)
+
 describe 'stock chart scales', ->
   it 'should take into account all data involved', ->
     scale = stock.yscale

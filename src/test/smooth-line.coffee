@@ -108,6 +108,21 @@ describe 'smooth line chart', ->
     expect(chart1.curves[1].myitem).to.be(chart1.curves[1].item)
     expect(chart1.curves[1].myindex).to.be(chart1.curves[1].index)
 
+  it 'should compute the centroid even if all y values are the same', ->
+    chart2 = SmoothLine
+      data: [[
+        { year: 2012, month: 1, value: 13 }
+        { year: 2012, month: 2, value: 13 }
+        { year: 2012, month: 3, value: 13 }
+        { year: 2012, month: 4, value: 13 }
+      ]]
+      xaccessor: date
+      yaccessor: (d) -> d.value
+      width: 300
+      height: 200
+
+    expect(chart2.curves[0].area.centroid[1]).to.be(200)
+
 describe 'smooth line chart scales', ->
   it 'should take into account all data involved', ->
     scale = chart.yscale
