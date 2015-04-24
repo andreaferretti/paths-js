@@ -67,8 +67,12 @@ module.exports = (grunt)->
           name: 'all'
           out: '<%= config.dist %>/global/paths.js'
           wrap: true
-          onBuildWrite: (moduleName, path, contents) ->
-            module.require('amdclean').clean(contents)
+          onModuleBundleComplete: (data) ->
+            fs = require('fs')
+            amdclean = require('amdclean')
+            outputFile = data.path
+
+            fs.writeFileSync outputFile, amdclean.clean(filePath: outputFile)
 
     watch:
       dist:
