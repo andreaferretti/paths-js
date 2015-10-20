@@ -1,6 +1,8 @@
 Paths.js
 ========
 
+[![Build Status](https://travis-ci.org/andreaferretti/paths-js.svg?branch=master)](https://travis-ci.org/andreaferretti/paths-js)
+
 Paths.js is a library to generate [SVG paths](http://www.w3.org/TR/SVG/paths.html), allowing you to create your own charts using a functional and testable API. It provides the primitives to create various shapes and charts starting from raw data, but it does not prescribe how you render these charts. This means you can use Paths.js to build components for your favorite frontend framework, and works even server-side on [NodeJS](http://nodejs.org/).
 
 Paths.js offers three APIs, of increasing abstraction. The lowest level is a chainable API to generate an arbitrary SVG path. On top of this, paths for simple geometric shapes such as polygons or circle sectors are defined. At the highest level, there is an API to generate some simple graphs (pie, line chart, radar...) for a collection of data, assembling the simple shapes.
@@ -29,7 +31,7 @@ Philosophy
 
 Drawing beautiful charts is a craft, and often one needs to add custom interactions, styling or animations. There are some beautiful chart libraries out there, such as [Flotcharts](http://www.flotcharts.org/) or [Dimple](http://dimplejs.org/), and if those are enough for your needs, they can be a pleasure to use.
 
-In many cases, though, what I really wanted was a library to take care of the generation of the chart, while still leaving me the possibility to render the actual thing. Paths.s does exactly this. It eventually generates [SVG paths](http://www.w3.org/TR/SVG/paths.html) with a high level API. These paths can be then used together with a template engine such as [Mustache](http://mustache.github.io/) or [Handlebars](http://handlebarsjs.com/) to display SVG graphics in the browser. If instead of a static template engine, you use a data binding library, such as [Facebook React](http://facebook.github.io/react/), [Ractive.js](http://www.ractivejs.org/) or [Angular](http://angularjs.org/), you get animated graphics for free.
+In many cases, though, what I really wanted was a library to take care of the generation of the chart, while still leaving me the possibility to render the actual thing. Paths.js does exactly this. It eventually generates [SVG paths](http://www.w3.org/TR/SVG/paths.html) with a high level API. These paths can be then used together with a template engine such as [Mustache](http://mustache.github.io/) or [Handlebars](http://handlebarsjs.com/) to display SVG graphics in the browser. If instead of a static template engine, you use a data binding library, such as [Facebook React](http://facebook.github.io/react/), [Ractive.js](http://www.ractivejs.org/) or [Angular](http://angularjs.org/), you get animated graphics for free.
 
 In designing Paths.js, I have tried to follow a few principles:
 

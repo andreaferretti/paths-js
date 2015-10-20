@@ -92,7 +92,6 @@ module.exports = (grunt)->
     'clean:test'
     'coffee:test'
     'mochacli'
-    'watch'
   ]
 
   grunt.registerTask 'build', [
@@ -105,4 +104,4 @@ module.exports = (grunt)->
     'clean:global'
   ]
 
-  grunt.registerTask 'default', ['test']
+  grunt.registerTask 'default', ['test', 'watch']
