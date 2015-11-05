@@ -8,7 +8,7 @@ let Path = function(init) {
   }
 
   let areEqualPoints = function(p1, p2) {
-    p1[0] == p2[0] && p1[1] == p2[1]
+    return (p1[0] === p2[0]) && (p1[1] === p2[1])
   }
 
   let trimZeros = function(string, char) {
@@ -58,15 +58,16 @@ let Path = function(init) {
   }
 
   let verbosify = function(keys, f) {
-    return
-      (a) => {
+    return (
+      function(a) {
         let args = (typeof a == 'object') ? keys.map((k) => { return a[k]; }) : arguments;
-        f.apply(null, args)
+        return f.apply(null, args)
       }
+    )
   }
 
   let plus = function(instruction) {
-    return Path(push(instructions), instruction)
+    return Path(push(instructions, instruction))
   }
 
   return ({
@@ -109,7 +110,7 @@ let Path = function(init) {
     smoothcurveto: verbosify(['x2', 'y2','x', 'y'], function(x2, y2, x, y) {
       return plus({
         command: 'S',
-        params: ['x2', 'y2','x', 'y']
+        params: [x2, y2,x, y]
       });
     }),
     qcurveto: verbosify(['x1', 'y1', 'x', 'y'], function(x1, y1, x, y) {
@@ -137,22 +138,21 @@ let Path = function(init) {
     points: function() {
       let ps = []
       let prev = [0, 0]
-      let f = function() {
+      for(let instruction of instructions) {
         let p = point(instruction, prev)
-        let prev = p
-        if (p) {
-          return ps.push(p);
+        prev = p
+        if(p) {
+          ps.push(p)
         }
       }
-      for(instruction of instructions)
-        f();
-        return ps;
+      return ps
     },
     instructions: function() {
       return instructions.slice(0, instructions.length);
     },
     connect: function(path) {
-      let last = this.points().slice(-1)[0];
+      let ps = this.points()
+      let last = ps[ps.length - 1]
       let first = path.points()[0];
       let newInstructions = path.instructions().slice(1);
       if (!areEqualPoints(last, first)) {
