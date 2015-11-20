@@ -1,51 +1,44 @@
-(function() {
-  var Rectangle, expect;
+import Rectangle from '../dist/node/rectangle.js'
+import expect from 'expect.js'
 
-  Rectangle = require('../dist/node/rectangle.js');
+describe('rectangle shape', () => {
+  it('should have four vertices', () => {
+    let rectangle = Rectangle({
+      left: 0,
+      right: 5,
+      top: 3,
+      bottom: -1
+    })
+    expect(rectangle.path.points()).to.have.length(4)
+  })
 
-  expect = require('expect.js');
+  it('should be made of straight lines', () => {
+    let rectangle = Rectangle({
+      left: 1,
+      right: 3,
+      top: 6,
+      bottom: 2
+    })
+    expect(rectangle.path.print()).to.match(/L \d+ \d+ L \d+ \d+ L \d+ \d+/)
+  })
 
-  describe('rectangle shape', function() {
-    it('should have four vertices', function() {
-      var rectangle;
-      rectangle = Rectangle({
-        left: 0,
-        right: 5,
-        top: 3,
-        bottom: -1
-      });
-      return expect(rectangle.path.points()).to.have.length(4);
-    });
-    it('should be made of straight lines', function() {
-      var rectangle;
-      rectangle = Rectangle({
-        left: 1,
-        right: 3,
-        top: 6,
-        bottom: 2
-      });
-      return expect(rectangle.path.print()).to.match(/L \d+ \d+ L \d+ \d+ L \d+ \d+/);
-    });
-    it('should be closed', function() {
-      var rectangle;
-      rectangle = Rectangle({
-        left: -3,
-        right: 3,
-        top: 6,
-        bottom: 2
-      });
-      return expect(rectangle.path.print()).to.match(/Z/);
-    });
-    return it('should have center halfway between the sides', function() {
-      var rectangle;
-      rectangle = Rectangle({
-        left: 1,
-        right: 9,
-        top: 5,
-        bottom: 1
-      });
-      return expect(rectangle.centroid).to.eql([5, 3]);
-    });
-  });
+  it('should be closed', () => {
+    let rectangle = Rectangle({
+      left: -3,
+      right: 3,
+      top: 6,
+      bottom: 2
+    })
+    expect(rectangle.path.print()).to.match(/Z/)
+  })
 
-}).call(this);
+  it('should have center halfway between the sides', () => {
+    let rectangle = Rectangle({
+      left: 1,
+      right: 9,
+      top: 5,
+      bottom: 1
+    })
+    expect(rectangle.centroid).to.eql([5, 3])
+  })
+})

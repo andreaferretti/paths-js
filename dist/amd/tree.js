@@ -1,74 +1,80 @@
-(function() {
-  define(['./connector', './linear', './tree_utils'], function(Connector, Linear, u) {
-    return function(arg) {
-      var child_nodes, children, connectors, data, height, hscale, hspace, i, j, levels, max_heights, position, ref, results, root_node, tension, tree, vscales, width;
-      data = arg.data, width = arg.width, height = arg.height, children = arg.children, tension = arg.tension;
-      if (children == null) {
-        children = function(x) {
-          return x.children;
-        };
-      }
-      tree = u.build_tree(data, children);
-      levels = u.tree_height(tree);
-      max_heights = u.set_height(tree);
-      hspace = width / (levels - 1);
-      hscale = Linear([0, levels - 1], [0, width]);
-      vscales = (function() {
-        results = [];
-        for (var j = 0, ref = levels - 1; 0 <= ref ? j <= ref : j >= ref; 0 <= ref ? j++ : j--){ results.push(j); }
-        return results;
-      }).apply(this).map(function(level) {
-        var available_height, bottom, max_height, top;
-        available_height = Math.sqrt(level / (levels - 1)) * height;
-        top = (height - available_height) / 2;
-        bottom = top + available_height;
-        max_height = level > 0 ? max_heights[level] + max_heights[level - 1] : max_heights[level];
-        if (max_height === 0) {
-          return function(x) {
-            return height / 2;
-          };
-        } else {
-          return Linear([0, max_height], [top, bottom]);
-        }
-      });
-      position = function(node) {
-        var level, vscale;
-        level = node.level;
-        vscale = vscales[level];
-        return [hscale(level), vscale(node.height_)];
-      };
-      i = -1;
-      connectors = u.collect(tree, function(parent, child) {
-        i += 1;
-        child.height_ = child.height + parent.height;
-        return {
-          connector: Connector({
-            start: position(parent),
-            end: position(child),
-            tension: tension
-          }),
-          index: i,
-          item: {
-            start: parent.item,
-            end: child.item
-          }
-        };
-      });
-      child_nodes = u.collect(tree, function(parent, child) {
-        return {
-          point: position(child),
-          item: child.item
-        };
-      });
-      root_node = {
-        point: position(tree),
-        item: tree.item
-      };
-      return {
-        curves: connectors,
-        nodes: [root_node].concat(child_nodes)
-      };
-    };
-  });
+define(['exports', 'module', './connector', './linear', './ops', './tree-utils'], function (exports, module, _connector, _linear, _ops, _treeUtils) {
+  'use strict';
 
-}).call(this);
+  function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+
+  var _Connector = _interopRequireDefault(_connector);
+
+  var _Linear = _interopRequireDefault(_linear);
+
+  module.exports = function (_ref) {
+    var data = _ref.data;
+    var width = _ref.width;
+    var height = _ref.height;
+    var children = _ref.children;
+    var tension = _ref.tension;
+
+    if (!children) {
+      children = function (x) {
+        return x.children;
+      };
+    }
+    var tree = (0, _treeUtils.buildTree)(data, children);
+    var levels = (0, _treeUtils.treeHeight)(tree);
+    var maxHeights = (0, _treeUtils.setHeight)(tree);
+    var hspace = width / (levels - 1);
+    var hscale = (0, _Linear['default'])([0, levels - 1], [0, width]);
+    var vscales = (0, _ops.range)(0, levels).map(function (level) {
+      var availableHeight = Math.sqrt(level / (levels - 1)) * height;
+      var top = (height - availableHeight) / 2;
+      var bottom = top + availableHeight;
+      var maxHeight = level > 0 ? maxHeights[level] + maxHeights[level - 1] : maxHeights[level];
+      if (maxHeight === 0) {
+        return function (x) {
+          return height / 2;
+        };
+      } else {
+        return (0, _Linear['default'])([0, maxHeight], [top, bottom]);
+      }
+    });
+
+    var position = function position(node) {
+      var level = node.level;
+      var vscale = vscales[level];
+      return [hscale(level), vscale(node.height_)];
+    };
+
+    var i = -1;
+    var connectors = (0, _treeUtils.collect)(tree, function (parent, child) {
+      i += 1;
+      child.height_ = child.height + parent.height;
+      return {
+        connector: (0, _Connector['default'])({
+          start: position(parent),
+          end: position(child),
+          tension: tension
+        }),
+        index: i,
+        item: {
+          start: parent.item,
+          end: child.item
+        }
+      };
+    });
+    var childNodes = (0, _treeUtils.collect)(tree, function (parent, child) {
+      return {
+        point: position(child),
+        item: child.item
+      };
+    });
+    var rootNode = {
+      point: position(tree),
+      item: tree.item
+    };
+
+    return {
+      curves: connectors,
+      nodes: [rootNode].concat(childNodes)
+    };
+  };
+});

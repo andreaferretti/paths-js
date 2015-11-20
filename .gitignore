@@ -1,2 +1,6 @@
-node_modules/
-bower_components/
+node_modules
+.tmp
+.idea
+dist/node/all.js
+dist/amd/all.js
+dist/es6/all.js

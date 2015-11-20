@@ -1,17 +1,22 @@
-(function() {
-  define(['./polygon', './ops'], function(Polygon, O) {
-    return function(arg) {
-      var angle, center, points, radii;
-      center = arg.center, radii = arg.radii;
-      angle = 2 * Math.PI / radii.length;
-      points = radii.map(function(r, i) {
-        return O.plus(center, O.on_circle(r, i * angle));
-      });
-      return Polygon({
-        points: points,
-        closed: true
-      });
-    };
-  });
+define(['exports', 'module', './polygon', './ops'], function (exports, module, _polygon, _ops) {
+  'use strict';
 
-}).call(this);
+  function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+
+  var _Polygon = _interopRequireDefault(_polygon);
+
+  module.exports = function (_ref) {
+    var center = _ref.center;
+    var radii = _ref.radii;
+
+    var angle = 2 * Math.PI / radii.length;
+    var points = radii.map(function (r, i) {
+      return (0, _ops.plus)(center, (0, _ops.onCircle)(r, i * angle));
+    });
+
+    return (0, _Polygon['default'])({
+      points: points,
+      closed: true
+    });
+  };
+});

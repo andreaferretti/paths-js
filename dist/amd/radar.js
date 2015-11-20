@@ -1,108 +1,159 @@
-(function() {
-  define(['./semi-regular-polygon', './ops'], function(SemiRegularPolygon, O) {
-    var collect_keys, global_max, key_accessor;
-    collect_keys = function(objects) {
-      var j, key, keys, keysets, l, len, len1, o, object, ref;
-      keys = [];
-      keysets = (function() {
-        var j, len, results;
-        results = [];
-        for (j = 0, len = objects.length; j < len; j++) {
-          o = objects[j];
-          results.push(Object.keys(o));
-        }
-        return results;
-      })();
-      for (j = 0, len = objects.length; j < len; j++) {
-        object = objects[j];
-        ref = Object.keys(object);
-        for (l = 0, len1 = ref.length; l < len1; l++) {
-          key = ref[l];
-          if (keys.indexOf(key) === -1) {
-            keys.push(key);
+define(['exports', 'module', './semi-regular-polygon', './ops'], function (exports, module, _semiRegularPolygon, _ops) {
+  'use strict';
+
+  function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+
+  var _SemiRegularPolygon = _interopRequireDefault(_semiRegularPolygon);
+
+  var collectKeys = function collectKeys(objects) {
+    var keys = [];
+    var keysets = objects.map(Object.keys);
+    var _iteratorNormalCompletion = true;
+    var _didIteratorError = false;
+    var _iteratorError = undefined;
+
+    try {
+      for (var _iterator = objects[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+        var object = _step.value;
+        var _iteratorNormalCompletion2 = true;
+        var _didIteratorError2 = false;
+        var _iteratorError2 = undefined;
+
+        try {
+          for (var _iterator2 = Object.keys(object)[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
+            var key = _step2.value;
+
+            if (keys.indexOf(key) == -1) {
+              keys.push(key);
+            }
+          }
+        } catch (err) {
+          _didIteratorError2 = true;
+          _iteratorError2 = err;
+        } finally {
+          try {
+            if (!_iteratorNormalCompletion2 && _iterator2['return']) {
+              _iterator2['return']();
+            }
+          } finally {
+            if (_didIteratorError2) {
+              throw _iteratorError2;
+            }
           }
         }
       }
-      return keys;
-    };
-    key_accessor = function(keys) {
-      var a, fn, j, key, len;
-      a = {};
-      fn = function(k) {
-        return a[k] = function(o) {
-          return o[k];
-        };
-      };
-      for (j = 0, len = keys.length; j < len; j++) {
-        key = keys[j];
-        fn(key);
+    } catch (err) {
+      _didIteratorError = true;
+      _iteratorError = err;
+    } finally {
+      try {
+        if (!_iteratorNormalCompletion && _iterator['return']) {
+          _iterator['return']();
+        }
+      } finally {
+        if (_didIteratorError) {
+          throw _iteratorError;
+        }
       }
-      return a;
-    };
-    global_max = function(data, accessor) {
-      var keys, maxs;
-      keys = Object.keys(accessor);
-      maxs = data.map(function(d) {
-        var vals;
-        vals = keys.map(function(k) {
-          return accessor[k](d);
-        });
-        return O.max(vals);
-      });
-      return O.max(maxs);
-    };
-    return function(arg) {
-      var accessor, angle, center, compute, data, i, j, keys, max, polygons, r, results, ring_paths, rings, sides;
-      data = arg.data, accessor = arg.accessor, center = arg.center, r = arg.r, max = arg.max, rings = arg.rings, compute = arg.compute;
-      if (rings == null) {
-        rings = 3;
-      }
-      if (accessor == null) {
-        accessor = key_accessor(collect_keys(data));
-      }
-      keys = Object.keys(accessor);
-      sides = keys.length;
-      angle = 2 * Math.PI / sides;
-      i = -1;
-      if (max == null) {
-        max = global_max(data, accessor);
-      }
-      ring_paths = (function() {
-        results = [];
-        for (var j = 1; 1 <= rings ? j <= rings : j >= rings; 1 <= rings ? j++ : j--){ results.push(j); }
-        return results;
-      }).apply(this).map(function(n) {
-        var j, radius, ref, results;
-        radius = r * n / rings;
-        return SemiRegularPolygon({
-          center: center,
-          radii: (function() {
-            results = [];
-            for (var j = 0, ref = sides - 1; 0 <= ref ? j <= ref : j >= ref; 0 <= ref ? j++ : j--){ results.push(j); }
-            return results;
-          }).apply(this).map(function(s) {
-            return radius;
-          })
-        });
-      });
-      polygons = data.map(function(d) {
-        i += 1;
-        return O.enhance(compute, {
-          polygon: SemiRegularPolygon({
-            center: center,
-            radii: keys.map(function(k) {
-              return r * accessor[k](d) / max;
-            })
-          }),
-          item: d,
-          index: i
-        });
-      });
-      return {
-        curves: polygons,
-        rings: ring_paths
-      };
-    };
-  });
+    }
 
-}).call(this);
+    return keys;
+  };
+
+  var keyAccessor = function keyAccessor(keys) {
+    var a = {};
+    var _iteratorNormalCompletion3 = true;
+    var _didIteratorError3 = false;
+    var _iteratorError3 = undefined;
+
+    try {
+      for (var _iterator3 = keys[Symbol.iterator](), _step3; !(_iteratorNormalCompletion3 = (_step3 = _iterator3.next()).done); _iteratorNormalCompletion3 = true) {
+        var key = _step3.value;
+
+        (function (k) {
+          a[k] = function (o) {
+            return o[k];
+          };
+        })(key);
+      }
+    } catch (err) {
+      _didIteratorError3 = true;
+      _iteratorError3 = err;
+    } finally {
+      try {
+        if (!_iteratorNormalCompletion3 && _iterator3['return']) {
+          _iterator3['return']();
+        }
+      } finally {
+        if (_didIteratorError3) {
+          throw _iteratorError3;
+        }
+      }
+    }
+
+    return a;
+  };
+
+  var globalMax = function globalMax(data, accessor) {
+    var keys = Object.keys(accessor);
+    var maxs = data.map(function (d) {
+      return (0, _ops.maxBy)(keys, function (k) {
+        return accessor[k](d);
+      });
+    });
+    return (0, _ops.max)(maxs);
+  };
+
+  module.exports = function (_ref) {
+    var data = _ref.data;
+    var accessor = _ref.accessor;
+    var center = _ref.center;
+    var r = _ref.r;
+    var max = _ref.max;
+    var _ref$rings = _ref.rings;
+    var rings = _ref$rings === undefined ? 3 : _ref$rings;
+    var _ref$compute = _ref.compute;
+    var compute = _ref$compute === undefined ? {} : _ref$compute;
+
+    if (!accessor) {
+      accessor = keyAccessor(collectKeys(data));
+    }
+    var keys = Object.keys(accessor);
+    var sides = keys.length;
+    var angle = 2 * Math.PI / sides;
+    var i = -1;
+    if (max == null) {
+      max = globalMax(data, accessor);
+    }
+
+    var ringPaths = (0, _ops.range)(1, rings, true).map(function (n) {
+      var radius = r * n / rings;
+      return (0, _SemiRegularPolygon['default'])({
+        center: center,
+        radii: (0, _ops.range)(0, sides).map(function (s) {
+          return radius;
+        })
+      });
+    });
+
+    var polygons = data.map(function (d) {
+      i += 1;
+
+      return (0, _ops.enhance)(compute, {
+        polygon: (0, _SemiRegularPolygon['default'])({
+          center: center,
+          radii: keys.map(function (k) {
+            return r * accessor[k](d) / max;
+          })
+        }),
+        item: d,
+        index: i
+      });
+    });
+
+    return {
+      curves: polygons,
+      rings: ringPaths
+    };
+  };
+});

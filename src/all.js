@@ -1,0 +1,39 @@
+import Bar from './bar'
+import Bezier from './bezier'
+import Connector from './connector'
+import CurvedRectangle from './curved-rectangle'
+import Graph from './graph'
+import Linear from './linear'
+import Path from './path'
+import Pie from './pie'
+import Polygon from './polygon'
+import Radar from './radar'
+import Rectangle from './rectangle'
+import Sankey from './sankey'
+import Sector from './sector'
+import SemiRegularPolygon from './semi-regular-polygon'
+import SmoothLine from './smooth-line'
+import Stock from './stock'
+import Tree from './tree'
+import Waterfall from './waterfall'
+
+window.Paths = {
+  Bar,
+  Bezier,
+  Connector,
+  CurvedRectangle,
+  Graph,
+  Linear,
+  Path,
+  Pie,
+  Polygon,
+  Radar,
+  Rectangle,
+  Sankey,
+  Sector,
+  SemiRegularPolygon,
+  SmoothLine,
+  Stock,
+  Tree,
+  Waterfall
+}

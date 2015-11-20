@@ -1,33 +1,61 @@
-(function() {
-  define(['./ops', './linear', './rectangle'], function(O, Linear, Rectangle) {
-    return function(arg) {
-      var M, absolute, accessor, bar_width, bottom, compute, curves, d, data, data_, gutter, height, high, i, j, k, last, left, len, len1, line, low, m, max, min, n, ref, ref1, right, scale, top, value, width;
-      data = arg.data, accessor = arg.accessor, width = arg.width, height = arg.height, gutter = arg.gutter, compute = arg.compute, min = arg.min, max = arg.max;
-      if (accessor == null) {
-        accessor = function(x) {
-          return x;
-        };
-      }
-      if (gutter == null) {
-        gutter = 0;
-      }
-      if (min == null) {
-        min = 0;
-      }
-      if (max == null) {
-        max = 0;
-      }
-      last = 0;
-      data_ = [];
-      for (j = 0, len = data.length; j < len; j++) {
-        d = data[j];
-        ref = accessor(d), value = ref.value, absolute = ref.absolute;
-        ref1 = absolute ? [0, value || last] : [last, last + value], low = ref1[0], high = ref1[1];
-        m = Math.min(low, high);
-        M = Math.max(low, high);
+define(['exports', 'module', './linear', './rectangle', './ops'], function (exports, module, _linear, _rectangle, _ops) {
+  'use strict';
+
+  var _slicedToArray = (function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i['return']) _i['return'](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError('Invalid attempt to destructure non-iterable instance'); } }; })();
+
+  function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+
+  var _Linear = _interopRequireDefault(_linear);
+
+  var _Rectangle = _interopRequireDefault(_rectangle);
+
+  module.exports = function (_ref) {
+    var data = _ref.data;
+    var accessor = _ref.accessor;
+    var width = _ref.width;
+    var height = _ref.height;
+    var gutter = _ref.gutter;
+    var compute = _ref.compute;
+    var min = _ref.min;
+    var max = _ref.max;
+
+    if (!accessor) {
+      accessor = function (x) {
+        return x;
+      };
+    }
+    gutter = gutter || 0;
+    min = min || 0;
+    max = max || 0;
+    var last = 0;
+    var data_ = [];
+
+    var _iteratorNormalCompletion = true;
+    var _didIteratorError = false;
+    var _iteratorError = undefined;
+
+    try {
+      for (var _iterator = data[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+        var d = _step.value;
+
+        var _accessor = accessor(d);
+
+        var value = _accessor.value;
+        var absolute = _accessor.absolute;
+
+        var _ref2 = absolute ? [0, value || last] : [last, last + value];
+
+        var _ref22 = _slicedToArray(_ref2, 2);
+
+        var low = _ref22[0];
+        var high = _ref22[1];
+
+        var m = Math.min(low, high);
+        var M = Math.max(low, high);
         min = Math.min(min, m);
         max = Math.max(max, M);
         last = high;
+
         data_.push({
           item: d,
           low: low,
@@ -35,34 +63,67 @@
           value: value != null ? value : high
         });
       }
-      n = data_.length;
-      bar_width = (width - gutter * (n - 1)) / n;
-      curves = [];
-      scale = Linear([min, max], [height, 0]);
-      for (i = k = 0, len1 = data_.length; k < len1; i = ++k) {
-        d = data_[i];
-        left = i * (bar_width + gutter);
-        right = left + bar_width;
-        bottom = scale(d.low);
-        top = scale(d.high);
-        line = Rectangle({
-          left: left,
-          right: right,
-          bottom: bottom,
-          top: top
-        });
-        curves.push(O.enhance(compute, {
+    } catch (err) {
+      _didIteratorError = true;
+      _iteratorError = err;
+    } finally {
+      try {
+        if (!_iteratorNormalCompletion && _iterator['return']) {
+          _iterator['return']();
+        }
+      } finally {
+        if (_didIteratorError) {
+          throw _iteratorError;
+        }
+      }
+    }
+
+    var n = data_.length;
+    var barWidth = (width - gutter * (n - 1)) / n;
+    var curves = [];
+    var scale = (0, _Linear['default'])([min, max], [height, 0]);
+
+    var _iteratorNormalCompletion2 = true;
+    var _didIteratorError2 = false;
+    var _iteratorError2 = undefined;
+
+    try {
+      for (var _iterator2 = data_.entries()[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
+        var _step2$value = _slicedToArray(_step2.value, 2);
+
+        var i = _step2$value[0];
+        var d = _step2$value[1];
+
+        var left = i * (barWidth + gutter);
+        var right = left + barWidth;
+        var bottom = scale(d.low);
+        var _top = scale(d.high);
+        var line = (0, _Rectangle['default'])({ left: left, right: right, bottom: bottom, top: _top });
+        curves.push((0, _ops.enhance)(compute, {
           item: d.item,
           line: line,
           value: d.value,
           index: i
         }));
       }
-      return {
-        curves: curves,
-        scale: scale
-      };
-    };
-  });
+    } catch (err) {
+      _didIteratorError2 = true;
+      _iteratorError2 = err;
+    } finally {
+      try {
+        if (!_iteratorNormalCompletion2 && _iterator2['return']) {
+          _iterator2['return']();
+        }
+      } finally {
+        if (_didIteratorError2) {
+          throw _iteratorError2;
+        }
+      }
+    }
 
-}).call(this);
+    return {
+      curves: curves,
+      scale: scale
+    };
+  };
+});

@@ -1,28 +1,43 @@
-(function() {
-  define(['./linear', './ops', './sector'], function(Linear, O, Sector) {
-    return function(arg) {
-      var R, accessor, center, compute, curves, data, i, item, j, len, r, s, scale, t, value, values;
-      data = arg.data, accessor = arg.accessor, center = arg.center, r = arg.r, R = arg.R, compute = arg.compute;
-      values = (function() {
-        var j, len, results;
-        results = [];
-        for (j = 0, len = data.length; j < len; j++) {
-          item = data[j];
-          results.push(accessor(item));
-        }
-        return results;
-      })();
-      s = O.sum(values);
-      scale = Linear([0, s], [0, 2 * Math.PI]);
-      curves = [];
-      t = 0;
-      for (i = j = 0, len = data.length; j < len; i = ++j) {
-        item = data[i];
-        value = values[i];
-        curves.push(O.enhance(compute, {
+define(['exports', 'module', './linear', './sector', './ops'], function (exports, module, _linear, _sector, _ops) {
+  'use strict';
+
+  var _slicedToArray = (function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i['return']) _i['return'](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError('Invalid attempt to destructure non-iterable instance'); } }; })();
+
+  function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+
+  var _Linear = _interopRequireDefault(_linear);
+
+  var _Sector = _interopRequireDefault(_sector);
+
+  module.exports = function (_ref) {
+    var data = _ref.data;
+    var accessor = _ref.accessor;
+    var center = _ref.center;
+    var r = _ref.r;
+    var R = _ref.R;
+    var compute = _ref.compute;
+
+    var values = data.map(accessor);
+    var s = (0, _ops.sum)(values);
+    var scale = (0, _Linear['default'])([0, s], [0, 2 * Math.PI]);
+    var curves = [];
+    var t = 0;
+    var _iteratorNormalCompletion = true;
+    var _didIteratorError = false;
+    var _iteratorError = undefined;
+
+    try {
+      for (var _iterator = data.entries()[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+        var _step$value = _slicedToArray(_step.value, 2);
+
+        var i = _step$value[0];
+        var item = _step$value[1];
+
+        var value = values[i];
+        curves.push((0, _ops.enhance)(compute, {
           item: item,
           index: i,
-          sector: Sector({
+          sector: (0, _Sector['default'])({
             center: center,
             r: r,
             R: R,
@@ -32,10 +47,21 @@
         }));
         t += value;
       }
-      return {
-        curves: curves
-      };
-    };
-  });
+    } catch (err) {
+      _didIteratorError = true;
+      _iteratorError = err;
+    } finally {
+      try {
+        if (!_iteratorNormalCompletion && _iterator['return']) {
+          _iterator['return']();
+        }
+      } finally {
+        if (_didIteratorError) {
+          throw _iteratorError;
+        }
+      }
+    }
 
-}).call(this);
+    return { curves: curves };
+  };
+});
