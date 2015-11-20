@@ -4,6 +4,10 @@
   "author": {
     "name": "Andrea Ferretti"
   },
+  "contributors": [
+    "pazqo",
+    "mfirry"
+  ],
   "license": "Apache-2.0",
   "homepage": "https://github.com/andreaferretti/paths-js",
   "keywords": [
