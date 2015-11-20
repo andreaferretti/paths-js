@@ -4,5 +4,5 @@ node_js:
   - "4.1"
   - "4.0"
 before_script:
-  - npm install -g grunt-cli
-script: grunt test
+  - npm run build-node
+script: npm run test

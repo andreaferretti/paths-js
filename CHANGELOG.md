@@ -24,3 +24,9 @@ First version with
 * New chart: Tree (in collaboration with pazqo)
 * New chart: Sankey diagram (thanks to pazqo)
 * Code snippets visible from the demo application
+
+0.4
+===
+
+This version involved a translation to ES6 for future
+development, so no new major features.
