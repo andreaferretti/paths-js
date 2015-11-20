@@ -7,6 +7,8 @@ Paths.js is a library to generate [SVG paths](http://www.w3.org/TR/SVG/paths.htm
 
 Paths.js offers three APIs, of increasing abstraction. The lowest level is a chainable API to generate an arbitrary SVG path. On top of this, paths for simple geometric shapes such as polygons or circle sectors are defined. At the highest level, there is an API to generate some simple graphs (pie, line chart, radar...) for a collection of data, assembling the simple shapes.
 
+Latest version is `0.4.0-beta` - see [this](migration-to-0.4) for the necessary changes from `0.3.5`.
+
 Table of contents
 -----------------
 
@@ -15,6 +17,7 @@ Table of contents
 - [Documentation](#documentation)
 - [Resources](#resources)
 - [Browser support](#browser-support)
+- [Migration to 0.4](migration-to-0.4)
 - [Using Paths.js with the Canvas API](#using-pathsjs-with-the-canvas-api)
 - [Using Paths.js with Scala.js](#using-pathsjs-with-scalajs)
 - [Contributing](#contributing)
@@ -74,6 +77,19 @@ Browser support
 Paths.js works in any environment that supports a modern version of Javascript, namely ES5. This includes any version of Node.js and all recent browsers. If you need support for older browsers, you can include an [ES5 polyfill](https://github.com/kriskowal/es5-shim/).
 
 On the other hand, not every browser will be able to display the SVG graphics that you will generate. Usually, recent desktop browsers are ok, but mobile browser are slow in adopting the SVG specification. You can refer to [caniuse](http://caniuse.com/#search=svg) for more detailed information.
+
+Migration to 0.4
+----------------
+
+Version 0.4 was rewritten in ES6 instead of CoffeeScript for future-proofing. The currently published version is `0.4.0-beta`, and
+it will be promoted to `0.4` after a period of using it without bugs. A few API changes were introduced, namely all keys are now camel cased.
+
+In particular:
+
+* in the low-level verbose API, `large_arc_flag` has been renamed to `largeArcFlag`, and `sweep_flag` to `sweepFlag`
+* the rectangle width in the Sankey diagram, is now called `rectWidth` instead of `rect_width`
+
+Everything else should be the same, so if you find any regression, please open a issue.
 
 Using Paths.js with the Canvas API
 ----------------------------------

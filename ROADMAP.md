@@ -1,4 +1,4 @@
-0.4
+0.5
 ===
 
 * Coordinate changes
@@ -8,15 +8,14 @@
 * Optimize Graph chart
 * Improve layout of trees and Sankey diagrams
 
-0.5
+0.6
 ===
 
 * Allow relative coordinates in low-level API
 * Improve testing and documentation
 * Fancier animations in demo application
-* Example demo with React.js?
 
-0.6
+0.7
 ===
 
 More complex layouts:
