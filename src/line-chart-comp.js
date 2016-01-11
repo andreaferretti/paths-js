@@ -23,7 +23,7 @@ let box = (datum, accessor) => {
   }
 }
 
-export default function({data, xaccessor, yaccessor, width, height, closed}) {
+export default function({data, xaccessor, yaccessor, width, height, closed, min, max}) {
   if (! xaccessor) { xaccessor = ([x, y]) => x }
   if (! yaccessor) { yaccessor = ([x, y]) => y }
   let f = (i) => [xaccessor(i), yaccessor(i)]
@@ -31,8 +31,8 @@ export default function({data, xaccessor, yaccessor, width, height, closed}) {
 
   let xmin = minBy(arranged, (d) => d.xmin)
   let xmax = maxBy(arranged, (d) => d.xmax)
-  let ymin = minBy(arranged, (d) => d.ymin)
-  let ymax = maxBy(arranged, (d) => d.ymax)
+  let ymin = min || minBy(arranged, (d) => d.ymin)
+  let ymax = max || maxBy(arranged, (d) => d.ymax)
   if (closed) {
     ymin = Math.min(ymin, 0)
     ymax = Math.max(ymax, 0)
