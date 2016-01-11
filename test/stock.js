@@ -149,6 +149,24 @@ describe('stock chart scales', () => {
     expect(scale(22)).to.be(0)
   })
 
+  it('should use user-defined ymin and/or ymax if they are are specified', () => {
+    let stock3 = Stock({
+      data: [[
+        { year: 2012, month: 1, value: 20 },
+        { year: 2012, month: 2, value: 30 },
+      ]],
+      min: 10,
+      max: 40,
+      xaccessor: date,
+      yaccessor: (d) => d.value,
+      width: 300,
+      height: 200
+    })
+    let scale = stock3.yscale
+    expect(scale(10)).to.be(200)
+    expect(scale(40)).to.be(0)
+  })
+
   it('should take into account if 0 is to be displayed as a baseline', () => {
     let stock1 = Stock({
       data: data,
