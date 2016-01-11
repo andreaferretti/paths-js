@@ -1,8 +1,6 @@
 (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
 'use strict';
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
-
 var _bar = require('./bar');
 
 var _bar2 = _interopRequireDefault(_bar);
@@ -75,48 +73,38 @@ var _waterfall = require('./waterfall');
 
 var _waterfall2 = _interopRequireDefault(_waterfall);
 
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
 window.Paths = {
-  Bar: _bar2['default'],
-  Bezier: _bezier2['default'],
-  Connector: _connector2['default'],
-  CurvedRectangle: _curvedRectangle2['default'],
-  Graph: _graph2['default'],
-  Linear: _linear2['default'],
-  Path: _path2['default'],
-  Pie: _pie2['default'],
-  Polygon: _polygon2['default'],
-  Radar: _radar2['default'],
-  Rectangle: _rectangle2['default'],
-  Sankey: _sankey2['default'],
-  Sector: _sector2['default'],
-  SemiRegularPolygon: _semiRegularPolygon2['default'],
-  SmoothLine: _smoothLine2['default'],
-  Stock: _stock2['default'],
-  Tree: _tree2['default'],
-  Waterfall: _waterfall2['default']
+  Bar: _bar2.default,
+  Bezier: _bezier2.default,
+  Connector: _connector2.default,
+  CurvedRectangle: _curvedRectangle2.default,
+  Graph: _graph2.default,
+  Linear: _linear2.default,
+  Path: _path2.default,
+  Pie: _pie2.default,
+  Polygon: _polygon2.default,
+  Radar: _radar2.default,
+  Rectangle: _rectangle2.default,
+  Sankey: _sankey2.default,
+  Sector: _sector2.default,
+  SemiRegularPolygon: _semiRegularPolygon2.default,
+  SmoothLine: _smoothLine2.default,
+  Stock: _stock2.default,
+  Tree: _tree2.default,
+  Waterfall: _waterfall2.default
 };
 },{"./bar":2,"./bezier":4,"./connector":5,"./curved-rectangle":6,"./graph":7,"./linear":9,"./path":11,"./pie":12,"./polygon":13,"./radar":14,"./rectangle":15,"./sankey":16,"./sector":17,"./semi-regular-polygon":18,"./smooth-line":19,"./stock":20,"./tree":22,"./waterfall":23}],2:[function(require,module,exports){
 'use strict';
 
-Object.defineProperty(exports, '__esModule', {
+var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"]) _i["return"](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError("Invalid attempt to destructure non-iterable instance"); } }; }();
+
+Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _slicedToArray = (function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i['return']) _i['return'](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError('Invalid attempt to destructure non-iterable instance'); } }; })();
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
-
-var _linear = require('./linear');
-
-var _linear2 = _interopRequireDefault(_linear);
-
-var _rectangle = require('./rectangle');
-
-var _rectangle2 = _interopRequireDefault(_rectangle);
-
-var _ops = require('./ops');
-
-exports['default'] = function (_ref) {
+exports.default = function (_ref) {
   var data = _ref.data;
   var accessor = _ref.accessor;
   var width = _ref.width;
@@ -126,7 +114,7 @@ exports['default'] = function (_ref) {
   var compute = _ref.compute;
 
   if (accessor == null) {
-    accessor = function (x) {
+    accessor = function accessor(x) {
       return x;
     };
   }
@@ -172,8 +160,8 @@ exports['default'] = function (_ref) {
         _iteratorError3 = err;
       } finally {
         try {
-          if (!_iteratorNormalCompletion3 && _iterator3['return']) {
-            _iterator3['return']();
+          if (!_iteratorNormalCompletion3 && _iterator3.return) {
+            _iterator3.return();
           }
         } finally {
           if (_didIteratorError3) {
@@ -187,8 +175,8 @@ exports['default'] = function (_ref) {
     _iteratorError = err;
   } finally {
     try {
-      if (!_iteratorNormalCompletion && _iterator['return']) {
-        _iterator['return']();
+      if (!_iteratorNormalCompletion && _iterator.return) {
+        _iterator.return();
       }
     } finally {
       if (_didIteratorError) {
@@ -200,7 +188,7 @@ exports['default'] = function (_ref) {
   var n = groups.length;
   var groupWidth = (width - gutter * (n - 1)) / n;
   var curves = [];
-  var scale = (0, _linear2['default'])([min, max], [height, 0]);
+  var scale = (0, _linear2.default)([min, max], [height, 0]);
 
   var _iteratorNormalCompletion2 = true;
   var _didIteratorError2 = false;
@@ -229,8 +217,8 @@ exports['default'] = function (_ref) {
           var left = shift + w * j;
           var right = left + w;
           var bottom = scale(0);
-          var _top = scale(el);
-          var line = (0, _rectangle2['default'])({ left: left, right: right, bottom: bottom, top: _top });
+          var top = scale(el);
+          var line = (0, _rectangle2.default)({ left: left, right: right, bottom: bottom, top: top });
           curves.push((0, _ops.enhance)(compute, {
             item: data[j][i],
             line: line,
@@ -242,8 +230,8 @@ exports['default'] = function (_ref) {
         _iteratorError4 = err;
       } finally {
         try {
-          if (!_iteratorNormalCompletion4 && _iterator4['return']) {
-            _iterator4['return']();
+          if (!_iteratorNormalCompletion4 && _iterator4.return) {
+            _iterator4.return();
           }
         } finally {
           if (_didIteratorError4) {
@@ -257,8 +245,8 @@ exports['default'] = function (_ref) {
     _iteratorError2 = err;
   } finally {
     try {
-      if (!_iteratorNormalCompletion2 && _iterator2['return']) {
-        _iterator2['return']();
+      if (!_iteratorNormalCompletion2 && _iterator2.return) {
+        _iterator2.return();
       }
     } finally {
       if (_didIteratorError2) {
@@ -273,15 +261,25 @@ exports['default'] = function (_ref) {
   };
 };
 
-module.exports = exports['default'];
+var _linear = require('./linear');
+
+var _linear2 = _interopRequireDefault(_linear);
+
+var _rectangle = require('./rectangle');
+
+var _rectangle2 = _interopRequireDefault(_rectangle);
+
+var _ops = require('./ops');
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 },{"./linear":9,"./ops":10,"./rectangle":15}],3:[function(require,module,exports){
 'use strict';
 
-Object.defineProperty(exports, '__esModule', {
+var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"]) _i["return"](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError("Invalid attempt to destructure non-iterable instance"); } }; }();
+
+Object.defineProperty(exports, "__esModule", {
   value: true
 });
-
-var _slicedToArray = (function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i['return']) _i['return'](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError('Invalid attempt to destructure non-iterable instance'); } }; })();
 
 var _ops = require('./ops');
 
@@ -304,12 +302,12 @@ var locate = function locate(_ref, quadrants) {
     for (var _iterator = quadrants[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
       var q = _step.value;
       var _q$box = q.box;
-      var _top = _q$box.top;
+      var top = _q$box.top;
       var bottom = _q$box.bottom;
       var left = _q$box.left;
       var right = _q$box.right;
 
-      if (left <= x && x <= right && bottom <= y && y <= _top) {
+      if (left <= x && x <= right && bottom <= y && y <= top) {
         return q;
       }
     }
@@ -318,8 +316,8 @@ var locate = function locate(_ref, quadrants) {
     _iteratorError = err;
   } finally {
     try {
-      if (!_iteratorNormalCompletion && _iterator['return']) {
-        _iterator['return']();
+      if (!_iteratorNormalCompletion && _iterator.return) {
+        _iterator.return();
       }
     } finally {
       if (_didIteratorError) {
@@ -335,10 +333,10 @@ var makeQuadrant = function makeQuadrant(_ref3, _ref4) {
   var left = _ref3.left;
   var right = _ref3.right;
 
-  var _ref42 = _slicedToArray(_ref4, 2);
+  var _ref5 = _slicedToArray(_ref4, 2);
 
-  var a = _ref42[0];
-  var b = _ref42[1];
+  var a = _ref5[0];
+  var b = _ref5[1];
 
   var halfwayV = (left + right) / 2;
   var halfwayH = (top + bottom) / 2;
@@ -353,8 +351,8 @@ var makeQuadrant = function makeQuadrant(_ref3, _ref4) {
   };
 };
 
-var subdivide = function subdivide(_ref5) {
-  var box = _ref5.box;
+var subdivide = function subdivide(_ref6) {
+  var box = _ref6.box;
   return [makeQuadrant(box, [0, 0]), makeQuadrant(box, [1, 0]), makeQuadrant(box, [0, 1]), makeQuadrant(box, [1, 1])];
 };
 
@@ -369,12 +367,12 @@ var addBody = function addBody(root, body) {
     if (root.children) {
       var child = locate(body.point, root.children);
 
-      var _ref6 = root.point ? average(root, body) : [body.point, body.mass];
+      var _ref7 = root.point ? average(root, body) : [body.point, body.mass];
 
-      var _ref62 = _slicedToArray(_ref6, 2);
+      var _ref8 = _slicedToArray(_ref7, 2);
 
-      var p = _ref62[0];
-      var m = _ref62[1];
+      var p = _ref8[0];
+      var m = _ref8[1];
 
       root.point = p;
       root.mass = m;
@@ -385,25 +383,13 @@ var addBody = function addBody(root, body) {
   }
 };
 
-var makeTree = function makeTree(_x, _x2) {
-  var _again = true;
-
-  _function: while (_again) {
-    var bodies = _x,
-        root = _x2;
-    _again = false;
-
-    if (bodies.length === 0) {
-      return root;
-    } else {
-      var body = bodies.shift();
-      addBody(root, body);
-      _x = bodies;
-      _x2 = root;
-      _again = true;
-      body = undefined;
-      continue _function;
-    }
+var makeTree = function makeTree(bodies, root) {
+  if (bodies.length === 0) {
+    return root;
+  } else {
+    var body = bodies.shift();
+    addBody(root, body);
+    return makeTree(bodies, root);
   }
 };
 
@@ -444,8 +430,8 @@ var walkLeaves = function walkLeaves(tree, f) {
         _iteratorError2 = err;
       } finally {
         try {
-          if (!_iteratorNormalCompletion2 && _iterator2['return']) {
-            _iterator2['return']();
+          if (!_iteratorNormalCompletion2 && _iterator2.return) {
+            _iterator2.return();
           }
         } finally {
           if (_didIteratorError2) {
@@ -463,11 +449,11 @@ var bodyForceOn = function bodyForceOn(b1, b2, repulsion) {
   return (0, _ops.times)(repulsion * b1.mass * b2.mass / (d * d * d), segment);
 };
 
-var boxWidth = function boxWidth(_ref7) {
-  var top = _ref7.top;
-  var bottom = _ref7.bottom;
-  var left = _ref7.left;
-  var right = _ref7.right;
+var boxWidth = function boxWidth(_ref9) {
+  var top = _ref9.top;
+  var bottom = _ref9.bottom;
+  var left = _ref9.left;
+  var right = _ref9.right;
   return (0, _ops.length)([top - bottom, right - left]);
 };
 
@@ -496,39 +482,20 @@ var repulsiveForces = function repulsiveForces(tree, repulsion, threshold) {
   return forces;
 };
 
-exports['default'] = {
+exports.default = {
   tree: makeTree,
   bodies: makeBodies,
   root: makeRoot,
   forces: repulsiveForces
 };
-module.exports = exports['default'];
 },{"./ops":10}],4:[function(require,module,exports){
 'use strict';
 
-Object.defineProperty(exports, '__esModule', {
+Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
-
-function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) arr2[i] = arr[i]; return arr2; } else { return Array.from(arr); } }
-
-var _path = require('./path');
-
-var _path2 = _interopRequireDefault(_path);
-
-var _polygon = require('./polygon');
-
-var _polygon2 = _interopRequireDefault(_polygon);
-
-var _ops = require('./ops');
-
-var reflect = function reflect(p, q) {
-  return (0, _ops.minus)((0, _ops.times)(2, p), q);
-};
-
-exports['default'] = function (_ref) {
+exports.default = function (_ref) {
   var _Path;
 
   var points = _ref.points;
@@ -538,7 +505,7 @@ exports['default'] = function (_ref) {
   var diffs = [];
   var l = points.length;
   if (l <= 2) {
-    return (0, _polygon2['default'])({ points: points });
+    return (0, _polygon2.default)({ points: points });
   }
   for (var i = 1; i <= l - 1; i++) {
     diffs.push((0, _ops.times)(tension, (0, _ops.minus)(points[i], points[i - 1])));
@@ -552,7 +519,7 @@ exports['default'] = function (_ref) {
   var c1 = controlPoints[1];
   var p0 = points[0];
   var p1 = points[1];
-  var path = (_Path = (0, _path2['default'])()).moveto.apply(_Path, _toConsumableArray(p0)).curveto(c0[0], c0[1], c1[0], c1[1], p1[0], p1[1]);
+  var path = (_Path = (0, _path2.default)()).moveto.apply(_Path, _toConsumableArray(p0)).curveto(c0[0], c0[1], c1[0], c1[1], p1[0], p1[1]);
 
   return {
     path: (0, _ops.range)(2, l).reduce(function (pt, i) {
@@ -564,28 +531,34 @@ exports['default'] = function (_ref) {
   };
 };
 
-module.exports = exports['default'];
-},{"./ops":10,"./path":11,"./polygon":13}],5:[function(require,module,exports){
-'use strict';
-
-Object.defineProperty(exports, '__esModule', {
-  value: true
-});
-
-var _slicedToArray = (function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i['return']) _i['return'](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError('Invalid attempt to destructure non-iterable instance'); } }; })();
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
-
-function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) arr2[i] = arr[i]; return arr2; } else { return Array.from(arr); } }
-
 var _path = require('./path');
 
 var _path2 = _interopRequireDefault(_path);
 
+var _polygon = require('./polygon');
+
+var _polygon2 = _interopRequireDefault(_polygon);
+
 var _ops = require('./ops');
 
-exports['default'] = function (_ref) {
-  var _Path$moveto$lineto$curveto, _Path$moveto, _Path;
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
+
+var reflect = function reflect(p, q) {
+  return (0, _ops.minus)((0, _ops.times)(2, p), q);
+};
+},{"./ops":10,"./path":11,"./polygon":13}],5:[function(require,module,exports){
+'use strict';
+
+var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"]) _i["return"](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError("Invalid attempt to destructure non-iterable instance"); } }; }();
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+exports.default = function (_ref) {
+  var _Path$moveto$lineto$c, _Path$moveto, _Path;
 
   var start = _ref.start;
   var end = _ref.end;
@@ -610,20 +583,43 @@ exports['default'] = function (_ref) {
   var mid2 = [c - length, d];
 
   return {
-    path: (_Path$moveto$lineto$curveto = (_Path$moveto = (_Path = (0, _path2['default'])()).moveto.apply(_Path, _toConsumableArray(start))).lineto.apply(_Path$moveto, mid1).curveto(a + 5 * length, b, c - 5 * length, d, c - length, d)).lineto.apply(_Path$moveto$lineto$curveto, _toConsumableArray(end)),
+    path: (_Path$moveto$lineto$c = (_Path$moveto = (_Path = (0, _path2.default)()).moveto.apply(_Path, _toConsumableArray(start))).lineto.apply(_Path$moveto, mid1).curveto(a + 5 * length, b, c - 5 * length, d, c - length, d)).lineto.apply(_Path$moveto$lineto$c, _toConsumableArray(end)),
     centroid: (0, _ops.average)([start, end])
   };
 };
 
-module.exports = exports['default'];
+var _path = require('./path');
+
+var _path2 = _interopRequireDefault(_path);
+
+var _ops = require('./ops');
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
 },{"./ops":10,"./path":11}],6:[function(require,module,exports){
 'use strict';
 
-Object.defineProperty(exports, '__esModule', {
+Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+exports.default = function (_ref) {
+  var topleft = _ref.topleft;
+  var topright = _ref.topright;
+  var bottomleft = _ref.bottomleft;
+  var bottomright = _ref.bottomright;
+
+  var topCurve = (0, _connector2.default)({ start: topleft, end: topright }).path;
+  var bottomCurve = (0, _connector2.default)({ start: bottomright, end: bottomleft }).path;
+  var path = topCurve.connect(bottomCurve).closepath();
+  var centroid = (0, _ops.average)([topleft, topright, bottomleft, bottomright]);
+
+  return {
+    path: path,
+    centroid: centroid
+  };
+};
 
 var _path = require('./path');
 
@@ -635,34 +631,191 @@ var _connector2 = _interopRequireDefault(_connector);
 
 var _ops = require('./ops');
 
-exports['default'] = function (_ref) {
-  var topleft = _ref.topleft;
-  var topright = _ref.topright;
-  var bottomleft = _ref.bottomleft;
-  var bottomright = _ref.bottomright;
-
-  var topCurve = (0, _connector2['default'])({ start: topleft, end: topright }).path;
-  var bottomCurve = (0, _connector2['default'])({ start: bottomright, end: bottomleft }).path;
-  var path = topCurve.connect(bottomCurve).closepath();
-  var centroid = (0, _ops.average)([topleft, topright, bottomleft, bottomright]);
-
-  return {
-    path: path,
-    centroid: centroid
-  };
-};
-
-module.exports = exports['default'];
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 },{"./connector":5,"./ops":10,"./path":11}],7:[function(require,module,exports){
 'use strict';
 
-Object.defineProperty(exports, '__esModule', {
+var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"]) _i["return"](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError("Invalid attempt to destructure non-iterable instance"); } }; }();
+
+Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _slicedToArray = (function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i['return']) _i['return'](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError('Invalid attempt to destructure non-iterable instance'); } }; })();
+exports.default = function (_ref3) {
+  var data = _ref3.data;
+  var nodeaccessor = _ref3.nodeaccessor;
+  var linkaccessor = _ref3.linkaccessor;
+  var width = _ref3.width;
+  var height = _ref3.height;
+  var attraction = _ref3.attraction;
+  var repulsion = _ref3.repulsion;
+  var threshold = _ref3.threshold;
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+  var identity = function identity(x) {
+    return x;
+  };
+  if (!nodeaccessor) {
+    nodeaccessor = identity;
+  }
+  if (!linkaccessor) {
+    linkaccessor = identity;
+  }
+  attraction = attraction || 1;
+  repulsion = repulsion || 1;
+  threshold = threshold || 0.5;
+  var bound = inside(width, height);
+
+  var nodes = data.nodes;
+  var links = data.links;
+  var constraints = data.constraints;
+
+  if (!constraints) {
+    constraints = {};
+  }
+  var nodesPositions = {};
+  var nodes_ = {};
+  var _iteratorNormalCompletion2 = true;
+  var _didIteratorError2 = false;
+  var _iteratorError2 = undefined;
+
+  try {
+    for (var _iterator2 = nodes[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
+      var node = _step2.value;
+
+      var id = nodeaccessor(node);
+      nodesPositions[id] = constraints[id] || randomPosition(width, height);
+      nodes_[id] = node;
+    }
+  } catch (err) {
+    _didIteratorError2 = true;
+    _iteratorError2 = err;
+  } finally {
+    try {
+      if (!_iteratorNormalCompletion2 && _iterator2.return) {
+        _iterator2.return();
+      }
+    } finally {
+      if (_didIteratorError2) {
+        throw _iteratorError2;
+      }
+    }
+  }
+
+  var links_ = {};
+
+  var _iteratorNormalCompletion3 = true;
+  var _didIteratorError3 = false;
+  var _iteratorError3 = undefined;
+
+  try {
+    for (var _iterator3 = links[Symbol.iterator](), _step3; !(_iteratorNormalCompletion3 = (_step3 = _iterator3.next()).done); _iteratorNormalCompletion3 = true) {
+      var link = _step3.value;
+
+      var _linkaccessor = linkaccessor(link);
+
+      var start = _linkaccessor.start;
+      var end = _linkaccessor.end;
+      var weight = _linkaccessor.weight;
+
+      links_[start + '|' + end] = { weight: weight, start: start, end: end, link: link };
+    }
+  } catch (err) {
+    _didIteratorError3 = true;
+    _iteratorError3 = err;
+  } finally {
+    try {
+      if (!_iteratorNormalCompletion3 && _iterator3.return) {
+        _iterator3.return();
+      }
+    } finally {
+      if (_didIteratorError3) {
+        throw _iteratorError3;
+      }
+    }
+  }
+
+  var tick = function tick() {
+    var bodies = _barnesHut2.default.bodies(nodesPositions);
+    var root = _barnesHut2.default.root(width, height);
+    var tree = _barnesHut2.default.tree(bodies, root);
+    var attractions = attractiveForces(links_, nodesPositions, attraction / 1000);
+    var repulsions = _barnesHut2.default.forces(tree, repulsion * 1000, threshold);
+    var _iteratorNormalCompletion4 = true;
+    var _didIteratorError4 = false;
+    var _iteratorError4 = undefined;
+
+    try {
+      for (var _iterator4 = Object.keys(nodesPositions)[Symbol.iterator](), _step4; !(_iteratorNormalCompletion4 = (_step4 = _iterator4.next()).done); _iteratorNormalCompletion4 = true) {
+        var id = _step4.value;
+
+        var position = nodesPositions[id];
+        if (constraints[id]) {
+          nodesPositions[id] = constraints[id];
+        } else {
+          var f1 = attractions[id] || [0, 0];
+          var f2 = repulsions[id] || [0, 0];
+          var f = (0, _ops.plus)(f1, f2);
+          nodesPositions[id] = bound((0, _ops.plus)(position, f));
+        }
+      }
+    } catch (err) {
+      _didIteratorError4 = true;
+      _iteratorError4 = err;
+    } finally {
+      try {
+        if (!_iteratorNormalCompletion4 && _iterator4.return) {
+          _iterator4.return();
+        }
+      } finally {
+        if (_didIteratorError4) {
+          throw _iteratorError4;
+        }
+      }
+    }
+
+    return recompute();
+  };
+
+  var constrain = function constrain(id, position) {
+    constraints[id] = position;
+  };
+
+  var unconstrain = function unconstrain(id) {
+    delete constraints[id];
+  };
+
+  var graph = { tick: tick, constrain: constrain, unconstrain: unconstrain };
+
+  var recompute = function recompute() {
+    var i = -1;
+    graph.curves = (0, _ops.mapObject)(links_, function (id, _ref4) {
+      var start = _ref4.start;
+      var end = _ref4.end;
+      var link = _ref4.link;
+
+      i += 1;
+      var p = nodesPositions[start];
+      var q = nodesPositions[end];
+
+      return {
+        link: (0, _polygon2.default)({ points: [p, q], closed: false }),
+        item: link,
+        index: i
+      };
+    });
+
+    graph.nodes = (0, _ops.mapObject)(nodes_, function (id, node) {
+      return {
+        point: nodesPositions[id],
+        item: node
+      };
+    });
+
+    return graph;
+  };
+
+  return recompute();
+};
 
 var _polygon = require('./polygon');
 
@@ -673,6 +826,8 @@ var _ops = require('./ops');
 var _barnesHut = require('./barnes-hut');
 
 var _barnesHut2 = _interopRequireDefault(_barnesHut);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var randomPosition = function randomPosition(w, h) {
   return [Math.random() * w, Math.random() * h];
@@ -723,8 +878,8 @@ var attractiveForces = function attractiveForces(links, positions, attraction) {
     _iteratorError = err;
   } finally {
     try {
-      if (!_iteratorNormalCompletion && _iterator['return']) {
-        _iterator['return']();
+      if (!_iteratorNormalCompletion && _iterator.return) {
+        _iterator.return();
       }
     } finally {
       if (_didIteratorError) {
@@ -735,194 +890,85 @@ var attractiveForces = function attractiveForces(links, positions, attraction) {
 
   return forces;
 };
-
-exports['default'] = function (_ref3) {
-  var data = _ref3.data;
-  var nodeaccessor = _ref3.nodeaccessor;
-  var linkaccessor = _ref3.linkaccessor;
-  var width = _ref3.width;
-  var height = _ref3.height;
-  var attraction = _ref3.attraction;
-  var repulsion = _ref3.repulsion;
-  var threshold = _ref3.threshold;
-
-  var identity = function identity(x) {
-    return x;
-  };
-  if (!nodeaccessor) {
-    nodeaccessor = identity;
-  }
-  if (!linkaccessor) {
-    linkaccessor = identity;
-  }
-  attraction = attraction || 1;
-  repulsion = repulsion || 1;
-  threshold = threshold || 0.5;
-  var bound = inside(width, height);
-
-  var nodes = data.nodes;
-  var links = data.links;
-  var constraints = data.constraints;
-
-  if (!constraints) {
-    constraints = {};
-  }
-  var nodesPositions = {};
-  var nodes_ = {};
-  var _iteratorNormalCompletion2 = true;
-  var _didIteratorError2 = false;
-  var _iteratorError2 = undefined;
-
-  try {
-    for (var _iterator2 = nodes[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
-      var node = _step2.value;
-
-      var id = nodeaccessor(node);
-      nodesPositions[id] = constraints[id] || randomPosition(width, height);
-      nodes_[id] = node;
-    }
-  } catch (err) {
-    _didIteratorError2 = true;
-    _iteratorError2 = err;
-  } finally {
-    try {
-      if (!_iteratorNormalCompletion2 && _iterator2['return']) {
-        _iterator2['return']();
-      }
-    } finally {
-      if (_didIteratorError2) {
-        throw _iteratorError2;
-      }
-    }
-  }
-
-  var links_ = {};
-
-  var _iteratorNormalCompletion3 = true;
-  var _didIteratorError3 = false;
-  var _iteratorError3 = undefined;
-
-  try {
-    for (var _iterator3 = links[Symbol.iterator](), _step3; !(_iteratorNormalCompletion3 = (_step3 = _iterator3.next()).done); _iteratorNormalCompletion3 = true) {
-      var link = _step3.value;
-
-      var _linkaccessor = linkaccessor(link);
-
-      var start = _linkaccessor.start;
-      var end = _linkaccessor.end;
-      var weight = _linkaccessor.weight;
-
-      links_[start + '|' + end] = { weight: weight, start: start, end: end, link: link };
-    }
-  } catch (err) {
-    _didIteratorError3 = true;
-    _iteratorError3 = err;
-  } finally {
-    try {
-      if (!_iteratorNormalCompletion3 && _iterator3['return']) {
-        _iterator3['return']();
-      }
-    } finally {
-      if (_didIteratorError3) {
-        throw _iteratorError3;
-      }
-    }
-  }
-
-  var tick = function tick() {
-    var bodies = _barnesHut2['default'].bodies(nodesPositions);
-    var root = _barnesHut2['default'].root(width, height);
-    var tree = _barnesHut2['default'].tree(bodies, root);
-    var attractions = attractiveForces(links_, nodesPositions, attraction / 1000);
-    var repulsions = _barnesHut2['default'].forces(tree, repulsion * 1000, threshold);
-    var _iteratorNormalCompletion4 = true;
-    var _didIteratorError4 = false;
-    var _iteratorError4 = undefined;
-
-    try {
-      for (var _iterator4 = Object.keys(nodesPositions)[Symbol.iterator](), _step4; !(_iteratorNormalCompletion4 = (_step4 = _iterator4.next()).done); _iteratorNormalCompletion4 = true) {
-        var id = _step4.value;
-
-        var position = nodesPositions[id];
-        if (constraints[id]) {
-          nodesPositions[id] = constraints[id];
-        } else {
-          var f1 = attractions[id] || [0, 0];
-          var f2 = repulsions[id] || [0, 0];
-          var f = (0, _ops.plus)(f1, f2);
-          nodesPositions[id] = bound((0, _ops.plus)(position, f));
-        }
-      }
-    } catch (err) {
-      _didIteratorError4 = true;
-      _iteratorError4 = err;
-    } finally {
-      try {
-        if (!_iteratorNormalCompletion4 && _iterator4['return']) {
-          _iterator4['return']();
-        }
-      } finally {
-        if (_didIteratorError4) {
-          throw _iteratorError4;
-        }
-      }
-    }
-
-    return recompute();
-  };
-
-  var constrain = function constrain(id, position) {
-    constraints[id] = position;
-  };
-
-  var unconstrain = function unconstrain(id) {
-    delete constraints[id];
-  };
-
-  var graph = { tick: tick, constrain: constrain, unconstrain: unconstrain };
-
-  var recompute = function recompute() {
-    var i = -1;
-    graph.curves = (0, _ops.mapObject)(links_, function (id, _ref4) {
-      var start = _ref4.start;
-      var end = _ref4.end;
-      var link = _ref4.link;
-
-      i += 1;
-      var p = nodesPositions[start];
-      var q = nodesPositions[end];
-
-      return {
-        link: (0, _polygon2['default'])({ points: [p, q], closed: false }),
-        item: link,
-        index: i
-      };
-    });
-
-    graph.nodes = (0, _ops.mapObject)(nodes_, function (id, node) {
-      return {
-        point: nodesPositions[id],
-        item: node
-      };
-    });
-
-    return graph;
-  };
-
-  return recompute();
-};
-
-module.exports = exports['default'];
 },{"./barnes-hut":3,"./ops":10,"./polygon":13}],8:[function(require,module,exports){
 'use strict';
 
-Object.defineProperty(exports, '__esModule', {
+var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"]) _i["return"](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError("Invalid attempt to destructure non-iterable instance"); } }; }();
+
+Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _slicedToArray = (function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i['return']) _i['return'](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError('Invalid attempt to destructure non-iterable instance'); } }; })();
+exports.default = function (_ref5) {
+  var data = _ref5.data;
+  var xaccessor = _ref5.xaccessor;
+  var yaccessor = _ref5.yaccessor;
+  var width = _ref5.width;
+  var height = _ref5.height;
+  var closed = _ref5.closed;
+  var min = _ref5.min;
+  var max = _ref5.max;
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+  if (!xaccessor) {
+    xaccessor = function xaccessor(_ref6) {
+      var _ref7 = _slicedToArray(_ref6, 2);
+
+      var x = _ref7[0];
+      var y = _ref7[1];
+      return x;
+    };
+  }
+  if (!yaccessor) {
+    yaccessor = function yaccessor(_ref8) {
+      var _ref9 = _slicedToArray(_ref8, 2);
+
+      var x = _ref9[0];
+      var y = _ref9[1];
+      return y;
+    };
+  }
+  var f = function f(i) {
+    return [xaccessor(i), yaccessor(i)];
+  };
+  var arranged = data.map(function (datum) {
+    return box(datum, f);
+  });
+
+  var xmin = (0, _ops.minBy)(arranged, function (d) {
+    return d.xmin;
+  });
+  var xmax = (0, _ops.maxBy)(arranged, function (d) {
+    return d.xmax;
+  });
+  var ymin = min || (0, _ops.minBy)(arranged, function (d) {
+    return d.ymin;
+  });
+  var ymax = max || (0, _ops.maxBy)(arranged, function (d) {
+    return d.ymax;
+  });
+  if (closed) {
+    ymin = Math.min(ymin, 0);
+    ymax = Math.max(ymax, 0);
+  }
+  var base = closed ? 0 : ymin;
+  var xscale = (0, _linear2.default)([xmin, xmax], [0, width]);
+  var yscale = (0, _linear2.default)([ymin, ymax], [height, 0]);
+  var scale = function scale(_ref10) {
+    var _ref11 = _slicedToArray(_ref10, 2);
+
+    var x = _ref11[0];
+    var y = _ref11[1];
+    return [xscale(x), yscale(y)];
+  };
+
+  return {
+    arranged: arranged,
+    scale: scale,
+    xscale: xscale,
+    yscale: yscale,
+    base: base
+  };
+};
 
 var _linear = require('./linear');
 
@@ -930,20 +976,22 @@ var _linear2 = _interopRequireDefault(_linear);
 
 var _ops = require('./ops');
 
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
 var epsilon = 1e-5;
 
 var box = function box(datum, accessor) {
   var points = datum.map(accessor);
-  var sorted = points.sort(function (_ref, _ref3) {
-    var _ref2 = _slicedToArray(_ref, 2);
+  var sorted = points.sort(function (_ref, _ref2) {
+    var _ref4 = _slicedToArray(_ref, 2);
 
-    var a = _ref2[0];
-    var b = _ref2[1];
+    var a = _ref4[0];
+    var b = _ref4[1];
 
-    var _ref32 = _slicedToArray(_ref3, 2);
+    var _ref3 = _slicedToArray(_ref2, 2);
 
-    var c = _ref32[0];
-    var d = _ref32[1];
+    var c = _ref3[0];
+    var d = _ref3[1];
     return a - c;
   });
   var l = sorted.length;
@@ -970,96 +1018,24 @@ var box = function box(datum, accessor) {
     ymax: ymax
   };
 };
-
-exports['default'] = function (_ref4) {
-  var data = _ref4.data;
-  var xaccessor = _ref4.xaccessor;
-  var yaccessor = _ref4.yaccessor;
-  var width = _ref4.width;
-  var height = _ref4.height;
-  var closed = _ref4.closed;
-
-  if (!xaccessor) {
-    xaccessor = function (_ref5) {
-      var _ref52 = _slicedToArray(_ref5, 2);
-
-      var x = _ref52[0];
-      var y = _ref52[1];
-      return x;
-    };
-  }
-  if (!yaccessor) {
-    yaccessor = function (_ref6) {
-      var _ref62 = _slicedToArray(_ref6, 2);
-
-      var x = _ref62[0];
-      var y = _ref62[1];
-      return y;
-    };
-  }
-  var f = function f(i) {
-    return [xaccessor(i), yaccessor(i)];
-  };
-  var arranged = data.map(function (datum) {
-    return box(datum, f);
-  });
-
-  var xmin = (0, _ops.minBy)(arranged, function (d) {
-    return d.xmin;
-  });
-  var xmax = (0, _ops.maxBy)(arranged, function (d) {
-    return d.xmax;
-  });
-  var ymin = (0, _ops.minBy)(arranged, function (d) {
-    return d.ymin;
-  });
-  var ymax = (0, _ops.maxBy)(arranged, function (d) {
-    return d.ymax;
-  });
-  if (closed) {
-    ymin = Math.min(ymin, 0);
-    ymax = Math.max(ymax, 0);
-  }
-  var base = closed ? 0 : ymin;
-  var xscale = (0, _linear2['default'])([xmin, xmax], [0, width]);
-  var yscale = (0, _linear2['default'])([ymin, ymax], [height, 0]);
-  var scale = function scale(_ref7) {
-    var _ref72 = _slicedToArray(_ref7, 2);
-
-    var x = _ref72[0];
-    var y = _ref72[1];
-    return [xscale(x), yscale(y)];
-  };
-
-  return {
-    arranged: arranged,
-    scale: scale,
-    xscale: xscale,
-    yscale: yscale,
-    base: base
-  };
-};
-
-module.exports = exports['default'];
 },{"./linear":9,"./ops":10}],9:[function(require,module,exports){
 "use strict";
+
+var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"]) _i["return"](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError("Invalid attempt to destructure non-iterable instance"); } }; }();
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
+var linear = function linear(_ref, _ref2) {
+  var _ref4 = _slicedToArray(_ref, 2);
 
-var _slicedToArray = (function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"]) _i["return"](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError("Invalid attempt to destructure non-iterable instance"); } }; })();
+  var a = _ref4[0];
+  var b = _ref4[1];
 
-var linear = function linear(_ref, _ref3) {
-  var _ref2 = _slicedToArray(_ref, 2);
+  var _ref3 = _slicedToArray(_ref2, 2);
 
-  var a = _ref2[0];
-  var b = _ref2[1];
-
-  var _ref32 = _slicedToArray(_ref3, 2);
-
-  var c = _ref32[0];
-  var d = _ref32[1];
+  var c = _ref3[0];
+  var d = _ref3[1];
 
   var f = function f(x) {
     return c + (d - c) * (x - a) / (b - a);
@@ -1071,17 +1047,15 @@ var linear = function linear(_ref, _ref3) {
   return f;
 };
 
-exports["default"] = linear;
-module.exports = exports["default"];
+exports.default = linear;
 },{}],10:[function(require,module,exports){
 "use strict";
+
+var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"]) _i["return"](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError("Invalid attempt to destructure non-iterable instance"); } }; }();
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-
-var _slicedToArray = (function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"]) _i["return"](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError("Invalid attempt to destructure non-iterable instance"); } }; })();
-
 var sum = function sum(xs) {
   return xs.reduce(function (a, b) {
     return a + b;
@@ -1118,45 +1092,45 @@ var maxBy = function maxBy(xs, f) {
   }, -Infinity);
 };
 
-var plus = function plus(_ref, _ref3) {
-  var _ref2 = _slicedToArray(_ref, 2);
+var plus = function plus(_ref, _ref2) {
+  var _ref4 = _slicedToArray(_ref, 2);
 
-  var a = _ref2[0];
-  var b = _ref2[1];
+  var a = _ref4[0];
+  var b = _ref4[1];
 
-  var _ref32 = _slicedToArray(_ref3, 2);
+  var _ref3 = _slicedToArray(_ref2, 2);
 
-  var c = _ref32[0];
-  var d = _ref32[1];
+  var c = _ref3[0];
+  var d = _ref3[1];
   return [a + c, b + d];
 };
 
-var minus = function minus(_ref4, _ref5) {
-  var _ref42 = _slicedToArray(_ref4, 2);
+var minus = function minus(_ref5, _ref6) {
+  var _ref8 = _slicedToArray(_ref5, 2);
 
-  var a = _ref42[0];
-  var b = _ref42[1];
+  var a = _ref8[0];
+  var b = _ref8[1];
 
-  var _ref52 = _slicedToArray(_ref5, 2);
+  var _ref7 = _slicedToArray(_ref6, 2);
 
-  var c = _ref52[0];
-  var d = _ref52[1];
+  var c = _ref7[0];
+  var d = _ref7[1];
   return [a - c, b - d];
 };
 
-var times = function times(k, _ref6) {
-  var _ref62 = _slicedToArray(_ref6, 2);
+var times = function times(k, _ref9) {
+  var _ref10 = _slicedToArray(_ref9, 2);
 
-  var a = _ref62[0];
-  var b = _ref62[1];
+  var a = _ref10[0];
+  var b = _ref10[1];
   return [k * a, k * b];
 };
 
-var length = function length(_ref7) {
-  var _ref72 = _slicedToArray(_ref7, 2);
+var length = function length(_ref11) {
+  var _ref12 = _slicedToArray(_ref11, 2);
 
-  var a = _ref72[0];
-  var b = _ref72[1];
+  var a = _ref12[0];
+  var b = _ref12[1];
   return Math.sqrt(a * a + b * b);
 };
 
@@ -1210,8 +1184,8 @@ var mapObject = function mapObject(obj, f) {
     _iteratorError = err;
   } finally {
     try {
-      if (!_iteratorNormalCompletion && _iterator["return"]) {
-        _iterator["return"]();
+      if (!_iteratorNormalCompletion && _iterator.return) {
+        _iterator.return();
       }
     } finally {
       if (_didIteratorError) {
@@ -1229,17 +1203,22 @@ var pairs = function pairs(obj) {
   });
 };
 
-exports["default"] = { sum: sum, min: min, max: max, sumBy: sumBy, minBy: minBy, maxBy: maxBy, plus: plus, minus: minus, times: times,
+exports.default = { sum: sum, min: min, max: max, sumBy: sumBy, minBy: minBy, maxBy: maxBy, plus: plus, minus: minus, times: times,
   length: length, sumVectors: sumVectors, average: average, onCircle: onCircle, enhance: enhance, range: range, mapObject: mapObject, pairs: pairs };
-module.exports = exports["default"];
 },{}],11:[function(require,module,exports){
 'use strict';
 
-Object.defineProperty(exports, '__esModule', {
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol ? "symbol" : typeof obj; };
+
+var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"]) _i["return"](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError("Invalid attempt to destructure non-iterable instance"); } }; }();
+
+Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _slicedToArray = (function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i['return']) _i['return'](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError('Invalid attempt to destructure non-iterable instance'); } }; })();
+exports.default = function () {
+  return Path();
+};
 
 var Path = function Path(init) {
   var _instructions = init || [];
@@ -1250,16 +1229,16 @@ var Path = function Path(init) {
     return copy;
   };
 
-  var areEqualPoints = function areEqualPoints(_ref, _ref3) {
-    var _ref2 = _slicedToArray(_ref, 2);
+  var areEqualPoints = function areEqualPoints(_ref, _ref2) {
+    var _ref4 = _slicedToArray(_ref, 2);
 
-    var a1 = _ref2[0];
-    var b1 = _ref2[1];
+    var a1 = _ref4[0];
+    var b1 = _ref4[1];
 
-    var _ref32 = _slicedToArray(_ref3, 2);
+    var _ref3 = _slicedToArray(_ref2, 2);
 
-    var a2 = _ref32[0];
-    var b2 = _ref32[1];
+    var a2 = _ref3[0];
+    var b2 = _ref3[1];
     return a1 === a2 && b1 === b2;
   };
 
@@ -1279,9 +1258,9 @@ var Path = function Path(init) {
     return trimZeros(str);
   };
 
-  var printInstrunction = function printInstrunction(_ref4) {
-    var command = _ref4.command;
-    var params = _ref4.params;
+  var printInstrunction = function printInstrunction(_ref5) {
+    var command = _ref5.command;
+    var params = _ref5.params;
 
     var numbers = params.map(function (param) {
       return round(param, 6);
@@ -1289,14 +1268,14 @@ var Path = function Path(init) {
     return command + ' ' + numbers.join(' ');
   };
 
-  var point = function point(_ref5, _ref6) {
-    var command = _ref5.command;
-    var params = _ref5.params;
+  var point = function point(_ref6, _ref7) {
+    var command = _ref6.command;
+    var params = _ref6.params;
 
-    var _ref62 = _slicedToArray(_ref6, 2);
+    var _ref8 = _slicedToArray(_ref7, 2);
 
-    var prevX = _ref62[0];
-    var prevY = _ref62[1];
+    var prevX = _ref8[0];
+    var prevY = _ref8[1];
 
     switch (command) {
       case 'M':
@@ -1324,7 +1303,7 @@ var Path = function Path(init) {
 
   var verbosify = function verbosify(keys, f) {
     return function (a) {
-      var args = typeof a === 'object' ? keys.map(function (k) {
+      var args = (typeof a === 'undefined' ? 'undefined' : _typeof(a)) === 'object' ? keys.map(function (k) {
         return a[k];
       }) : arguments;
       return f.apply(null, args);
@@ -1421,8 +1400,8 @@ var Path = function Path(init) {
         _iteratorError = err;
       } finally {
         try {
-          if (!_iteratorNormalCompletion && _iterator['return']) {
-            _iterator['return']();
+          if (!_iteratorNormalCompletion && _iterator.return) {
+            _iterator.return();
           }
         } finally {
           if (_didIteratorError) {
@@ -1451,34 +1430,16 @@ var Path = function Path(init) {
     }
   };
 };
-
-exports['default'] = function () {
-  return Path();
-};
-
-module.exports = exports['default'];
 },{}],12:[function(require,module,exports){
 'use strict';
 
-Object.defineProperty(exports, '__esModule', {
+var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"]) _i["return"](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError("Invalid attempt to destructure non-iterable instance"); } }; }();
+
+Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _slicedToArray = (function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i['return']) _i['return'](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError('Invalid attempt to destructure non-iterable instance'); } }; })();
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
-
-var _linear = require('./linear');
-
-var _linear2 = _interopRequireDefault(_linear);
-
-var _sector = require('./sector');
-
-var _sector2 = _interopRequireDefault(_sector);
-
-var _ops = require('./ops');
-
-exports['default'] = function (_ref) {
+exports.default = function (_ref) {
   var data = _ref.data;
   var accessor = _ref.accessor;
   var center = _ref.center;
@@ -1488,7 +1449,7 @@ exports['default'] = function (_ref) {
 
   var values = data.map(accessor);
   var s = (0, _ops.sum)(values);
-  var scale = (0, _linear2['default'])([0, s], [0, 2 * Math.PI]);
+  var scale = (0, _linear2.default)([0, s], [0, 2 * Math.PI]);
   var curves = [];
   var t = 0;
   var _iteratorNormalCompletion = true;
@@ -1506,7 +1467,7 @@ exports['default'] = function (_ref) {
       curves.push((0, _ops.enhance)(compute, {
         item: item,
         index: i,
-        sector: (0, _sector2['default'])({
+        sector: (0, _sector2.default)({
           center: center,
           r: r,
           R: R,
@@ -1521,8 +1482,8 @@ exports['default'] = function (_ref) {
     _iteratorError = err;
   } finally {
     try {
-      if (!_iteratorNormalCompletion && _iterator['return']) {
-        _iterator['return']();
+      if (!_iteratorNormalCompletion && _iterator.return) {
+        _iterator.return();
       }
     } finally {
       if (_didIteratorError) {
@@ -1534,25 +1495,25 @@ exports['default'] = function (_ref) {
   return { curves: curves };
 };
 
-module.exports = exports['default'];
-},{"./linear":9,"./ops":10,"./sector":17}],13:[function(require,module,exports){
-'use strict';
+var _linear = require('./linear');
 
-Object.defineProperty(exports, '__esModule', {
-  value: true
-});
+var _linear2 = _interopRequireDefault(_linear);
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+var _sector = require('./sector');
 
-function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) arr2[i] = arr[i]; return arr2; } else { return Array.from(arr); } }
-
-var _path = require('./path');
-
-var _path2 = _interopRequireDefault(_path);
+var _sector2 = _interopRequireDefault(_sector);
 
 var _ops = require('./ops');
 
-exports['default'] = function (_ref) {
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+},{"./linear":9,"./ops":10,"./sector":17}],13:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+exports.default = function (_ref) {
   var _Path;
 
   var points = _ref.points;
@@ -1563,7 +1524,7 @@ exports['default'] = function (_ref) {
   var tail = points.slice(1, l + 1);
   var path = tail.reduce(function (pt, p) {
     return pt.lineto.apply(pt, _toConsumableArray(p));
-  }, (_Path = (0, _path2['default'])()).moveto.apply(_Path, _toConsumableArray(head)));
+  }, (_Path = (0, _path2.default)()).moveto.apply(_Path, _toConsumableArray(head)));
 
   return {
     path: closed ? path.closepath() : path,
@@ -1571,21 +1532,82 @@ exports['default'] = function (_ref) {
   };
 };
 
-module.exports = exports['default'];
+var _path = require('./path');
+
+var _path2 = _interopRequireDefault(_path);
+
+var _ops = require('./ops');
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
 },{"./ops":10,"./path":11}],14:[function(require,module,exports){
 'use strict';
 
-Object.defineProperty(exports, '__esModule', {
+Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+exports.default = function (_ref) {
+  var data = _ref.data;
+  var accessor = _ref.accessor;
+  var center = _ref.center;
+  var r = _ref.r;
+  var max = _ref.max;
+  var _ref$rings = _ref.rings;
+  var rings = _ref$rings === undefined ? 3 : _ref$rings;
+  var _ref$compute = _ref.compute;
+  var compute = _ref$compute === undefined ? {} : _ref$compute;
+
+  if (!accessor) {
+    accessor = keyAccessor(collectKeys(data));
+  }
+  var keys = Object.keys(accessor);
+  var sides = keys.length;
+  var angle = 2 * Math.PI / sides;
+  var i = -1;
+  if (max == null) {
+    max = globalMax(data, accessor);
+  }
+
+  var ringPaths = (0, _ops.range)(1, rings, true).map(function (n) {
+    var radius = r * n / rings;
+    return (0, _semiRegularPolygon2.default)({
+      center: center,
+      radii: (0, _ops.range)(0, sides).map(function (s) {
+        return radius;
+      })
+    });
+  });
+
+  var polygons = data.map(function (d) {
+    i += 1;
+
+    return (0, _ops.enhance)(compute, {
+      polygon: (0, _semiRegularPolygon2.default)({
+        center: center,
+        radii: keys.map(function (k) {
+          return r * accessor[k](d) / max;
+        })
+      }),
+      item: d,
+      index: i
+    });
+  });
+
+  return {
+    curves: polygons,
+    rings: ringPaths
+  };
+};
 
 var _semiRegularPolygon = require('./semi-regular-polygon');
 
 var _semiRegularPolygon2 = _interopRequireDefault(_semiRegularPolygon);
 
 var _ops = require('./ops');
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var collectKeys = function collectKeys(objects) {
   var keys = [];
@@ -1614,8 +1636,8 @@ var collectKeys = function collectKeys(objects) {
         _iteratorError2 = err;
       } finally {
         try {
-          if (!_iteratorNormalCompletion2 && _iterator2['return']) {
-            _iterator2['return']();
+          if (!_iteratorNormalCompletion2 && _iterator2.return) {
+            _iterator2.return();
           }
         } finally {
           if (_didIteratorError2) {
@@ -1629,8 +1651,8 @@ var collectKeys = function collectKeys(objects) {
     _iteratorError = err;
   } finally {
     try {
-      if (!_iteratorNormalCompletion && _iterator['return']) {
-        _iterator['return']();
+      if (!_iteratorNormalCompletion && _iterator.return) {
+        _iterator.return();
       }
     } finally {
       if (_didIteratorError) {
@@ -1663,8 +1685,8 @@ var keyAccessor = function keyAccessor(keys) {
     _iteratorError3 = err;
   } finally {
     try {
-      if (!_iteratorNormalCompletion3 && _iterator3['return']) {
-        _iterator3['return']();
+      if (!_iteratorNormalCompletion3 && _iterator3.return) {
+        _iterator3.return();
       }
     } finally {
       if (_didIteratorError3) {
@@ -1685,109 +1707,40 @@ var globalMax = function globalMax(data, accessor) {
   });
   return (0, _ops.max)(maxs);
 };
-
-exports['default'] = function (_ref) {
-  var data = _ref.data;
-  var accessor = _ref.accessor;
-  var center = _ref.center;
-  var r = _ref.r;
-  var max = _ref.max;
-  var _ref$rings = _ref.rings;
-  var rings = _ref$rings === undefined ? 3 : _ref$rings;
-  var _ref$compute = _ref.compute;
-  var compute = _ref$compute === undefined ? {} : _ref$compute;
-
-  if (!accessor) {
-    accessor = keyAccessor(collectKeys(data));
-  }
-  var keys = Object.keys(accessor);
-  var sides = keys.length;
-  var angle = 2 * Math.PI / sides;
-  var i = -1;
-  if (max == null) {
-    max = globalMax(data, accessor);
-  }
-
-  var ringPaths = (0, _ops.range)(1, rings, true).map(function (n) {
-    var radius = r * n / rings;
-    return (0, _semiRegularPolygon2['default'])({
-      center: center,
-      radii: (0, _ops.range)(0, sides).map(function (s) {
-        return radius;
-      })
-    });
-  });
-
-  var polygons = data.map(function (d) {
-    i += 1;
-
-    return (0, _ops.enhance)(compute, {
-      polygon: (0, _semiRegularPolygon2['default'])({
-        center: center,
-        radii: keys.map(function (k) {
-          return r * accessor[k](d) / max;
-        })
-      }),
-      item: d,
-      index: i
-    });
-  });
-
-  return {
-    curves: polygons,
-    rings: ringPaths
-  };
-};
-
-module.exports = exports['default'];
 },{"./ops":10,"./semi-regular-polygon":18}],15:[function(require,module,exports){
 'use strict';
 
-Object.defineProperty(exports, '__esModule', {
+Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
-
-var _polygon = require('./polygon');
-
-var _polygon2 = _interopRequireDefault(_polygon);
-
-exports['default'] = function (_ref) {
+exports.default = function (_ref) {
   var left = _ref.left;
   var right = _ref.right;
   var top = _ref.top;
   var bottom = _ref.bottom;
 
-  return (0, _polygon2['default'])({
+  return (0, _polygon2.default)({
     points: [[right, top], [right, bottom], [left, bottom], [left, top]],
     closed: true
   });
 };
 
-module.exports = exports['default'];
+var _polygon = require('./polygon');
+
+var _polygon2 = _interopRequireDefault(_polygon);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 },{"./polygon":13}],16:[function(require,module,exports){
 'use strict';
 
-Object.defineProperty(exports, '__esModule', {
+var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"]) _i["return"](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError("Invalid attempt to destructure non-iterable instance"); } }; }();
+
+Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _slicedToArray = (function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i['return']) _i['return'](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError('Invalid attempt to destructure non-iterable instance'); } }; })();
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
-
-var _rectangle = require('./rectangle');
-
-var _rectangle2 = _interopRequireDefault(_rectangle);
-
-var _curvedRectangle = require('./curved-rectangle');
-
-var _curvedRectangle2 = _interopRequireDefault(_curvedRectangle);
-
-var _ops = require('./ops');
-
-exports['default'] = function (_ref) {
+exports.default = function (_ref) {
   var data = _ref.data;
   var nodeaccessor = _ref.nodeaccessor;
   var linkaccessor = _ref.linkaccessor;
@@ -1835,7 +1788,7 @@ exports['default'] = function (_ref) {
   var _iteratorError = undefined;
 
   try {
-    var _loop = function () {
+    var _loop = function _loop() {
       var _step$value = _slicedToArray(_step.value, 2);
 
       var name = _step$value[0];
@@ -1872,8 +1825,8 @@ exports['default'] = function (_ref) {
     _iteratorError = err;
   } finally {
     try {
-      if (!_iteratorNormalCompletion && _iterator['return']) {
-        _iterator['return']();
+      if (!_iteratorNormalCompletion && _iterator.return) {
+        _iterator.return();
       }
     } finally {
       if (_didIteratorError) {
@@ -1920,8 +1873,8 @@ exports['default'] = function (_ref) {
     _iteratorError2 = err;
   } finally {
     try {
-      if (!_iteratorNormalCompletion2 && _iterator2['return']) {
-        _iterator2['return']();
+      if (!_iteratorNormalCompletion2 && _iterator2.return) {
+        _iterator2.return();
       }
     } finally {
       if (_didIteratorError2) {
@@ -1953,7 +1906,7 @@ exports['default'] = function (_ref) {
       nameValues[name].rectangleCoords = att;
       nodeIdx += 1;
       rectangles.push((0, _ops.enhance)(compute, {
-        curve: (0, _rectangle2['default'])(att),
+        curve: (0, _rectangle2.default)(att),
         item: data.nodes[idg][idn],
         index: nodeIdx,
         group: idg
@@ -1979,7 +1932,7 @@ exports['default'] = function (_ref) {
     t.currentlyUsedIn += scaledWeight;
 
     return (0, _ops.enhance)(compute, {
-      curve: (0, _curvedRectangle2['default'])(curvedRect),
+      curve: (0, _curvedRectangle2.default)(curvedRect),
       item: data.links[i],
       index: i
     });
@@ -1991,26 +1944,26 @@ exports['default'] = function (_ref) {
   };
 };
 
-module.exports = exports['default'];
-},{"./curved-rectangle":6,"./ops":10,"./rectangle":15}],17:[function(require,module,exports){
-'use strict';
+var _rectangle = require('./rectangle');
 
-Object.defineProperty(exports, '__esModule', {
-  value: true
-});
+var _rectangle2 = _interopRequireDefault(_rectangle);
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+var _curvedRectangle = require('./curved-rectangle');
 
-function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) arr2[i] = arr[i]; return arr2; } else { return Array.from(arr); } }
-
-var _path = require('./path');
-
-var _path2 = _interopRequireDefault(_path);
+var _curvedRectangle2 = _interopRequireDefault(_curvedRectangle);
 
 var _ops = require('./ops');
 
-exports['default'] = function (_ref) {
-  var _Path$moveto$arc$lineto, _Path$moveto$arc, _Path$moveto, _Path;
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+},{"./curved-rectangle":6,"./ops":10,"./rectangle":15}],17:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+exports.default = function (_ref) {
+  var _Path$moveto$arc$line, _Path$moveto$arc, _Path$moveto, _Path;
 
   var center = _ref.center;
   var r = _ref.r;
@@ -2025,7 +1978,7 @@ exports['default'] = function (_ref) {
 
   var large = end - start > Math.PI ? 1 : 0;
 
-  var path = (_Path$moveto$arc$lineto = (_Path$moveto$arc = (_Path$moveto = (_Path = (0, _path2['default'])()).moveto.apply(_Path, _toConsumableArray(a))).arc.apply(_Path$moveto, [R, R, 0, large, 1].concat(_toConsumableArray(b)))).lineto.apply(_Path$moveto$arc, _toConsumableArray(c))).arc.apply(_Path$moveto$arc$lineto, [r, r, 0, large, 0].concat(_toConsumableArray(d))).closepath();
+  var path = (_Path$moveto$arc$line = (_Path$moveto$arc = (_Path$moveto = (_Path = (0, _path2.default)()).moveto.apply(_Path, _toConsumableArray(a))).arc.apply(_Path$moveto, [R, R, 0, large, 1].concat(_toConsumableArray(b)))).lineto.apply(_Path$moveto$arc, _toConsumableArray(c))).arc.apply(_Path$moveto$arc$line, [r, r, 0, large, 0].concat(_toConsumableArray(d))).closepath();
 
   var midAngle = (start + end) / 2;
   var midRadius = (r + R) / 2;
@@ -2037,23 +1990,23 @@ exports['default'] = function (_ref) {
   };
 };
 
-module.exports = exports['default'];
-},{"./ops":10,"./path":11}],18:[function(require,module,exports){
-'use strict';
+var _path = require('./path');
 
-Object.defineProperty(exports, '__esModule', {
-  value: true
-});
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
-
-var _polygon = require('./polygon');
-
-var _polygon2 = _interopRequireDefault(_polygon);
+var _path2 = _interopRequireDefault(_path);
 
 var _ops = require('./ops');
 
-exports['default'] = function (_ref) {
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
+},{"./ops":10,"./path":11}],18:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+exports.default = function (_ref) {
   var center = _ref.center;
   var radii = _ref.radii;
 
@@ -2062,36 +2015,28 @@ exports['default'] = function (_ref) {
     return (0, _ops.plus)(center, (0, _ops.onCircle)(r, i * angle));
   });
 
-  return (0, _polygon2['default'])({
+  return (0, _polygon2.default)({
     points: points,
     closed: true
   });
 };
 
-module.exports = exports['default'];
-},{"./ops":10,"./polygon":13}],19:[function(require,module,exports){
-'use strict';
+var _polygon = require('./polygon');
 
-Object.defineProperty(exports, '__esModule', {
-  value: true
-});
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
-
-function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) arr2[i] = arr[i]; return arr2; } else { return Array.from(arr); } }
-
-var _bezier = require('./bezier');
-
-var _bezier2 = _interopRequireDefault(_bezier);
-
-var _lineChartComp = require('./line-chart-comp');
-
-var _lineChartComp2 = _interopRequireDefault(_lineChartComp);
+var _polygon2 = _interopRequireDefault(_polygon);
 
 var _ops = require('./ops');
 
-exports['default'] = function (options) {
-  var _comp = (0, _lineChartComp2['default'])(options);
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+},{"./ops":10,"./polygon":13}],19:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+exports.default = function (options) {
+  var _comp = (0, _lineChartComp2.default)(options);
 
   var arranged = _comp.arranged;
   var scale = _comp.scale;
@@ -2110,7 +2055,7 @@ exports['default'] = function (options) {
 
     var scaledPoints = points.map(scale);
     i += 1;
-    var line = (0, _bezier2['default'])({ points: scaledPoints });
+    var line = (0, _bezier2.default)({ points: scaledPoints });
     var area = {
       path: (_line$path$lineto = (_line$path = line.path).lineto.apply(_line$path, _toConsumableArray(scale([xmax, base])))).lineto.apply(_line$path$lineto, _toConsumableArray(scale([xmin, base]))).closepath(),
       centroid: (0, _ops.average)([line.centroid, scale([xmin, base]), scale([xmax, base])])
@@ -2131,19 +2076,9 @@ exports['default'] = function (options) {
   };
 };
 
-module.exports = exports['default'];
-},{"./bezier":4,"./line-chart-comp":8,"./ops":10}],20:[function(require,module,exports){
-'use strict';
+var _bezier = require('./bezier');
 
-Object.defineProperty(exports, '__esModule', {
-  value: true
-});
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
-
-var _polygon = require('./polygon');
-
-var _polygon2 = _interopRequireDefault(_polygon);
+var _bezier2 = _interopRequireDefault(_bezier);
 
 var _lineChartComp = require('./line-chart-comp');
 
@@ -2151,8 +2086,18 @@ var _lineChartComp2 = _interopRequireDefault(_lineChartComp);
 
 var _ops = require('./ops');
 
-exports['default'] = function (options) {
-  var _comp = (0, _lineChartComp2['default'])(options);
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
+},{"./bezier":4,"./line-chart-comp":8,"./ops":10}],20:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+exports.default = function (options) {
+  var _comp = (0, _lineChartComp2.default)(options);
 
   var arranged = _comp.arranged;
   var scale = _comp.scale;
@@ -2175,11 +2120,11 @@ exports['default'] = function (options) {
 
     return (0, _ops.enhance)(options.compute, {
       item: options.data[i],
-      line: (0, _polygon2['default'])({
+      line: (0, _polygon2.default)({
         points: scaledPoints,
         closed: false
       }),
-      area: (0, _polygon2['default'])({
+      area: (0, _polygon2.default)({
         points: scaledPointsClosed,
         closed: true
       }),
@@ -2194,15 +2139,26 @@ exports['default'] = function (options) {
   };
 };
 
-module.exports = exports['default'];
+var _polygon = require('./polygon');
+
+var _polygon2 = _interopRequireDefault(_polygon);
+
+var _lineChartComp = require('./line-chart-comp');
+
+var _lineChartComp2 = _interopRequireDefault(_lineChartComp);
+
+var _ops = require('./ops');
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 },{"./line-chart-comp":8,"./ops":10,"./polygon":13}],21:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-var maxBy = function maxBy(items, f) {
-  if (items === undefined) items = [];
+var maxBy = function maxBy() {
+  var items = arguments.length <= 0 || arguments[0] === undefined ? [] : arguments[0];
+  var f = arguments[1];
 
   return items.reduce(function (m, i) {
     return Math.max(m, f(i));
@@ -2255,8 +2211,8 @@ var setHeight = function setHeight(root) {
     _iteratorError = err;
   } finally {
     try {
-      if (!_iteratorNormalCompletion && _iterator["return"]) {
-        _iterator["return"]();
+      if (!_iteratorNormalCompletion && _iterator.return) {
+        _iterator.return();
       }
     } finally {
       if (_didIteratorError) {
@@ -2287,8 +2243,8 @@ var collect = function collect(root, f) {
     _iteratorError2 = err;
   } finally {
     try {
-      if (!_iteratorNormalCompletion2 && _iterator2["return"]) {
-        _iterator2["return"]();
+      if (!_iteratorNormalCompletion2 && _iterator2.return) {
+        _iterator2.return();
       }
     } finally {
       if (_didIteratorError2) {
@@ -2300,30 +2256,15 @@ var collect = function collect(root, f) {
   return result;
 };
 
-exports["default"] = { treeHeight: treeHeight, buildTree: buildTree, setHeight: setHeight, collect: collect };
-module.exports = exports["default"];
+exports.default = { treeHeight: treeHeight, buildTree: buildTree, setHeight: setHeight, collect: collect };
 },{}],22:[function(require,module,exports){
 'use strict';
 
-Object.defineProperty(exports, '__esModule', {
+Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
-
-var _connector = require('./connector');
-
-var _connector2 = _interopRequireDefault(_connector);
-
-var _linear = require('./linear');
-
-var _linear2 = _interopRequireDefault(_linear);
-
-var _ops = require('./ops');
-
-var _treeUtils = require('./tree-utils');
-
-exports['default'] = function (_ref) {
+exports.default = function (_ref) {
   var data = _ref.data;
   var width = _ref.width;
   var height = _ref.height;
@@ -2331,7 +2272,7 @@ exports['default'] = function (_ref) {
   var tension = _ref.tension;
 
   if (!children) {
-    children = function (x) {
+    children = function children(x) {
       return x.children;
     };
   }
@@ -2339,7 +2280,7 @@ exports['default'] = function (_ref) {
   var levels = (0, _treeUtils.treeHeight)(tree);
   var maxHeights = (0, _treeUtils.setHeight)(tree);
   var hspace = width / (levels - 1);
-  var hscale = (0, _linear2['default'])([0, levels - 1], [0, width]);
+  var hscale = (0, _linear2.default)([0, levels - 1], [0, width]);
   var vscales = (0, _ops.range)(0, levels).map(function (level) {
     var availableHeight = Math.sqrt(level / (levels - 1)) * height;
     var top = (height - availableHeight) / 2;
@@ -2350,7 +2291,7 @@ exports['default'] = function (_ref) {
         return height / 2;
       };
     } else {
-      return (0, _linear2['default'])([0, maxHeight], [top, bottom]);
+      return (0, _linear2.default)([0, maxHeight], [top, bottom]);
     }
   });
 
@@ -2365,7 +2306,7 @@ exports['default'] = function (_ref) {
     i += 1;
     child.height_ = child.height + parent.height;
     return {
-      connector: (0, _connector2['default'])({
+      connector: (0, _connector2.default)({
         start: position(parent),
         end: position(child),
         tension: tension
@@ -2394,29 +2335,29 @@ exports['default'] = function (_ref) {
   };
 };
 
-module.exports = exports['default'];
-},{"./connector":5,"./linear":9,"./ops":10,"./tree-utils":21}],23:[function(require,module,exports){
-'use strict';
+var _connector = require('./connector');
 
-Object.defineProperty(exports, '__esModule', {
-  value: true
-});
-
-var _slicedToArray = (function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i['return']) _i['return'](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError('Invalid attempt to destructure non-iterable instance'); } }; })();
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+var _connector2 = _interopRequireDefault(_connector);
 
 var _linear = require('./linear');
 
 var _linear2 = _interopRequireDefault(_linear);
 
-var _rectangle = require('./rectangle');
-
-var _rectangle2 = _interopRequireDefault(_rectangle);
-
 var _ops = require('./ops');
 
-exports['default'] = function (_ref) {
+var _treeUtils = require('./tree-utils');
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+},{"./connector":5,"./linear":9,"./ops":10,"./tree-utils":21}],23:[function(require,module,exports){
+'use strict';
+
+var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"]) _i["return"](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError("Invalid attempt to destructure non-iterable instance"); } }; }();
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+exports.default = function (_ref) {
   var data = _ref.data;
   var accessor = _ref.accessor;
   var width = _ref.width;
@@ -2427,7 +2368,7 @@ exports['default'] = function (_ref) {
   var max = _ref.max;
 
   if (!accessor) {
-    accessor = function (x) {
+    accessor = function accessor(x) {
       return x;
     };
   }
@@ -2452,10 +2393,10 @@ exports['default'] = function (_ref) {
 
       var _ref2 = absolute ? [0, value || last] : [last, last + value];
 
-      var _ref22 = _slicedToArray(_ref2, 2);
+      var _ref3 = _slicedToArray(_ref2, 2);
 
-      var low = _ref22[0];
-      var high = _ref22[1];
+      var low = _ref3[0];
+      var high = _ref3[1];
 
       var m = Math.min(low, high);
       var M = Math.max(low, high);
@@ -2475,8 +2416,8 @@ exports['default'] = function (_ref) {
     _iteratorError = err;
   } finally {
     try {
-      if (!_iteratorNormalCompletion && _iterator['return']) {
-        _iterator['return']();
+      if (!_iteratorNormalCompletion && _iterator.return) {
+        _iterator.return();
       }
     } finally {
       if (_didIteratorError) {
@@ -2488,7 +2429,7 @@ exports['default'] = function (_ref) {
   var n = data_.length;
   var barWidth = (width - gutter * (n - 1)) / n;
   var curves = [];
-  var scale = (0, _linear2['default'])([min, max], [height, 0]);
+  var scale = (0, _linear2.default)([min, max], [height, 0]);
 
   var _iteratorNormalCompletion2 = true;
   var _didIteratorError2 = false;
@@ -2504,8 +2445,8 @@ exports['default'] = function (_ref) {
       var left = i * (barWidth + gutter);
       var right = left + barWidth;
       var bottom = scale(d.low);
-      var _top = scale(d.high);
-      var line = (0, _rectangle2['default'])({ left: left, right: right, bottom: bottom, top: _top });
+      var top = scale(d.high);
+      var line = (0, _rectangle2.default)({ left: left, right: right, bottom: bottom, top: top });
       curves.push((0, _ops.enhance)(compute, {
         item: d.item,
         line: line,
@@ -2518,8 +2459,8 @@ exports['default'] = function (_ref) {
     _iteratorError2 = err;
   } finally {
     try {
-      if (!_iteratorNormalCompletion2 && _iterator2['return']) {
-        _iterator2['return']();
+      if (!_iteratorNormalCompletion2 && _iterator2.return) {
+        _iterator2.return();
       }
     } finally {
       if (_didIteratorError2) {
@@ -2534,5 +2475,15 @@ exports['default'] = function (_ref) {
   };
 };
 
-module.exports = exports['default'];
+var _linear = require('./linear');
+
+var _linear2 = _interopRequireDefault(_linear);
+
+var _rectangle = require('./rectangle');
+
+var _rectangle2 = _interopRequireDefault(_rectangle);
+
+var _ops = require('./ops');
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 },{"./linear":9,"./ops":10,"./rectangle":15}]},{},[1]);

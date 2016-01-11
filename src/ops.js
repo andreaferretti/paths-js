@@ -60,5 +60,8 @@ let mapObject = (obj, f) => {
 let pairs = (obj) =>
   mapObject(obj, (k, v) => [k, v])
 
+export { sum, min, max, sumBy, minBy, maxBy, plus, minus, times,
+  length, sumVectors, average, onCircle, enhance, range, mapObject, pairs }
+
 export default { sum, min, max, sumBy, minBy, maxBy, plus, minus, times,
   length, sumVectors, average, onCircle, enhance, range, mapObject, pairs }

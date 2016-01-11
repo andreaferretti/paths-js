@@ -4,6 +4,10 @@
   "author": {
     "name": "Andrea Ferretti"
   },
+  "contributors": [
+    "pazqo",
+    "mfirry"
+  ],
   "license": "Apache-2.0",
   "homepage": "https://github.com/andreaferretti/paths-js",
   "keywords": [
@@ -23,14 +27,16 @@
     "build-amd": "babel src --modules amd --out-dir dist/amd",
     "build-node": "babel src --out-dir dist/node && cp README.md dist/node && cp package.json dist/node",
     "build-global": "mkdir -p dist/global && browserify dist/node/all.js -o dist/global/paths.js",
-    "test": "mocha --reporter nyan --compilers js:mocha-babel --recursive test"
+    "test": "mocha --reporter nyan --compilers js:babel-register --recursive test"
   },
   "devDependencies": {
-    "babel": "^5.8.29",
+    "babel": "^6.3.26",
+    "babel-cli": "^6.4.0",
+    "babel-preset-es2015": "^6.3.13",
+    "babel-register": "^6.3.13",
     "browserify": "^12.0.1",
     "expect.js": "^0.3.1",
-    "mocha": "^2.3.4",
-    "mocha-babel": "^3.0.0"
+    "mocha": "^2.3.0"
   },
   "engines": {
     "node": ">=0.11.0"

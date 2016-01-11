@@ -44,4 +44,4 @@ let collect = (root, f) => {
   return result
 }
 
-export default { treeHeight, buildTree, setHeight, collect }
+export { treeHeight, buildTree, setHeight, collect }

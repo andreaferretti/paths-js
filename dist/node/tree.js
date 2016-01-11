@@ -1,24 +1,10 @@
 'use strict';
 
-Object.defineProperty(exports, '__esModule', {
+Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
-
-var _connector = require('./connector');
-
-var _connector2 = _interopRequireDefault(_connector);
-
-var _linear = require('./linear');
-
-var _linear2 = _interopRequireDefault(_linear);
-
-var _ops = require('./ops');
-
-var _treeUtils = require('./tree-utils');
-
-exports['default'] = function (_ref) {
+exports.default = function (_ref) {
   var data = _ref.data;
   var width = _ref.width;
   var height = _ref.height;
@@ -26,7 +12,7 @@ exports['default'] = function (_ref) {
   var tension = _ref.tension;
 
   if (!children) {
-    children = function (x) {
+    children = function children(x) {
       return x.children;
     };
   }
@@ -34,7 +20,7 @@ exports['default'] = function (_ref) {
   var levels = (0, _treeUtils.treeHeight)(tree);
   var maxHeights = (0, _treeUtils.setHeight)(tree);
   var hspace = width / (levels - 1);
-  var hscale = (0, _linear2['default'])([0, levels - 1], [0, width]);
+  var hscale = (0, _linear2.default)([0, levels - 1], [0, width]);
   var vscales = (0, _ops.range)(0, levels).map(function (level) {
     var availableHeight = Math.sqrt(level / (levels - 1)) * height;
     var top = (height - availableHeight) / 2;
@@ -45,7 +31,7 @@ exports['default'] = function (_ref) {
         return height / 2;
       };
     } else {
-      return (0, _linear2['default'])([0, maxHeight], [top, bottom]);
+      return (0, _linear2.default)([0, maxHeight], [top, bottom]);
     }
   });
 
@@ -60,7 +46,7 @@ exports['default'] = function (_ref) {
     i += 1;
     child.height_ = child.height + parent.height;
     return {
-      connector: (0, _connector2['default'])({
+      connector: (0, _connector2.default)({
         start: position(parent),
         end: position(child),
         tension: tension
@@ -89,4 +75,16 @@ exports['default'] = function (_ref) {
   };
 };
 
-module.exports = exports['default'];
+var _connector = require('./connector');
+
+var _connector2 = _interopRequireDefault(_connector);
+
+var _linear = require('./linear');
+
+var _linear2 = _interopRequireDefault(_linear);
+
+var _ops = require('./ops');
+
+var _treeUtils = require('./tree-utils');
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }

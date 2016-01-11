@@ -1,23 +1,11 @@
 'use strict';
 
-Object.defineProperty(exports, '__esModule', {
+Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
-
-var _polygon = require('./polygon');
-
-var _polygon2 = _interopRequireDefault(_polygon);
-
-var _lineChartComp = require('./line-chart-comp');
-
-var _lineChartComp2 = _interopRequireDefault(_lineChartComp);
-
-var _ops = require('./ops');
-
-exports['default'] = function (options) {
-  var _comp = (0, _lineChartComp2['default'])(options);
+exports.default = function (options) {
+  var _comp = (0, _lineChartComp2.default)(options);
 
   var arranged = _comp.arranged;
   var scale = _comp.scale;
@@ -40,11 +28,11 @@ exports['default'] = function (options) {
 
     return (0, _ops.enhance)(options.compute, {
       item: options.data[i],
-      line: (0, _polygon2['default'])({
+      line: (0, _polygon2.default)({
         points: scaledPoints,
         closed: false
       }),
-      area: (0, _polygon2['default'])({
+      area: (0, _polygon2.default)({
         points: scaledPointsClosed,
         closed: true
       }),
@@ -59,4 +47,14 @@ exports['default'] = function (options) {
   };
 };
 
-module.exports = exports['default'];
+var _polygon = require('./polygon');
+
+var _polygon2 = _interopRequireDefault(_polygon);
+
+var _lineChartComp = require('./line-chart-comp');
+
+var _lineChartComp2 = _interopRequireDefault(_lineChartComp);
+
+var _ops = require('./ops');
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }

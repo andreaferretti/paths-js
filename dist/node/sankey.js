@@ -1,24 +1,12 @@
 'use strict';
 
-Object.defineProperty(exports, '__esModule', {
+var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"]) _i["return"](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError("Invalid attempt to destructure non-iterable instance"); } }; }();
+
+Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _slicedToArray = (function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i['return']) _i['return'](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError('Invalid attempt to destructure non-iterable instance'); } }; })();
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
-
-var _rectangle = require('./rectangle');
-
-var _rectangle2 = _interopRequireDefault(_rectangle);
-
-var _curvedRectangle = require('./curved-rectangle');
-
-var _curvedRectangle2 = _interopRequireDefault(_curvedRectangle);
-
-var _ops = require('./ops');
-
-exports['default'] = function (_ref) {
+exports.default = function (_ref) {
   var data = _ref.data;
   var nodeaccessor = _ref.nodeaccessor;
   var linkaccessor = _ref.linkaccessor;
@@ -66,7 +54,7 @@ exports['default'] = function (_ref) {
   var _iteratorError = undefined;
 
   try {
-    var _loop = function () {
+    var _loop = function _loop() {
       var _step$value = _slicedToArray(_step.value, 2);
 
       var name = _step$value[0];
@@ -103,8 +91,8 @@ exports['default'] = function (_ref) {
     _iteratorError = err;
   } finally {
     try {
-      if (!_iteratorNormalCompletion && _iterator['return']) {
-        _iterator['return']();
+      if (!_iteratorNormalCompletion && _iterator.return) {
+        _iterator.return();
       }
     } finally {
       if (_didIteratorError) {
@@ -151,8 +139,8 @@ exports['default'] = function (_ref) {
     _iteratorError2 = err;
   } finally {
     try {
-      if (!_iteratorNormalCompletion2 && _iterator2['return']) {
-        _iterator2['return']();
+      if (!_iteratorNormalCompletion2 && _iterator2.return) {
+        _iterator2.return();
       }
     } finally {
       if (_didIteratorError2) {
@@ -184,7 +172,7 @@ exports['default'] = function (_ref) {
       nameValues[name].rectangleCoords = att;
       nodeIdx += 1;
       rectangles.push((0, _ops.enhance)(compute, {
-        curve: (0, _rectangle2['default'])(att),
+        curve: (0, _rectangle2.default)(att),
         item: data.nodes[idg][idn],
         index: nodeIdx,
         group: idg
@@ -210,7 +198,7 @@ exports['default'] = function (_ref) {
     t.currentlyUsedIn += scaledWeight;
 
     return (0, _ops.enhance)(compute, {
-      curve: (0, _curvedRectangle2['default'])(curvedRect),
+      curve: (0, _curvedRectangle2.default)(curvedRect),
       item: data.links[i],
       index: i
     });
@@ -222,4 +210,14 @@ exports['default'] = function (_ref) {
   };
 };
 
-module.exports = exports['default'];
+var _rectangle = require('./rectangle');
+
+var _rectangle2 = _interopRequireDefault(_rectangle);
+
+var _curvedRectangle = require('./curved-rectangle');
+
+var _curvedRectangle2 = _interopRequireDefault(_curvedRectangle);
+
+var _ops = require('./ops');
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }

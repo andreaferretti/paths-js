@@ -1,10 +1,16 @@
 'use strict';
 
-Object.defineProperty(exports, '__esModule', {
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol ? "symbol" : typeof obj; };
+
+var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"]) _i["return"](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError("Invalid attempt to destructure non-iterable instance"); } }; }();
+
+Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _slicedToArray = (function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i['return']) _i['return'](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError('Invalid attempt to destructure non-iterable instance'); } }; })();
+exports.default = function () {
+  return Path();
+};
 
 var Path = function Path(init) {
   var _instructions = init || [];
@@ -15,16 +21,16 @@ var Path = function Path(init) {
     return copy;
   };
 
-  var areEqualPoints = function areEqualPoints(_ref, _ref3) {
-    var _ref2 = _slicedToArray(_ref, 2);
+  var areEqualPoints = function areEqualPoints(_ref, _ref2) {
+    var _ref4 = _slicedToArray(_ref, 2);
 
-    var a1 = _ref2[0];
-    var b1 = _ref2[1];
+    var a1 = _ref4[0];
+    var b1 = _ref4[1];
 
-    var _ref32 = _slicedToArray(_ref3, 2);
+    var _ref3 = _slicedToArray(_ref2, 2);
 
-    var a2 = _ref32[0];
-    var b2 = _ref32[1];
+    var a2 = _ref3[0];
+    var b2 = _ref3[1];
     return a1 === a2 && b1 === b2;
   };
 
@@ -44,9 +50,9 @@ var Path = function Path(init) {
     return trimZeros(str);
   };
 
-  var printInstrunction = function printInstrunction(_ref4) {
-    var command = _ref4.command;
-    var params = _ref4.params;
+  var printInstrunction = function printInstrunction(_ref5) {
+    var command = _ref5.command;
+    var params = _ref5.params;
 
     var numbers = params.map(function (param) {
       return round(param, 6);
@@ -54,14 +60,14 @@ var Path = function Path(init) {
     return command + ' ' + numbers.join(' ');
   };
 
-  var point = function point(_ref5, _ref6) {
-    var command = _ref5.command;
-    var params = _ref5.params;
+  var point = function point(_ref6, _ref7) {
+    var command = _ref6.command;
+    var params = _ref6.params;
 
-    var _ref62 = _slicedToArray(_ref6, 2);
+    var _ref8 = _slicedToArray(_ref7, 2);
 
-    var prevX = _ref62[0];
-    var prevY = _ref62[1];
+    var prevX = _ref8[0];
+    var prevY = _ref8[1];
 
     switch (command) {
       case 'M':
@@ -89,7 +95,7 @@ var Path = function Path(init) {
 
   var verbosify = function verbosify(keys, f) {
     return function (a) {
-      var args = typeof a === 'object' ? keys.map(function (k) {
+      var args = (typeof a === 'undefined' ? 'undefined' : _typeof(a)) === 'object' ? keys.map(function (k) {
         return a[k];
       }) : arguments;
       return f.apply(null, args);
@@ -186,8 +192,8 @@ var Path = function Path(init) {
         _iteratorError = err;
       } finally {
         try {
-          if (!_iteratorNormalCompletion && _iterator['return']) {
-            _iterator['return']();
+          if (!_iteratorNormalCompletion && _iterator.return) {
+            _iterator.return();
           }
         } finally {
           if (_didIteratorError) {
@@ -216,9 +222,3 @@ var Path = function Path(init) {
     }
   };
 };
-
-exports['default'] = function () {
-  return Path();
-};
-
-module.exports = exports['default'];

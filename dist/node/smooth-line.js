@@ -1,25 +1,11 @@
 'use strict';
 
-Object.defineProperty(exports, '__esModule', {
+Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
-
-function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) arr2[i] = arr[i]; return arr2; } else { return Array.from(arr); } }
-
-var _bezier = require('./bezier');
-
-var _bezier2 = _interopRequireDefault(_bezier);
-
-var _lineChartComp = require('./line-chart-comp');
-
-var _lineChartComp2 = _interopRequireDefault(_lineChartComp);
-
-var _ops = require('./ops');
-
-exports['default'] = function (options) {
-  var _comp = (0, _lineChartComp2['default'])(options);
+exports.default = function (options) {
+  var _comp = (0, _lineChartComp2.default)(options);
 
   var arranged = _comp.arranged;
   var scale = _comp.scale;
@@ -38,7 +24,7 @@ exports['default'] = function (options) {
 
     var scaledPoints = points.map(scale);
     i += 1;
-    var line = (0, _bezier2['default'])({ points: scaledPoints });
+    var line = (0, _bezier2.default)({ points: scaledPoints });
     var area = {
       path: (_line$path$lineto = (_line$path = line.path).lineto.apply(_line$path, _toConsumableArray(scale([xmax, base])))).lineto.apply(_line$path$lineto, _toConsumableArray(scale([xmin, base]))).closepath(),
       centroid: (0, _ops.average)([line.centroid, scale([xmin, base]), scale([xmax, base])])
@@ -59,4 +45,16 @@ exports['default'] = function (options) {
   };
 };
 
-module.exports = exports['default'];
+var _bezier = require('./bezier');
+
+var _bezier2 = _interopRequireDefault(_bezier);
+
+var _lineChartComp = require('./line-chart-comp');
+
+var _lineChartComp2 = _interopRequireDefault(_lineChartComp);
+
+var _ops = require('./ops');
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
