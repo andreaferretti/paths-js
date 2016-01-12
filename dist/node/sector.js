@@ -1,11 +1,21 @@
 'use strict';
 
-Object.defineProperty(exports, "__esModule", {
+Object.defineProperty(exports, '__esModule', {
   value: true
 });
 
-exports.default = function (_ref) {
-  var _Path$moveto$arc$line, _Path$moveto$arc, _Path$moveto, _Path;
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+
+function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) arr2[i] = arr[i]; return arr2; } else { return Array.from(arr); } }
+
+var _path = require('./path');
+
+var _path2 = _interopRequireDefault(_path);
+
+var _ops = require('./ops');
+
+exports['default'] = function (_ref) {
+  var _Path$moveto$arc$lineto, _Path$moveto$arc, _Path$moveto, _Path;
 
   var center = _ref.center;
   var r = _ref.r;
@@ -20,7 +30,7 @@ exports.default = function (_ref) {
 
   var large = end - start > Math.PI ? 1 : 0;
 
-  var path = (_Path$moveto$arc$line = (_Path$moveto$arc = (_Path$moveto = (_Path = (0, _path2.default)()).moveto.apply(_Path, _toConsumableArray(a))).arc.apply(_Path$moveto, [R, R, 0, large, 1].concat(_toConsumableArray(b)))).lineto.apply(_Path$moveto$arc, _toConsumableArray(c))).arc.apply(_Path$moveto$arc$line, [r, r, 0, large, 0].concat(_toConsumableArray(d))).closepath();
+  var path = (_Path$moveto$arc$lineto = (_Path$moveto$arc = (_Path$moveto = (_Path = (0, _path2['default'])()).moveto.apply(_Path, _toConsumableArray(a))).arc.apply(_Path$moveto, [R, R, 0, large, 1].concat(_toConsumableArray(b)))).lineto.apply(_Path$moveto$arc, _toConsumableArray(c))).arc.apply(_Path$moveto$arc$lineto, [r, r, 0, large, 0].concat(_toConsumableArray(d))).closepath();
 
   var midAngle = (start + end) / 2;
   var midRadius = (r + R) / 2;
@@ -32,12 +42,4 @@ exports.default = function (_ref) {
   };
 };
 
-var _path = require('./path');
-
-var _path2 = _interopRequireDefault(_path);
-
-var _ops = require('./ops');
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
+module.exports = exports['default'];

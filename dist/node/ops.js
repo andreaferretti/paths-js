@@ -1,10 +1,11 @@
 "use strict";
 
-var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"]) _i["return"](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError("Invalid attempt to destructure non-iterable instance"); } }; }();
-
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
+
+var _slicedToArray = (function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"]) _i["return"](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError("Invalid attempt to destructure non-iterable instance"); } }; })();
+
 var sum = function sum(xs) {
   return xs.reduce(function (a, b) {
     return a + b;
@@ -41,45 +42,45 @@ var maxBy = function maxBy(xs, f) {
   }, -Infinity);
 };
 
-var plus = function plus(_ref, _ref2) {
-  var _ref4 = _slicedToArray(_ref, 2);
+var plus = function plus(_ref, _ref3) {
+  var _ref2 = _slicedToArray(_ref, 2);
 
-  var a = _ref4[0];
-  var b = _ref4[1];
+  var a = _ref2[0];
+  var b = _ref2[1];
 
-  var _ref3 = _slicedToArray(_ref2, 2);
+  var _ref32 = _slicedToArray(_ref3, 2);
 
-  var c = _ref3[0];
-  var d = _ref3[1];
+  var c = _ref32[0];
+  var d = _ref32[1];
   return [a + c, b + d];
 };
 
-var minus = function minus(_ref5, _ref6) {
-  var _ref8 = _slicedToArray(_ref5, 2);
+var minus = function minus(_ref4, _ref5) {
+  var _ref42 = _slicedToArray(_ref4, 2);
 
-  var a = _ref8[0];
-  var b = _ref8[1];
+  var a = _ref42[0];
+  var b = _ref42[1];
 
-  var _ref7 = _slicedToArray(_ref6, 2);
+  var _ref52 = _slicedToArray(_ref5, 2);
 
-  var c = _ref7[0];
-  var d = _ref7[1];
+  var c = _ref52[0];
+  var d = _ref52[1];
   return [a - c, b - d];
 };
 
-var times = function times(k, _ref9) {
-  var _ref10 = _slicedToArray(_ref9, 2);
+var times = function times(k, _ref6) {
+  var _ref62 = _slicedToArray(_ref6, 2);
 
-  var a = _ref10[0];
-  var b = _ref10[1];
+  var a = _ref62[0];
+  var b = _ref62[1];
   return [k * a, k * b];
 };
 
-var length = function length(_ref11) {
-  var _ref12 = _slicedToArray(_ref11, 2);
+var length = function length(_ref7) {
+  var _ref72 = _slicedToArray(_ref7, 2);
 
-  var a = _ref12[0];
-  var b = _ref12[1];
+  var a = _ref72[0];
+  var b = _ref72[1];
   return Math.sqrt(a * a + b * b);
 };
 
@@ -133,8 +134,8 @@ var mapObject = function mapObject(obj, f) {
     _iteratorError = err;
   } finally {
     try {
-      if (!_iteratorNormalCompletion && _iterator.return) {
-        _iterator.return();
+      if (!_iteratorNormalCompletion && _iterator["return"]) {
+        _iterator["return"]();
       }
     } finally {
       if (_didIteratorError) {
@@ -169,5 +170,5 @@ exports.enhance = enhance;
 exports.range = range;
 exports.mapObject = mapObject;
 exports.pairs = pairs;
-exports.default = { sum: sum, min: min, max: max, sumBy: sumBy, minBy: minBy, maxBy: maxBy, plus: plus, minus: minus, times: times,
+exports["default"] = { sum: sum, min: min, max: max, sumBy: sumBy, minBy: minBy, maxBy: maxBy, plus: plus, minus: minus, times: times,
   length: length, sumVectors: sumVectors, average: average, onCircle: onCircle, enhance: enhance, range: range, mapObject: mapObject, pairs: pairs };

@@ -2,7 +2,7 @@ import Linear from './linear'
 import Rectangle from './rectangle'
 import { enhance } from './ops'
 
-export default function({data, accessor, width, height, gutter = 0, compute}) {
+export default function({data, accessor, width, height, gutter = 10, compute}) {
   if (accessor == null) {
     accessor = (x) => x
   }

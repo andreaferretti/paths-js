@@ -1,6 +1,6 @@
 {
   "name": "paths-js",
-  "version": "0.4.0-beta",
+  "version": "0.4.0",
   "author": {
     "name": "Andrea Ferretti"
   },
@@ -27,13 +27,10 @@
     "build-amd": "babel src --modules amd --out-dir dist/amd",
     "build-node": "babel src --out-dir dist/node && cp README.md dist/node && cp package.json dist/node",
     "build-global": "mkdir -p dist/global && browserify dist/node/all.js -o dist/global/paths.js",
-    "test": "mocha --reporter nyan --compilers js:babel-register --recursive test"
+    "test": "mocha --reporter nyan --compilers js:babel/register --recursive test"
   },
   "devDependencies": {
-    "babel": "^6.3.26",
-    "babel-cli": "^6.4.0",
-    "babel-preset-es2015": "^6.3.13",
-    "babel-register": "^6.3.13",
+    "babel": "^5.8.34",
     "browserify": "^12.0.1",
     "expect.js": "^0.3.1",
     "mocha": "^2.3.0"

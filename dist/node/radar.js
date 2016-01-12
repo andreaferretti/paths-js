@@ -1,69 +1,16 @@
 'use strict';
 
-Object.defineProperty(exports, "__esModule", {
+Object.defineProperty(exports, '__esModule', {
   value: true
 });
 
-exports.default = function (_ref) {
-  var data = _ref.data;
-  var accessor = _ref.accessor;
-  var center = _ref.center;
-  var r = _ref.r;
-  var max = _ref.max;
-  var _ref$rings = _ref.rings;
-  var rings = _ref$rings === undefined ? 3 : _ref$rings;
-  var _ref$compute = _ref.compute;
-  var compute = _ref$compute === undefined ? {} : _ref$compute;
-
-  if (!accessor) {
-    accessor = keyAccessor(collectKeys(data));
-  }
-  var keys = Object.keys(accessor);
-  var sides = keys.length;
-  var angle = 2 * Math.PI / sides;
-  var i = -1;
-  if (max == null) {
-    max = globalMax(data, accessor);
-  }
-
-  var ringPaths = (0, _ops.range)(1, rings, true).map(function (n) {
-    var radius = r * n / rings;
-    return (0, _semiRegularPolygon2.default)({
-      center: center,
-      radii: (0, _ops.range)(0, sides).map(function (s) {
-        return radius;
-      })
-    });
-  });
-
-  var polygons = data.map(function (d) {
-    i += 1;
-
-    return (0, _ops.enhance)(compute, {
-      polygon: (0, _semiRegularPolygon2.default)({
-        center: center,
-        radii: keys.map(function (k) {
-          return r * accessor[k](d) / max;
-        })
-      }),
-      item: d,
-      index: i
-    });
-  });
-
-  return {
-    curves: polygons,
-    rings: ringPaths
-  };
-};
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 
 var _semiRegularPolygon = require('./semi-regular-polygon');
 
 var _semiRegularPolygon2 = _interopRequireDefault(_semiRegularPolygon);
 
 var _ops = require('./ops');
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var collectKeys = function collectKeys(objects) {
   var keys = [];
@@ -92,8 +39,8 @@ var collectKeys = function collectKeys(objects) {
         _iteratorError2 = err;
       } finally {
         try {
-          if (!_iteratorNormalCompletion2 && _iterator2.return) {
-            _iterator2.return();
+          if (!_iteratorNormalCompletion2 && _iterator2['return']) {
+            _iterator2['return']();
           }
         } finally {
           if (_didIteratorError2) {
@@ -107,8 +54,8 @@ var collectKeys = function collectKeys(objects) {
     _iteratorError = err;
   } finally {
     try {
-      if (!_iteratorNormalCompletion && _iterator.return) {
-        _iterator.return();
+      if (!_iteratorNormalCompletion && _iterator['return']) {
+        _iterator['return']();
       }
     } finally {
       if (_didIteratorError) {
@@ -141,8 +88,8 @@ var keyAccessor = function keyAccessor(keys) {
     _iteratorError3 = err;
   } finally {
     try {
-      if (!_iteratorNormalCompletion3 && _iterator3.return) {
-        _iterator3.return();
+      if (!_iteratorNormalCompletion3 && _iterator3['return']) {
+        _iterator3['return']();
       }
     } finally {
       if (_didIteratorError3) {
@@ -163,3 +110,58 @@ var globalMax = function globalMax(data, accessor) {
   });
   return (0, _ops.max)(maxs);
 };
+
+exports['default'] = function (_ref) {
+  var data = _ref.data;
+  var accessor = _ref.accessor;
+  var center = _ref.center;
+  var r = _ref.r;
+  var max = _ref.max;
+  var _ref$rings = _ref.rings;
+  var rings = _ref$rings === undefined ? 3 : _ref$rings;
+  var _ref$compute = _ref.compute;
+  var compute = _ref$compute === undefined ? {} : _ref$compute;
+
+  if (!accessor) {
+    accessor = keyAccessor(collectKeys(data));
+  }
+  var keys = Object.keys(accessor);
+  var sides = keys.length;
+  var angle = 2 * Math.PI / sides;
+  var i = -1;
+  if (max == null) {
+    max = globalMax(data, accessor);
+  }
+
+  var ringPaths = (0, _ops.range)(1, rings, true).map(function (n) {
+    var radius = r * n / rings;
+    return (0, _semiRegularPolygon2['default'])({
+      center: center,
+      radii: (0, _ops.range)(0, sides).map(function (s) {
+        return radius;
+      })
+    });
+  });
+
+  var polygons = data.map(function (d) {
+    i += 1;
+
+    return (0, _ops.enhance)(compute, {
+      polygon: (0, _semiRegularPolygon2['default'])({
+        center: center,
+        radii: keys.map(function (k) {
+          return r * accessor[k](d) / max;
+        })
+      }),
+      item: d,
+      index: i
+    });
+  });
+
+  return {
+    curves: polygons,
+    rings: ringPaths
+  };
+};
+
+module.exports = exports['default'];

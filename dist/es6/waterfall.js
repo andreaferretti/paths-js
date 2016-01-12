@@ -3,11 +3,8 @@ import Rectangle from './rectangle'
 import { enhance } from './ops'
 
 
-export default function({data, accessor, width, height, gutter, compute, min, max}) {
+export default function({data, accessor, width, height, gutter = 10, compute, min = 0, max = 0}) {
   if (!accessor) { accessor = (x) => x }
-  gutter = gutter || 0
-  min = min || 0
-  max = max || 0
   let last = 0
   let data_ = []
 

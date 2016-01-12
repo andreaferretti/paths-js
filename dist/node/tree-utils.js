@@ -3,9 +3,8 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-var maxBy = function maxBy() {
-  var items = arguments.length <= 0 || arguments[0] === undefined ? [] : arguments[0];
-  var f = arguments[1];
+var maxBy = function maxBy(items, f) {
+  if (items === undefined) items = [];
 
   return items.reduce(function (m, i) {
     return Math.max(m, f(i));
@@ -58,8 +57,8 @@ var setHeight = function setHeight(root) {
     _iteratorError = err;
   } finally {
     try {
-      if (!_iteratorNormalCompletion && _iterator.return) {
-        _iterator.return();
+      if (!_iteratorNormalCompletion && _iterator["return"]) {
+        _iterator["return"]();
       }
     } finally {
       if (_didIteratorError) {
@@ -90,8 +89,8 @@ var collect = function collect(root, f) {
     _iteratorError2 = err;
   } finally {
     try {
-      if (!_iteratorNormalCompletion2 && _iterator2.return) {
-        _iterator2.return();
+      if (!_iteratorNormalCompletion2 && _iterator2["return"]) {
+        _iterator2["return"]();
       }
     } finally {
       if (_didIteratorError2) {

@@ -1,22 +1,34 @@
 'use strict';
 
-var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"]) _i["return"](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError("Invalid attempt to destructure non-iterable instance"); } }; }();
-
-Object.defineProperty(exports, "__esModule", {
+Object.defineProperty(exports, '__esModule', {
   value: true
 });
 
-exports.default = function (_ref) {
+var _slicedToArray = (function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i['return']) _i['return'](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError('Invalid attempt to destructure non-iterable instance'); } }; })();
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+
+var _linear = require('./linear');
+
+var _linear2 = _interopRequireDefault(_linear);
+
+var _rectangle = require('./rectangle');
+
+var _rectangle2 = _interopRequireDefault(_rectangle);
+
+var _ops = require('./ops');
+
+exports['default'] = function (_ref) {
   var data = _ref.data;
   var accessor = _ref.accessor;
   var width = _ref.width;
   var height = _ref.height;
   var _ref$gutter = _ref.gutter;
-  var gutter = _ref$gutter === undefined ? 0 : _ref$gutter;
+  var gutter = _ref$gutter === undefined ? 10 : _ref$gutter;
   var compute = _ref.compute;
 
   if (accessor == null) {
-    accessor = function accessor(x) {
+    accessor = function (x) {
       return x;
     };
   }
@@ -62,8 +74,8 @@ exports.default = function (_ref) {
         _iteratorError3 = err;
       } finally {
         try {
-          if (!_iteratorNormalCompletion3 && _iterator3.return) {
-            _iterator3.return();
+          if (!_iteratorNormalCompletion3 && _iterator3['return']) {
+            _iterator3['return']();
           }
         } finally {
           if (_didIteratorError3) {
@@ -77,8 +89,8 @@ exports.default = function (_ref) {
     _iteratorError = err;
   } finally {
     try {
-      if (!_iteratorNormalCompletion && _iterator.return) {
-        _iterator.return();
+      if (!_iteratorNormalCompletion && _iterator['return']) {
+        _iterator['return']();
       }
     } finally {
       if (_didIteratorError) {
@@ -90,7 +102,7 @@ exports.default = function (_ref) {
   var n = groups.length;
   var groupWidth = (width - gutter * (n - 1)) / n;
   var curves = [];
-  var scale = (0, _linear2.default)([min, max], [height, 0]);
+  var scale = (0, _linear2['default'])([min, max], [height, 0]);
 
   var _iteratorNormalCompletion2 = true;
   var _didIteratorError2 = false;
@@ -119,8 +131,8 @@ exports.default = function (_ref) {
           var left = shift + w * j;
           var right = left + w;
           var bottom = scale(0);
-          var top = scale(el);
-          var line = (0, _rectangle2.default)({ left: left, right: right, bottom: bottom, top: top });
+          var _top = scale(el);
+          var line = (0, _rectangle2['default'])({ left: left, right: right, bottom: bottom, top: _top });
           curves.push((0, _ops.enhance)(compute, {
             item: data[j][i],
             line: line,
@@ -132,8 +144,8 @@ exports.default = function (_ref) {
         _iteratorError4 = err;
       } finally {
         try {
-          if (!_iteratorNormalCompletion4 && _iterator4.return) {
-            _iterator4.return();
+          if (!_iteratorNormalCompletion4 && _iterator4['return']) {
+            _iterator4['return']();
           }
         } finally {
           if (_didIteratorError4) {
@@ -147,8 +159,8 @@ exports.default = function (_ref) {
     _iteratorError2 = err;
   } finally {
     try {
-      if (!_iteratorNormalCompletion2 && _iterator2.return) {
-        _iterator2.return();
+      if (!_iteratorNormalCompletion2 && _iterator2['return']) {
+        _iterator2['return']();
       }
     } finally {
       if (_didIteratorError2) {
@@ -163,14 +175,4 @@ exports.default = function (_ref) {
   };
 };
 
-var _linear = require('./linear');
-
-var _linear2 = _interopRequireDefault(_linear);
-
-var _rectangle = require('./rectangle');
-
-var _rectangle2 = _interopRequireDefault(_rectangle);
-
-var _ops = require('./ops');
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+module.exports = exports['default'];
