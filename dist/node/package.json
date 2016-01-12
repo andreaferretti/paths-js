@@ -26,13 +26,14 @@
     "build-es6": "mkdir -p dist/es6 && cp src/* dist/es6",
     "build-amd": "babel src --modules amd --out-dir dist/amd",
     "build-node": "babel src --out-dir dist/node && cp README.md dist/node && cp package.json dist/node",
-    "build-global": "mkdir -p dist/global && browserify dist/node/all.js -o dist/global/paths.js",
+    "build-global": "mkdir -p dist/global && browserify dist/node/all.js -d -p [minifyify --map dist/global/paths.js.map --output dist/global/paths.js.map] -o dist/global/paths.js",
     "test": "mocha --reporter nyan --compilers js:babel/register --recursive test"
   },
   "devDependencies": {
     "babel": "^5.8.34",
     "browserify": "^12.0.1",
     "expect.js": "^0.3.1",
+    "minifyify": "^7.1.0",
     "mocha": "^2.3.0"
   },
   "engines": {
