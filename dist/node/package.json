@@ -27,7 +27,7 @@
     "build-amd": "babel src --modules amd --out-dir dist/amd",
     "build-node": "babel src --out-dir dist/node && cp README.md dist/node && cp package.json dist/node",
     "build-global": "mkdir -p dist/global && browserify dist/node/all.js -o dist/global/paths.js",
-    "test": "npm run build-node && mocha --reporter nyan --compilers js:babel/register --recursive test"
+    "test": "mocha --reporter nyan --compilers js:babel/register --recursive test"
   },
   "devDependencies": {
     "babel": "^5.8.34",

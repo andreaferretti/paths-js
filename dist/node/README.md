@@ -81,13 +81,16 @@ On the other hand, not every browser will be able to display the SVG graphics th
 Migration to 0.4
 ----------------
 
-Version 0.4 was rewritten in ES6 instead of CoffeeScript for future-proofing. The currently published version is `0.4.0-beta`, and
-it will be promoted to `0.4` after a period of using it without bugs. A few API changes were introduced, namely all keys are now camel cased.
+Version 0.4 was rewritten in ES6 instead of CoffeeScript for future-proofing. The currently published version is `0.4.0`.
+
+A few API changes were introduced, namely all keys are now camel cased.
 
 In particular:
 
 * in the low-level verbose API, `large_arc_flag` has been renamed to `largeArcFlag`, and `sweep_flag` to `sweepFlag`
 * the rectangle width in the Sankey diagram, is now called `rectWidth` instead of `rect_width`
+
+Also, the default for the `gutter` parameter is now `10` everywhere (that is, also in the `Bar` and `Waterfall` charts).
 
 Everything else should be the same, so if you find any regression, please open a issue.
 
