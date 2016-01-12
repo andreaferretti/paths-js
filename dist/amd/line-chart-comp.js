@@ -89,12 +89,12 @@ define(['exports', 'module', './linear', './ops'], function (exports, module, _l
     var xmax = (0, _ops.maxBy)(arranged, function (d) {
       return d.xmax;
     });
-    var ymin = min || (0, _ops.minBy)(arranged, function (d) {
+    var ymin = min == null ? (0, _ops.minBy)(arranged, function (d) {
       return d.ymin;
-    });
-    var ymax = max || (0, _ops.maxBy)(arranged, function (d) {
+    }) : min;
+    var ymax = max == null ? (0, _ops.maxBy)(arranged, function (d) {
       return d.ymax;
-    });
+    }) : max;
     if (closed) {
       ymin = Math.min(ymin, 0);
       ymax = Math.max(ymax, 0);

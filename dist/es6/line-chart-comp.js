@@ -31,8 +31,8 @@ export default function({data, xaccessor, yaccessor, width, height, closed, min,
 
   let xmin = minBy(arranged, (d) => d.xmin)
   let xmax = maxBy(arranged, (d) => d.xmax)
-  let ymin = min || minBy(arranged, (d) => d.ymin)
-  let ymax = max || maxBy(arranged, (d) => d.ymax)
+  let ymin = (min == null) ? minBy(arranged, (d) => d.ymin) : min
+  let ymax = (max == null) ? maxBy(arranged, (d) => d.ymax) : max
   if (closed) {
     ymin = Math.min(ymin, 0)
     ymax = Math.max(ymax, 0)
