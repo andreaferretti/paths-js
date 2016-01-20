@@ -1,14 +1,11 @@
 import Linear from './linear'
 import Rectangle from './rectangle'
-import { enhance } from './ops'
+import { id, enhance } from './ops'
 
-export default function({data, accessor, width, height, gutter = 10, compute}) {
-  if (accessor == null) {
-    accessor = (x) => x
-  }
+export default function({data, accessor = id, width, height, min, max, gutter = 10, compute}) {
   let groups = []
-  let min = 0
-  let max = 0
+  if (min == null) { min = 0 }
+  if (max == null) { max = 0 }
 
   for(let [i, d] of data.entries()) {
     for(let [j, el] of d.entries()) {

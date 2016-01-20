@@ -154,6 +154,10 @@ define(["exports"], function (exports) {
     });
   };
 
+  var id = function id(x) {
+    return x;
+  };
+
   exports.sum = sum;
   exports.min = min;
   exports.max = max;
@@ -163,6 +167,7 @@ define(["exports"], function (exports) {
   exports.plus = plus;
   exports.minus = minus;
   exports.times = times;
+  exports.id = id;
   exports.length = length;
   exports.sumVectors = sumVectors;
   exports.average = average;
@@ -171,6 +176,6 @@ define(["exports"], function (exports) {
   exports.range = range;
   exports.mapObject = mapObject;
   exports.pairs = pairs;
-  exports["default"] = { sum: sum, min: min, max: max, sumBy: sumBy, minBy: minBy, maxBy: maxBy, plus: plus, minus: minus, times: times,
+  exports["default"] = { sum: sum, min: min, max: max, sumBy: sumBy, minBy: minBy, maxBy: maxBy, plus: plus, minus: minus, times: times, id: id,
     length: length, sumVectors: sumVectors, average: average, onCircle: onCircle, enhance: enhance, range: range, mapObject: mapObject, pairs: pairs };
 });
