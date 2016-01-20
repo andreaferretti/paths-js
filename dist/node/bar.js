@@ -138,6 +138,7 @@ exports['default'] = function (_ref) {
           curves.push((0, _ops.enhance)(compute, {
             item: data[j][i],
             line: line,
+            group: i,
             index: j
           }));
         }

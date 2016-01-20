@@ -40,6 +40,7 @@ export default function({data, accessor = id, width, height, min, max, gutter = 
       curves.push(enhance(compute, {
         item: data[j][i],
         line: line,
+        group: i,
         index: j
       }))
     }
