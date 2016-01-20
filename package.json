@@ -6,7 +6,8 @@
   },
   "contributors": [
     "pazqo",
-    "mfirry"
+    "mfirry",
+    "vabite"
   ],
   "license": "Apache-2.0",
   "homepage": "https://github.com/andreaferretti/paths-js",
