@@ -127,6 +127,13 @@ let repulsiveForces = (tree, repulsion, threshold) => {
   return forces
 }
 
+export {
+  makeTree as tree,
+  makeBodies as bodies,
+  makeRoot as root,
+  repulsiveForces as forces
+}
+
 export default {
   tree: makeTree,
   bodies: makeBodies,

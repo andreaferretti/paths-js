@@ -219,10 +219,13 @@ var repulsiveForces = function repulsiveForces(tree, repulsion, threshold) {
   return forces;
 };
 
+exports.tree = makeTree;
+exports.bodies = makeBodies;
+exports.root = makeRoot;
+exports.forces = repulsiveForces;
 exports['default'] = {
   tree: makeTree,
   bodies: makeBodies,
   root: makeRoot,
   forces: repulsiveForces
 };
-module.exports = exports['default'];

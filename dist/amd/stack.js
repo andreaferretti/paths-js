@@ -50,15 +50,16 @@ define(['exports', 'module', './linear', './rectangle', './ops'], function (expo
             var j = _step3$value[0];
             var el = _step3$value[1];
 
-            var val = accessor(el);
+            if (groups[j] == null) {
+              groups[j] = [];
+            }
+            var last = i === 0 ? 0 : groups[j][i - 1];
+            var val = accessor(el) + last;
             if (val < min) {
               min = val;
             }
             if (val > max) {
               max = val;
-            }
-            if (groups[j] == null) {
-              groups[j] = [];
             }
             groups[j][i] = val;
           }
@@ -92,46 +93,44 @@ define(['exports', 'module', './linear', './rectangle', './ops'], function (expo
       }
     }
 
-    var n = groups.length;
-    var groupWidth = (width - gutter * (n - 1)) / n;
-    var curves = [];
+    var n = data[0].length;
     var scale = (0, _Linear['default'])([min, max], [height, 0]);
+    var barWidth = (width - (n - 1) * gutter) / n;
+    var curves = [];
 
     var _iteratorNormalCompletion2 = true;
     var _didIteratorError2 = false;
     var _iteratorError2 = undefined;
 
     try {
-      for (var _iterator2 = groups.entries()[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
+      for (var _iterator2 = data.entries()[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
         var _step2$value = _slicedToArray(_step2.value, 2);
 
         var i = _step2$value[0];
-        var g = _step2$value[1];
-
-        var w = groupWidth / g.length;
-        var shift = (groupWidth + gutter) * i;
+        var d = _step2$value[1];
         var _iteratorNormalCompletion4 = true;
         var _didIteratorError4 = false;
         var _iteratorError4 = undefined;
 
         try {
-          for (var _iterator4 = g.entries()[Symbol.iterator](), _step4; !(_iteratorNormalCompletion4 = (_step4 = _iterator4.next()).done); _iteratorNormalCompletion4 = true) {
+          for (var _iterator4 = d.entries()[Symbol.iterator](), _step4; !(_iteratorNormalCompletion4 = (_step4 = _iterator4.next()).done); _iteratorNormalCompletion4 = true) {
             var _step4$value = _slicedToArray(_step4.value, 2);
 
             var j = _step4$value[0];
             var el = _step4$value[1];
 
-            var left = shift + w * j;
-            var right = left + w;
-            var bottom = scale(0);
-            var _top = scale(el);
-            var line = (0, _Rectangle['default'])({ left: left, right: right, bottom: bottom, top: _top });
-            curves.push((0, _ops.enhance)(compute, {
-              item: data[j][i],
-              line: line,
+            var curve = {
+              line: (0, _Rectangle['default'])({
+                top: scale(groups[j][i]),
+                bottom: i === 0 ? scale(0) : scale(groups[j][i - 1]),
+                left: j * (barWidth + gutter),
+                right: j * (barWidth + gutter) + barWidth
+              }),
+              index: j,
               group: i,
-              index: j
-            }));
+              item: el
+            };
+            curves.push((0, _ops.enhance)(compute, curve));
           }
         } catch (err) {
           _didIteratorError4 = true;
@@ -163,9 +162,6 @@ define(['exports', 'module', './linear', './rectangle', './ops'], function (expo
       }
     }
 
-    return {
-      curves: curves,
-      scale: scale
-    };
+    return { curves: curves, scale: scale };
   };
 });

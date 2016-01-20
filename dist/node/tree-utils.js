@@ -102,5 +102,7 @@ var collect = function collect(root, f) {
   return result;
 };
 
-exports["default"] = { treeHeight: treeHeight, buildTree: buildTree, setHeight: setHeight, collect: collect };
-module.exports = exports["default"];
+exports.treeHeight = treeHeight;
+exports.buildTree = buildTree;
+exports.setHeight = setHeight;
+exports.collect = collect;

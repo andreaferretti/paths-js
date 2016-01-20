@@ -23,19 +23,19 @@ exports['default'] = function (_ref) {
   var accessor = _ref.accessor;
   var width = _ref.width;
   var height = _ref.height;
-  var gutter = _ref.gutter;
+  var _ref$gutter = _ref.gutter;
+  var gutter = _ref$gutter === undefined ? 10 : _ref$gutter;
   var compute = _ref.compute;
-  var min = _ref.min;
-  var max = _ref.max;
+  var _ref$min = _ref.min;
+  var min = _ref$min === undefined ? 0 : _ref$min;
+  var _ref$max = _ref.max;
+  var max = _ref$max === undefined ? 0 : _ref$max;
 
   if (!accessor) {
     accessor = function (x) {
       return x;
     };
   }
-  gutter = gutter || 0;
-  min = min || 0;
-  max = max || 0;
   var last = 0;
   var data_ = [];
 

@@ -7,7 +7,7 @@ Paths.js is a library to generate [SVG paths](http://www.w3.org/TR/SVG/paths.htm
 
 Paths.js offers three APIs, of increasing abstraction. The lowest level is a chainable API to generate an arbitrary SVG path. On top of this, paths for simple geometric shapes such as polygons or circle sectors are defined. At the highest level, there is an API to generate some simple graphs (pie, line chart, radar...) for a collection of data, assembling the simple shapes.
 
-Latest version is `0.4.0-beta` - see [this](#migration-to-04) for the necessary changes from `0.3.5`.
+Latest version is `0.4.0` - see [this](#migration-to-04) for the necessary changes from `0.3.5`.
 
 Table of contents
 -----------------
@@ -81,13 +81,16 @@ On the other hand, not every browser will be able to display the SVG graphics th
 Migration to 0.4
 ----------------
 
-Version 0.4 was rewritten in ES6 instead of CoffeeScript for future-proofing. The currently published version is `0.4.0-beta`, and
-it will be promoted to `0.4` after a period of using it without bugs. A few API changes were introduced, namely all keys are now camel cased.
+Version 0.4 was rewritten in ES6 instead of CoffeeScript for future-proofing. The currently published version is `0.4.0`.
+
+A few API changes were introduced, namely all keys are now camel cased.
 
 In particular:
 
 * in the low-level verbose API, `large_arc_flag` has been renamed to `largeArcFlag`, and `sweep_flag` to `sweepFlag`
 * the rectangle width in the Sankey diagram, is now called `rectWidth` instead of `rect_width`
+
+Also, the default for the `gutter` parameter is now `10` everywhere (that is, also in the `Bar` and `Waterfall` charts).
 
 Everything else should be the same, so if you find any regression, please open a issue.
 

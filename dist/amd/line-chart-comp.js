@@ -55,6 +55,8 @@ define(['exports', 'module', './linear', './ops'], function (exports, module, _l
     var width = _ref4.width;
     var height = _ref4.height;
     var closed = _ref4.closed;
+    var min = _ref4.min;
+    var max = _ref4.max;
 
     if (!xaccessor) {
       xaccessor = function (_ref5) {
@@ -87,12 +89,12 @@ define(['exports', 'module', './linear', './ops'], function (exports, module, _l
     var xmax = (0, _ops.maxBy)(arranged, function (d) {
       return d.xmax;
     });
-    var ymin = (0, _ops.minBy)(arranged, function (d) {
+    var ymin = min == null ? (0, _ops.minBy)(arranged, function (d) {
       return d.ymin;
-    });
-    var ymax = (0, _ops.maxBy)(arranged, function (d) {
+    }) : min;
+    var ymax = max == null ? (0, _ops.maxBy)(arranged, function (d) {
       return d.ymax;
-    });
+    }) : max;
     if (closed) {
       ymin = Math.min(ymin, 0);
       ymax = Math.max(ymax, 0);

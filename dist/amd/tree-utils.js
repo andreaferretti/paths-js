@@ -1,6 +1,9 @@
-define(["exports", "module"], function (exports, module) {
+define(["exports"], function (exports) {
   "use strict";
 
+  Object.defineProperty(exports, "__esModule", {
+    value: true
+  });
   var maxBy = function maxBy(items, f) {
     if (items === undefined) items = [];
 
@@ -100,5 +103,8 @@ define(["exports", "module"], function (exports, module) {
     return result;
   };
 
-  module.exports = { treeHeight: treeHeight, buildTree: buildTree, setHeight: setHeight, collect: collect };
+  exports.treeHeight = treeHeight;
+  exports.buildTree = buildTree;
+  exports.setHeight = setHeight;
+  exports.collect = collect;
 });
