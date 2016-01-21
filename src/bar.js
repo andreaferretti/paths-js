@@ -4,18 +4,16 @@ import { id, enhance } from './ops'
 
 export default function({data, accessor = id, width, height, min, max, gutter = 10, compute}) {
   let groups = []
-  if (min == null) { min = 0 }
-  if (max == null) { max = 0 }
+  let minUnset = false
+  let maxUnset = false
+  if (min == null) { min = 0; minUnset = true }
+  if (max == null) { max = 0; maxUnset = true }
 
   for(let [i, d] of data.entries()) {
     for(let [j, el] of d.entries()) {
       let val = accessor(el)
-      if(val < min) {
-        min = val
-      }
-      if(val > max) {
-        max = val
-      }
+      if (minUnset && (val < min)) { min = val }
+      if (maxUnset && (val > max)) { max = val }
       if (groups[j] == null) {
         groups[j] = []
       }
@@ -46,8 +44,5 @@ export default function({data, accessor = id, width, height, min, max, gutter = 
     }
   }
 
-  return {
-    curves: curves,
-    scale: scale
-  }
+  return { curves, scale }
 }
