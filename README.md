@@ -7,7 +7,7 @@ Paths.js is a library to generate [SVG paths](http://www.w3.org/TR/SVG/paths.htm
 
 Paths.js offers three APIs, of increasing abstraction. The lowest level is a chainable API to generate an arbitrary SVG path. On top of this, paths for simple geometric shapes such as polygons or circle sectors are defined. At the highest level, there is an API to generate some simple graphs (pie, line chart, radar...) for a collection of data, assembling the simple shapes.
 
-Latest version is `0.4.0` - see [this](#migration-to-04) for the necessary changes from `0.3.5`.
+Latest version is `0.4.2` - see [this](#migration-to-04) for the necessary changes from `0.3.5`.
 
 Table of contents
 -----------------
