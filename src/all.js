@@ -17,23 +17,29 @@ import Stock from './stock'
 import Tree from './tree'
 import Waterfall from './waterfall'
 
-window.Paths = {
-  Bar,
-  Bezier,
-  Connector,
-  CurvedRectangle,
-  Graph,
-  Linear,
-  Path,
-  Pie,
-  Polygon,
-  Radar,
-  Rectangle,
-  Sankey,
-  Sector,
-  SemiRegularPolygon,
-  SmoothLine,
-  Stock,
-  Tree,
-  Waterfall
-}
+(function() {
+  "use strict"
+
+  var global = (1,eval)('this')
+
+  global.Paths = {
+    Bar,
+    Bezier,
+    Connector,
+    CurvedRectangle,
+    Graph,
+    Linear,
+    Path,
+    Pie,
+    Polygon,
+    Radar,
+    Rectangle,
+    Sankey,
+    Sector,
+    SemiRegularPolygon,
+    SmoothLine,
+    Stock,
+    Tree,
+    Waterfall
+  }
+}())
