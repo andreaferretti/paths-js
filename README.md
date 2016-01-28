@@ -9,6 +9,7 @@ Paths.js offers three APIs, of increasing abstraction. The lowest level is a cha
 
 Latest version is `0.4.2` - see [this](#migration-to-04) for the necessary changes from `0.3.5`.
 
+
 Table of contents
 -----------------
 
