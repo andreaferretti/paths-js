@@ -5,6 +5,7 @@ import Geom from "./geom";
 function Beachline(item, parent, l, r, cEvent){
   Tree.call(this, item, parent, l, r);
     this.cEvent=cEvent;
+  }
 
   Beachline.prototype=Object.create(Tree.prototype);
 
@@ -61,6 +62,5 @@ function Beachline(item, parent, l, r, cEvent){
     else midEdgeNode.parent.l=liveCutBranch;
     liveCutBranch.parent=midEdgeNode.parent;
   }
-}
 
 export default Beachline;
