@@ -40,11 +40,13 @@ define(["exports", "module", "./polygon", "./fortune"], function (exports, modul
     var diag = Math.sqrt(Math.pow(xrange[0] - xrange[1], 2) + Math.pow(yrange[0] - yrange[1], 2));
     var xscale = scale(xrange, [0, args.width]);
     var yscale = scale(yrange, [args.height, 0]);
+    var k = 10;
 
-    var closingPoints = [[1e5 * (xrange[0] - diag), 1e5 * ym], [1e5 * (xrange[1] + diag), 1e5 * ym], [1e5 * xm, 1e5 * (yrange[0] - diag)], [1e5 * xm, 1e5 * (yrange[1] + diag)]];
+    var closingPoints = [[k * (xrange[0] - diag), k * ym], [k * (xrange[1] + diag), k * ym], [k * xm, k * (yrange[0] - diag)], [k * xm, k * (yrange[1] + diag)]];
 
-    // var points=closingPoints.concat(sites);
-    var points = sites;
+    var points = closingPoints.concat(sites);
+    // var points = sites;
+    console.log(points);
 
     var fortune = new _Fortune["default"](points);
     var patches = fortune.getPatches();
