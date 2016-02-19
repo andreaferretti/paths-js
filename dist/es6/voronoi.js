@@ -4,7 +4,7 @@ import Linear from './linear'
 import { enhance } from './ops'
 
 export default function Voronoi({ data, accessor, width, height, xrange, yrange, compute }) { //data, accessor, width, height, xrange, yrange, compute
-  if (typeof accessor !== "function"){
+  if (typeof accessor !== 'function') {
     accessor = (x) => x
   }
   xrange = xrange || [-1,1]

@@ -33,7 +33,7 @@ function Voronoi(_ref) {
   var yrange = _ref.yrange;
   var compute = _ref.compute;
   //data, accessor, width, height, xrange, yrange, compute
-  if (typeof accessor !== "function") {
+  if (typeof accessor !== 'function') {
     accessor = function (x) {
       return x;
     };
