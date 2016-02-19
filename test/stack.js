@@ -81,4 +81,18 @@ describe('stack chart scale', () => {
     expect(stack1.scale(2*max)).to.be(0)
     expect(stack1.scale(0)).to.be(400)
   })
+
+  it('should use user-defined ymin and/or ymax if they are are specified', () => {
+    let stack1 = Stack({
+      data: data,
+      width: 300,
+      height: 400,
+      gutter: 15,
+      max: 15,
+      min: -1
+    })
+    let scale = stack1.scale
+    expect(scale(-1)).to.be(400)
+    expect(scale(15)).to.be(0)
+  })
 })

@@ -30,3 +30,11 @@ First version with
 
 This version involved a translation to ES6 for future
 development, so no new major features.
+
+0.5
+===
+
+Still in development. For now...
+
+* More consistent API across charts
+* New chart: Stacked bar charts (thanks to vabite)

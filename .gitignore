@@ -4,3 +4,4 @@ node_modules
 dist/node/all.js
 dist/amd/all.js
 dist/es6/all.js
+index.html

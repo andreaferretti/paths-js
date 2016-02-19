@@ -68,4 +68,18 @@ describe('bar chart scale', () => {
     expect(bar1.scale(81)).to.be(0)
     expect(bar1.scale(0)).to.be(400)
   })
+
+  it('should use user-defined ymin and/or ymax if they are are specified', () => {
+    let bar1 = Bar({
+      data: data,
+      width: 300,
+      height: 400,
+      gutter: 15,
+      max: 8,
+      min: -1
+    })
+    let scale = bar1.scale
+    expect(scale(-1)).to.be(400)
+    expect(scale(8)).to.be(0)
+  })
 })

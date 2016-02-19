@@ -31,11 +31,13 @@ exports['default'] = function (_ref) {
   var compute = _ref.compute;
 
   var groups = [];
+  var minUnset = false;
+  var maxUnset = false;
   if (min == null) {
-    min = 0;
+    min = 0;minUnset = true;
   }
   if (max == null) {
-    max = 0;
+    max = 0;maxUnset = true;
   }
 
   var _iteratorNormalCompletion = true;
@@ -60,10 +62,10 @@ exports['default'] = function (_ref) {
           var el = _step3$value[1];
 
           var val = accessor(el);
-          if (val < min) {
+          if (minUnset && val < min) {
             min = val;
           }
-          if (val > max) {
+          if (maxUnset && val > max) {
             max = val;
           }
           if (groups[j] == null) {
@@ -172,10 +174,7 @@ exports['default'] = function (_ref) {
     }
   }
 
-  return {
-    curves: curves,
-    scale: scale
-  };
+  return { curves: curves, scale: scale };
 };
 
 module.exports = exports['default'];
