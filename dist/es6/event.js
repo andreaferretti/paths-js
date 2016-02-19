@@ -1,4 +1,4 @@
-import Geom from ".geom";
+import Geom from "./geom";
 
 function Event(arcSiteOrNodes, eventCoord, vertexCoord){
   if(arcSiteOrNodes.length==2) {

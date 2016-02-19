@@ -1,4 +1,4 @@
-define(["exports", "module", ".geom"], function (exports, module, _geom) {
+define(["exports", "module", "./geom"], function (exports, module, _geom) {
   "use strict";
 
   function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }

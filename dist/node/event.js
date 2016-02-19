@@ -6,7 +6,7 @@ Object.defineProperty(exports, "__esModule", {
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
-var _geom = require(".geom");
+var _geom = require("./geom");
 
 var _geom2 = _interopRequireDefault(_geom);
 
