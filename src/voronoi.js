@@ -3,25 +3,19 @@ import Fortune from './fortune'
 import Linear from './linear'
 import { enhance } from './ops'
 
-export default function Voronoi(args) { //data, accessor, width, height, xrange, yrange, compute
-  if (typeof args.accessor !== "function"){
-    args.accessor = (x) => x
+export default function Voronoi({ data, accessor, width, height, xrange, yrange, compute }) { //data, accessor, width, height, xrange, yrange, compute
+  if (typeof accessor !== "function"){
+    accessor = (x) => x
   }
-  let xrange = args.xrange || [-1,1]
-  let yrange = args.yrange || [-1,1]
-
-  // function scale(iIn, iOut) {
-  //   return function(x){
-  //     return iOut[0] + (iOut[1] - iOut[0]) * (x - iIn[0]) / (iIn[1] - iIn[0]);
-  //   }
-  // }
-  let sites = args.data.map(args.accessor)
+  xrange = xrange || [-1,1]
+  yrange = yrange || [-1,1]
+  let sites = data.map(accessor)
   let sq = (x) => x * x
   let xm = (xrange[0] + xrange[1]) / 2
   let ym = (yrange[0] + yrange[1]) / 2
   let diag = Math.sqrt(sq(xrange[0] - xrange[1]) + sq(yrange[0] - yrange[1]))
-  let xscale = Linear(xrange, [0, args.width])
-  let yscale = Linear(yrange, [args.height, 0])
+  let xscale = Linear(xrange, [0, width])
+  let yscale = Linear(yrange, [height, 0])
   let k = 10
   let closingPoints=[
     [k * (xrange[0] - diag), k * ym],
@@ -40,15 +34,15 @@ export default function Voronoi(args) { //data, accessor, width, height, xrange,
 
     nodes.push({
       point: [xscale(site[0]), yscale(site[1])],
-      item: args.data[i]
+      item: data[i]
     })
-    curves.push(enhance(args.compute, {
+    curves.push(enhance(compute, {
       line: Polygon({
           points: scaledPatch,
           closed: true,
         }),
       index: i,
-      item: args.data[i],
+      item: data[i],
     }))
   })
 

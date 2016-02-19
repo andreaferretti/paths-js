@@ -24,30 +24,31 @@ var _linear2 = _interopRequireDefault(_linear);
 
 var _ops = require('./ops');
 
-function Voronoi(args) {
+function Voronoi(_ref) {
+  var data = _ref.data;
+  var accessor = _ref.accessor;
+  var width = _ref.width;
+  var height = _ref.height;
+  var xrange = _ref.xrange;
+  var yrange = _ref.yrange;
+  var compute = _ref.compute;
   //data, accessor, width, height, xrange, yrange, compute
-  if (typeof args.accessor !== "function") {
-    args.accessor = function (x) {
+  if (typeof accessor !== "function") {
+    accessor = function (x) {
       return x;
     };
   }
-  var xrange = args.xrange || [-1, 1];
-  var yrange = args.yrange || [-1, 1];
-
-  // function scale(iIn, iOut) {
-  //   return function(x){
-  //     return iOut[0] + (iOut[1] - iOut[0]) * (x - iIn[0]) / (iIn[1] - iIn[0]);
-  //   }
-  // }
-  var sites = args.data.map(args.accessor);
+  xrange = xrange || [-1, 1];
+  yrange = yrange || [-1, 1];
+  var sites = data.map(accessor);
   var sq = function sq(x) {
     return x * x;
   };
   var xm = (xrange[0] + xrange[1]) / 2;
   var ym = (yrange[0] + yrange[1]) / 2;
   var diag = Math.sqrt(sq(xrange[0] - xrange[1]) + sq(yrange[0] - yrange[1]));
-  var xscale = (0, _linear2['default'])(xrange, [0, args.width]);
-  var yscale = (0, _linear2['default'])(yrange, [args.height, 0]);
+  var xscale = (0, _linear2['default'])(xrange, [0, width]);
+  var yscale = (0, _linear2['default'])(yrange, [height, 0]);
   var k = 10;
   var closingPoints = [[k * (xrange[0] - diag), k * ym], [k * (xrange[1] + diag), k * ym], [k * xm, k * (yrange[0] - diag)], [k * xm, k * (yrange[1] + diag)]];
   var points = closingPoints.concat(sites);
@@ -57,25 +58,25 @@ function Voronoi(args) {
   var curves = [];
 
   sites.forEach(function (site, i) {
-    var scaledPatch = patches[site].map(function (_ref) {
-      var _ref2 = _slicedToArray(_ref, 2);
+    var scaledPatch = patches[site].map(function (_ref2) {
+      var _ref22 = _slicedToArray(_ref2, 2);
 
-      var x = _ref2[0];
-      var y = _ref2[1];
+      var x = _ref22[0];
+      var y = _ref22[1];
       return [xscale(x), yscale(y)];
     });
 
     nodes.push({
       point: [xscale(site[0]), yscale(site[1])],
-      item: args.data[i]
+      item: data[i]
     });
-    curves.push((0, _ops.enhance)(args.compute, {
+    curves.push((0, _ops.enhance)(compute, {
       line: (0, _polygon2['default'])({
         points: scaledPatch,
         closed: true
       }),
       index: i,
-      item: args.data[i]
+      item: data[i]
     }));
   });
 
