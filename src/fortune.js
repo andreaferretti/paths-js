@@ -103,37 +103,40 @@ Fortune.prototype.getEdges = function() {
 	return this.edges
 }
 
-Fortune.prototype.getPatches=function(width, height, pointSize, pointsColor, edgesColor){
-		function isIn(point, array){
-				for(var i=0; i<array.length; i++){
-								if(array[i][0]===point[0] && array[i][1]===point[1])
-										return true;
-				};
-				return false;
+Fortune.prototype.getPatches = function(width, height, pointSize, pointsColor, edgesColor) {
+	function isIn(point, array) {
+		for(let i = 0; i < array.length; i++) {
+			if(array[i][0] === point[0] && array[i][1] === point[1])
+				return true
 		}
-		function insertByAtan(c, v, vs) {
-				for(var i=0; i<vs.length; i++){
-						if (Math.atan2((v[1]-c[1]), (v[0]-c[0])) <
-								Math.atan2((vs[i][1]-c[1]), (vs[i][0]-c[0]))) {
-								vs.splice(i, 0, v);
-								return;
-						};
-				};
-				vs.push(v);
-		}
-		function assignEdgeBounds(edge) {
-				if (!(isIn(edge.ps, this.patches[edge.pl])))
-						insertByAtan(edge.pl, edge.ps, this.patches[edge.pl]);
-				if (!(isIn(edge.ps, this.patches[edge.pr])))
-						insertByAtan(edge.pr, edge.ps, this.patches[edge.pr]);
-				if (!(isIn(edge.pe, this.patches[edge.pl])))
-						insertByAtan(edge.pl, edge.pe, this.patches[edge.pl]);
-				if (!(isIn(edge.pe, this.patches[edge.pr])))
-						insertByAtan(edge.pr, edge.pe, this.patches[edge.pr]);
-		}
+		return false
+	}
 
-		this.getEdges().forEach(assignEdgeBounds, this);
-		return this.patches;
+	function insertByAtan(c, v, vs) {
+		for(let i=0; i<vs.length; i++) {
+			if (Math.atan2((v[1]-c[1]), (v[0]-c[0])) <
+					Math.atan2((vs[i][1]-c[1]), (vs[i][0]-c[0]))
+      ) {
+				vs.splice(i, 0, v)
+				return
+			}
+		}
+		vs.push(v)
+	}
+
+	function assignEdgeBounds(edge) {
+		if (!(isIn(edge.ps, this.patches[edge.pl])))
+			insertByAtan(edge.pl, edge.ps, this.patches[edge.pl])
+		if (!(isIn(edge.ps, this.patches[edge.pr])))
+			insertByAtan(edge.pr, edge.ps, this.patches[edge.pr])
+		if (!(isIn(edge.pe, this.patches[edge.pl])))
+			insertByAtan(edge.pl, edge.pe, this.patches[edge.pl])
+		if (!(isIn(edge.pe, this.patches[edge.pr])))
+			insertByAtan(edge.pr, edge.pe, this.patches[edge.pr])
+	}
+
+	this.getEdges().forEach(assignEdgeBounds, this)
+	return this.patches
 }
 
-export default Fortune;
+export default Fortune
