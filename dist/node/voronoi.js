@@ -49,7 +49,8 @@ function Voronoi(args) {
 
   var closingPoints = [[1e5 * (xrange[0] - diag), 1e5 * ym], [1e5 * (xrange[1] + diag), 1e5 * ym], [1e5 * xm, 1e5 * (yrange[0] - diag)], [1e5 * xm, 1e5 * (yrange[1] + diag)]];
 
-  var points = closingPoints.concat(sites);
+  // var points=closingPoints.concat(sites);
+  var points = sites;
 
   var fortune = new _fortune2["default"](points);
   var patches = fortune.getPatches();
