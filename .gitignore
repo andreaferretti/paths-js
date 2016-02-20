@@ -6,3 +6,4 @@ dist/amd/all.js
 dist/es6/all.js
 index.html
 .DS_Store
+npm-debug.log
