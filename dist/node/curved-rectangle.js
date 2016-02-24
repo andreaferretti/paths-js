@@ -6,9 +6,9 @@ Object.defineProperty(exports, '__esModule', {
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 
-var _path = require('./path');
+var _path2 = require('./path2');
 
-var _path2 = _interopRequireDefault(_path);
+var _path22 = _interopRequireDefault(_path2);
 
 var _connector = require('./connector');
 

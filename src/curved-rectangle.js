@@ -1,4 +1,4 @@
-import Path from './path'
+import Path from './path2'
 import Connector from './connector'
 import { average } from './ops'
 

@@ -57,35 +57,40 @@ let Path = (init) => {
   }
 
   let verbosify = (keys, f) =>
-    function(a) {
+    function(a, mutable = false) {
       let args = (typeof a === 'object') ? keys.map((k) => a[k]) : arguments
-      return f.apply(null, args)
+      return plus(f.apply(null, args), mutable)
     }
 
-  let plus = (instruction) =>
-    Path(push(instructions, instruction))
+  let plus = (instruction, mutable = false) => {
+    if (mutable) {
+      instructions.push(instruction)
+      return Path(instructions)
+    }
+    else return Path(push(instructions, instruction))
+  }
 
   return ({
     moveto: verbosify(['x', 'y'], (x, y) =>
-      plus({
+      ({
         command: 'M',
         params: [x, y]
       })
     ),
     lineto: verbosify(['x', 'y'], (x, y) =>
-      plus({
+      ({
         command: 'L',
         params: [x, y]
       })
     ),
     hlineto: verbosify(['x'], (x) =>
-      plus({
+      ({
         command: 'H',
         params: [x]
       })
     ),
     vlineto: verbosify(['y'], (y) =>
-      plus({
+      ({
         command: 'V',
         params: [y]
       })
@@ -96,32 +101,32 @@ let Path = (init) => {
         params: []
       }),
     curveto: verbosify(['x1', 'y1', 'x2', 'y2','x', 'y'], (x1, y1, x2, y2, x, y) =>
-      plus({
+      ({
         command: 'C',
         params: [x1, y1, x2, y2, x, y]
       })
     ),
     smoothcurveto: verbosify(['x2', 'y2','x', 'y'], (x2, y2, x, y) =>
-      plus({
+      ({
         command: 'S',
         params: [x2, y2,x, y]
       })
     ),
     qcurveto: verbosify(['x1', 'y1', 'x', 'y'], (x1, y1, x, y) =>
-      plus({
+      ({
         command: 'Q',
         params: [x1, y1, x, y]
       })
     ),
     smoothqcurveto: verbosify(['x', 'y'], (x, y) =>
-      plus({
+      ({
         command: 'T',
         params: [x, y]
       })
     ),
     arc: verbosify(['rx', 'ry', 'xrot', 'largeArcFlag', 'sweepFlag', 'x', 'y'],
       (rx, ry, xrot, largeArcFlag, sweepFlag, x, y) =>
-      plus({
+      ({
         command: 'A',
         params: [rx, ry, xrot, largeArcFlag, sweepFlag, x, y]
       })

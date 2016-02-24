@@ -89,41 +89,48 @@ var Path = function Path(init) {
 
   var verbosify = function verbosify(keys, f) {
     return function (a) {
+      var mutable = arguments.length <= 1 || arguments[1] === undefined ? false : arguments[1];
+
       var args = typeof a === 'object' ? keys.map(function (k) {
         return a[k];
       }) : arguments;
-      return f.apply(null, args);
+      return plus(f.apply(null, args), mutable);
     };
   };
 
   var plus = function plus(instruction) {
-    return Path(push(_instructions, instruction));
+    var mutable = arguments.length <= 1 || arguments[1] === undefined ? false : arguments[1];
+
+    if (mutable) {
+      _instructions.push(instruction);
+      return Path(_instructions);
+    } else return Path(push(_instructions, instruction));
   };
 
   return {
     moveto: verbosify(['x', 'y'], function (x, y) {
-      return plus({
+      return {
         command: 'M',
         params: [x, y]
-      });
+      };
     }),
     lineto: verbosify(['x', 'y'], function (x, y) {
-      return plus({
+      return {
         command: 'L',
         params: [x, y]
-      });
+      };
     }),
     hlineto: verbosify(['x'], function (x) {
-      return plus({
+      return {
         command: 'H',
         params: [x]
-      });
+      };
     }),
     vlineto: verbosify(['y'], function (y) {
-      return plus({
+      return {
         command: 'V',
         params: [y]
-      });
+      };
     }),
     closepath: function closepath() {
       return plus({
@@ -132,34 +139,34 @@ var Path = function Path(init) {
       });
     },
     curveto: verbosify(['x1', 'y1', 'x2', 'y2', 'x', 'y'], function (x1, y1, x2, y2, x, y) {
-      return plus({
+      return {
         command: 'C',
         params: [x1, y1, x2, y2, x, y]
-      });
+      };
     }),
     smoothcurveto: verbosify(['x2', 'y2', 'x', 'y'], function (x2, y2, x, y) {
-      return plus({
+      return {
         command: 'S',
         params: [x2, y2, x, y]
-      });
+      };
     }),
     qcurveto: verbosify(['x1', 'y1', 'x', 'y'], function (x1, y1, x, y) {
-      return plus({
+      return {
         command: 'Q',
         params: [x1, y1, x, y]
-      });
+      };
     }),
     smoothqcurveto: verbosify(['x', 'y'], function (x, y) {
-      return plus({
+      return {
         command: 'T',
         params: [x, y]
-      });
+      };
     }),
     arc: verbosify(['rx', 'ry', 'xrot', 'largeArcFlag', 'sweepFlag', 'x', 'y'], function (rx, ry, xrot, largeArcFlag, sweepFlag, x, y) {
-      return plus({
+      return {
         command: 'A',
         params: [rx, ry, xrot, largeArcFlag, sweepFlag, x, y]
-      });
+      };
     }),
     print: function print() {
       return _instructions.map(printInstrunction).join(' ');
