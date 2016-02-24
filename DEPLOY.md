@@ -1,15 +1,12 @@
 Steps to deploy
 ===============
 
-* Try a new feature in the demo application
-* Copy it to the main repository and fix paths
-* Commit and tag it (locally) to check it still works on the demo
-* Remove local tag
-* Update `bower.json` and `package.json` version number
+* Try a new feature in the demo application, using [this workflow](https://github.com/andreaferretti/paths-js/wiki/Contributing#workflow)
 * Add tests
-* Commit again and add tag
+* Update `bower.json` and `package.json` version number
+* Commit again and add a version tag
 * Push to Github for bower
 * Publish on NPM  with `npm publish` inside `dist/node`
-* Make a PR to update the WebJars repository
+* Update the WebJars repository from [here](http://www.webjars.org/bower)
 * Wrap the feature inside a Scala.js façade
 * Publish a new version of Paths.scala.js on Maven central
