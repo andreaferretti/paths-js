@@ -13,8 +13,10 @@ import Sankey from './sankey'
 import Sector from './sector'
 import SemiRegularPolygon from './semi-regular-polygon'
 import SmoothLine from './smooth-line'
+import Stack from './stack'
 import Stock from './stock'
 import Tree from './tree'
+import Voronoi from './voronoi'
 import Waterfall from './waterfall'
 
 (function() {
@@ -38,8 +40,10 @@ import Waterfall from './waterfall'
     Sector,
     SemiRegularPolygon,
     SmoothLine,
+    Stack,
     Stock,
     Tree,
+    Voronoi,
     Waterfall
   }
 }())

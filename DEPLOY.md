@@ -2,6 +2,7 @@ Steps to deploy
 ===============
 
 * Try a new feature in the demo application, using [this workflow](https://github.com/andreaferretti/paths-js/wiki/Contributing#workflow)
+* If it is a new chart, remember to expose it in [all.js](https://github.com/andreaferretti/paths-js/blob/master/src/all.js)
 * Add tests
 * Update `bower.json` and `package.json` version number
 * Commit again and add a version tag
