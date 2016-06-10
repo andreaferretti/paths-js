@@ -128,6 +128,8 @@ let Path = (init) => {
     ),
     print: () =>
       instructions.map(printInstrunction).join(' '),
+    toString: () =>
+      this.print(),
     points: () => {
       let ps = []
       let prev = [0, 0]
