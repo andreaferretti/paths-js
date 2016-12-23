@@ -9,9 +9,9 @@ define(['exports', 'module', './linear', './ops'], function (exports, module, _l
 
   var epsilon = 1e-5;
 
-  var box = function box(datum, accessor) {
+  var box = function box(datum, accessor, sort) {
     var points = datum.map(accessor);
-    var sorted = points.sort(function (_ref, _ref3) {
+    var sorted = sort ? points.sort(function (_ref, _ref3) {
       var _ref2 = _slicedToArray(_ref, 2);
 
       var a = _ref2[0];
@@ -22,7 +22,7 @@ define(['exports', 'module', './linear', './ops'], function (exports, module, _l
       var c = _ref32[0];
       var d = _ref32[1];
       return a - c;
-    });
+    }) : points;
     var l = sorted.length;
     var xmin = sorted[0][0];
     var xmax = sorted[l - 1][0];
@@ -57,6 +57,8 @@ define(['exports', 'module', './linear', './ops'], function (exports, module, _l
     var closed = _ref4.closed;
     var min = _ref4.min;
     var max = _ref4.max;
+    var _ref4$sort = _ref4.sort;
+    var sort = _ref4$sort === undefined ? true : _ref4$sort;
 
     if (!xaccessor) {
       xaccessor = function (_ref5) {
@@ -80,7 +82,7 @@ define(['exports', 'module', './linear', './ops'], function (exports, module, _l
       return [xaccessor(i), yaccessor(i)];
     };
     var arranged = data.map(function (datum) {
-      return box(datum, f);
+      return box(datum, f, sort);
     });
 
     var xmin = (0, _ops.minBy)(arranged, function (d) {

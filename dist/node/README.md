@@ -13,7 +13,7 @@ Latest version is `0.4.4` - see [this](#migration-to-04) for the necessary chang
 Table of contents
 -----------------
 
-- [Let me see it](#let-me-see-it)
+- [Demos](#demos)
 - [Philosophy](#philosophy)
 - [Documentation](#documentation)
 - [Resources](#resources)
@@ -23,12 +23,14 @@ Table of contents
 - [Using Paths.js with Scala.js](#using-pathsjs-with-scalajs)
 - [Contributing](#contributing)
 
-Let me see it
--------------
+Demos
+-----
 
-Of course, when judging a chart library, this is a very reasonable request. But Paths.js is different: it provides the components, and you draw the charts. That said, there is a [demo application](http://andreaferretti.github.io/paths-js-demo/) to show some features - [here](https://github.com/andreaferretti/paths-js-demo) you find the source.
+Of course, when judging a chart library, the first request is to have a look at results. But Paths.js is different: it provides the geometry, and you draw the charts.
 
-Another demo, using Facebook React instead of Ractive.js, is in progress [here](http://andreaferretti.github.io/paths-js-react-demo/) ([source here](https://github.com/andreaferretti/paths-js-react-demo)).
+That said, we have two demos. The [first one](http://andreaferretti.github.io/paths-js-react-demo) is written using React ([source here](https://github.com/andreaferretti/paths-js-react-demo)).
+
+The [old demo](http://andreaferretti.github.io/paths-js-demo/) is written using Ractive ([source here](https://github.com/andreaferretti/paths-js-demo)).
 
 Philosophy
 ----------

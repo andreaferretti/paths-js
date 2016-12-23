@@ -48,6 +48,8 @@ let round = (x, digits = 5) => {
 let roundVector = (v, digits = 5) =>
   v.map((x) => round(x, digits))
 
+let deepCopy = (x) => JSON.parse(JSON.stringify(x))
+
 let date = (data) => {
   let d = new Date()
   d.setYear(data.year)
@@ -79,6 +81,41 @@ describe('stock chart', () => {
     let line = stock.curves[0].line
     let area = stock.curves[0].area
     expect(area.path.points().slice(0, 16)).to.eql(line.path.points())
+  })
+
+  it('should sort the points', () => {
+    let data1 = deepCopy(data)
+    let tmp = data1[0][0]
+    data1[0][0] = data1[0][3]
+    data1[0][3] = tmp
+    let stock1 = Stock({
+      data: data1,
+      xaccessor: date,
+      yaccessor: (d) => d.value,
+      width: 300,
+      height: 200
+    })
+    let points = stock1.curves[0].line.path.points()
+    let sorted = deepCopy(points).sort(([x1, y1], [x2, y2]) => x1 - x2)
+    expect(points).to.eql(sorted)
+  })
+
+  it('should allow not to sort the points', () => {
+    let data1 = deepCopy(data)
+    let tmp = data1[0][0]
+    data1[0][0] = data1[0][3]
+    data1[0][3] = tmp
+    let stock1 = Stock({
+      data: data1,
+      xaccessor: date,
+      yaccessor: (d) => d.value,
+      width: 300,
+      height: 200,
+      sort: false
+    })
+    let points = stock1.curves[0].line.path.points()
+    let sorted = deepCopy(points).sort(([x1, y1], [x2, y2]) => x1 - x2)
+    expect(points).not.to.eql(sorted)
   })
 
   it('should give access to the original items', () => {

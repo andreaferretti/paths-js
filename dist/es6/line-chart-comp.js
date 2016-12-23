@@ -3,9 +3,9 @@ import { minBy, maxBy } from './ops'
 
 const epsilon = 1e-5
 
-let box = (datum, accessor) => {
+let box = (datum, accessor, sort) => {
   let points = datum.map(accessor)
-  let sorted = points.sort(([a, b], [c, d]) => a - c)
+  let sorted = sort ? points.sort(([a, b], [c, d]) => a - c) : points
   let l = sorted.length
   let xmin = sorted[0][0]
   let xmax = sorted[l - 1][0]
@@ -23,11 +23,11 @@ let box = (datum, accessor) => {
   }
 }
 
-export default function({data, xaccessor, yaccessor, width, height, closed, min, max}) {
+export default function({data, xaccessor, yaccessor, width, height, closed, min, max, sort = true}) {
   if (! xaccessor) { xaccessor = ([x, y]) => x }
   if (! yaccessor) { yaccessor = ([x, y]) => y }
   let f = (i) => [xaccessor(i), yaccessor(i)]
-  let arranged = data.map((datum) => box(datum, f))
+  let arranged = data.map((datum) => box(datum, f, sort))
 
   let xmin = minBy(arranged, (d) => d.xmin)
   let xmax = maxBy(arranged, (d) => d.xmax)
