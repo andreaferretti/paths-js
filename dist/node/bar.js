@@ -28,6 +28,8 @@ exports['default'] = function (_ref) {
   var max = _ref.max;
   var _ref$gutter = _ref.gutter;
   var gutter = _ref$gutter === undefined ? 10 : _ref$gutter;
+  var _ref$offset = _ref.offset;
+  var offset = _ref$offset === undefined ? [0, 0] : _ref$offset;
   var compute = _ref.compute;
 
   var groups = [];
@@ -40,11 +42,16 @@ exports['default'] = function (_ref) {
     max = 0;maxUnset = true;
   }
 
+  var _offset = _slicedToArray(offset, 2);
+
+  var offX = _offset[0];
+  var offY = _offset[1];
   var _iteratorNormalCompletion = true;
   var _didIteratorError = false;
   var _iteratorError = undefined;
 
   try {
+
     for (var _iterator = data.entries()[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
       var _step$value = _slicedToArray(_step.value, 2);
 
@@ -106,7 +113,7 @@ exports['default'] = function (_ref) {
   var n = groups.length;
   var groupWidth = (width - gutter * (n - 1)) / n;
   var curves = [];
-  var scale = (0, _linear2['default'])([min, max], [height, 0]);
+  var scale = (0, _linear2['default'])([min, max], [height + offY, offY]);
 
   var _iteratorNormalCompletion2 = true;
   var _didIteratorError2 = false;
@@ -120,7 +127,7 @@ exports['default'] = function (_ref) {
       var g = _step2$value[1];
 
       var w = groupWidth / g.length;
-      var shift = (groupWidth + gutter) * i;
+      var shift = (groupWidth + gutter) * i + offX;
       var _iteratorNormalCompletion4 = true;
       var _didIteratorError4 = false;
       var _iteratorError4 = undefined;

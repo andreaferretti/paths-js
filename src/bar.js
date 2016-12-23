@@ -2,12 +2,13 @@ import Linear from './linear'
 import Rectangle from './rectangle'
 import { id, enhance } from './ops'
 
-export default function({data, accessor = id, width, height, min, max, gutter = 10, compute}) {
+export default function({data, accessor = id, width, height, min, max, gutter = 10, offset = [0, 0], compute}) {
   let groups = []
   let minUnset = false
   let maxUnset = false
   if (min == null) { min = 0; minUnset = true }
   if (max == null) { max = 0; maxUnset = true }
+  let [offX, offY] = offset
 
   for(let [i, d] of data.entries()) {
     for(let [j, el] of d.entries()) {
@@ -24,11 +25,11 @@ export default function({data, accessor = id, width, height, min, max, gutter = 
   let n = groups.length
   let groupWidth = (width - gutter * (n - 1)) / n
   let curves = []
-  let scale = Linear([min, max], [height, 0])
+  let scale = Linear([min, max], [height + offY, offY])
 
   for(let [i, g] of groups.entries()) {
     let w = groupWidth / g.length
-    let shift = (groupWidth + gutter) * i
+    let shift = (groupWidth + gutter) * i + offX
     for(let [j, el] of g.entries()) {
       let left = shift + w * j
       let right = left + w

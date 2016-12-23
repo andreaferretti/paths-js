@@ -164,6 +164,9 @@ var Path = function Path(init) {
     print: function print() {
       return _instructions.map(printInstrunction).join(' ');
     },
+    toString: function toString() {
+      return undefined.print();
+    },
     points: function points() {
       var ps = [];
       var prev = [0, 0];
