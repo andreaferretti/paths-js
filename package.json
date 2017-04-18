@@ -25,18 +25,23 @@
     "clean": "rm -r dist/*",
     "build": "npm run build-es6 && npm run build-amd && npm run build-node && npm run build-global",
     "build-es6": "mkdir -p dist/es6 && cp src/* dist/es6",
-    "build-amd": "babel src --modules amd --out-dir dist/amd",
-    "build-node": "babel src --out-dir dist/node && cp README.md dist/node && cp package.json dist/node",
+    "build-amd": "babel --plugins transform-es2015-modules-amd src --out-dir dist/amd",
+    "build-node": "babel --plugins transform-es2015-modules-commonjs src --out-dir dist/node && cp README.md dist/node && cp package.json dist/node",
     "build-global": "mkdir -p dist/global && browserify dist/node/all.js -d -p [minifyify --map dist/global/paths.js.map --output dist/global/paths.js.map] -o dist/global/paths.js",
     "watch": "babel src --watch --out-dir dist/node",
-    "test": "mocha --reporter nyan --compilers js:babel/register --recursive test"
+    "test": "mocha --reporter nyan --compilers babel-register --recursive test"
   },
   "devDependencies": {
-    "babel": "^5.8.34",
-    "browserify": "^12.0.1",
+    "babel": "^6.23.0",
+    "babel-cli": "^6.24.1",
+    "babel-plugin-transform-es2015-modules-amd": "^6.24.1",
+    "babel-plugin-transform-es2015-modules-commonjs": "^6.24.1",
+    "babel-polyfill": "^6.23.0",
+    "babel-register": "^6.24.1",
+    "browserify": "^14.3.0",
     "expect.js": "^0.3.1",
-    "minifyify": "^7.1.0",
-    "mocha": "^2.3.0"
+    "minifyify": "^7.3.5",
+    "mocha": "^3.2.0"
   },
   "engines": {
     "node": ">=0.11.0"
