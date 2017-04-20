@@ -26,7 +26,7 @@
     "build": "npm run build-es6 && npm run build-amd && npm run build-node && npm run build-global",
     "build-es6": "mkdir -p dist/es6 && cp src/* dist/es6",
     "build-amd": "babel --plugins transform-es2015-modules-amd src --out-dir dist/amd",
-    "build-node": "babel --plugins transform-es2015-modules-commonjs src --out-dir dist/node && cp README.md dist/node && cp package.json dist/node",
+    "build-node": "babel --plugins add-module-exports src --out-dir dist/node && cp README.md dist/node && cp package.json dist/node",
     "build-global": "mkdir -p dist/global && browserify dist/node/all.js -d -p [minifyify --map dist/global/paths.js.map --output dist/global/paths.js.map] -o dist/global/paths.js",
     "watch": "babel src --watch --out-dir dist/node",
     "test": "mocha --reporter nyan --compilers babel-register --recursive test"
@@ -34,6 +34,7 @@
   "devDependencies": {
     "babel": "^6.23.0",
     "babel-cli": "^6.24.1",
+    "babel-plugin-add-module-exports": "^0.2.1",
     "babel-plugin-transform-es2015-modules-amd": "^6.24.1",
     "babel-plugin-transform-es2015-modules-commonjs": "^6.24.1",
     "babel-polyfill": "^6.23.0",
