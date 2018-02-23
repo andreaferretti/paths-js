@@ -97,6 +97,11 @@ describe('points method', () => {
     let path = Path().moveto(0, 1).arc(3, 3, 2, 0, 1, 6, -3).curveto(2, 1, 3, 1, -1, 17)
     expect(path.points()).to.eql([[0, 1], [6, -3], [-1, 17]])
   })
+
+  it('should allow multiple subpaths within the same path', () => {
+    let path = Path().moveto(0,0).lineto(100,0).lineto(100,100).closepath().moveto(10,70).lineto(30,40).lineto(30,70).closepath()
+    expect(path.points()).to.eql([[0, 0], [100, 0], [100, 100], [10, 70], [30, 40], [30, 70]])
+  })
 })
 
 describe('print method', () => {
@@ -181,6 +186,13 @@ describe('connect method', () => {
     let path2 = Path().moveto(2,20).lineto(3,40)
     let path3 = path.connect(path2).points()
     expect(path2.points()).to.eql([[2,20],[3,40]])
+  })
+
+  it('should allow multiple closed subpaths to be connected', () => {
+    let path = Path().moveto(0,0).lineto(100,0).lineto(100,100).closepath()
+    let path2 = Path().moveto(10,70).lineto(30,40).lineto(30,70).closepath()
+    let path3 = path.connect(path2)
+    expect(path3.points()).to.eql([[0, 0], [100, 0], [100, 100], [10, 70], [30, 40], [30, 70]])
   })
 })
 

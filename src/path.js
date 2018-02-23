@@ -31,16 +31,16 @@ let Path = (init) => {
     return `${ command } ${ numbers.join(' ') }`
   }
 
-  let point = ({ command, params }, [prevX, prevY]) => {
+  let point = ({ command, params }, prev) => {
     switch(command) {
       case 'M':
         return [params[0], params[1]]
       case 'L':
         return [params[0], params[1]]
       case 'H':
-        return [params[0], prevY]
+        return [params[0], prev[1]]
       case 'V':
-        return [prevX, params[0]]
+        return [prev[0], params[0]]
       case 'Z':
         return null
       case 'C':
@@ -148,12 +148,17 @@ let Path = (init) => {
       let ps = this.points()
       let last = ps[ps.length - 1]
       let first = path.points()[0]
-      let newInstructions = path.instructions().slice(1)
-      if (!areEqualPoints(last, first)) {
-        newInstructions.unshift({
-          command: "L",
-          params: first
-        })
+      let newInstructions
+      if (instructions[instructions.length - 1].command !== 'Z') {
+        newInstructions = path.instructions().slice(1)
+        if (!areEqualPoints(last, first)) {
+          newInstructions.unshift({
+            command: "L",
+            params: first
+          })
+        }
+      } else {
+        newInstructions = path.instructions()
       }
       return Path(this.instructions().concat(newInstructions))
     }
