@@ -56,6 +56,167 @@ let Path = (init) => {
     }
   }
 
+  let matrixTransform = (points, m) => {
+    return points.map(point => {
+      return {
+        x: point.x * m[0] + point.y * m[2] + m[4],
+        y: point.x * m[1] + point.y * m[3] + m[5]
+      }
+    })
+  }
+
+  let transformEllipse = (rx, ry, ax, m) => {
+    const torad = Math.PI / 180
+    const epsilon = 0.0000000001
+
+    let c = Math.cos(ax * torad), s = Math.sin(ax * torad)
+    let ma = [
+      rx * (m[0]*c + m[2]*s),
+      rx * (m[1]*c + m[3]*s),
+      ry * (-m[0]*s + m[2]*c),
+      ry * (-m[1]*s + m[3]*c)
+    ]
+
+    let J = ma[0]*ma[0] + ma[2]*ma[2],
+      K = ma[1]*ma[1] + ma[3]*ma[3]
+    
+    let D = ((ma[0]-ma[3])*(ma[0]-ma[3]) + (ma[2]+ma[1])*(ma[2]+ma[1])) *
+      ((ma[0]+ma[3])*(ma[0]+ma[3]) + (ma[2]-ma[1])*(ma[2]-ma[1]))
+
+    let JK = (J + K) / 2
+    
+    if (D < epsilon * JK) {
+      return {
+        rx: Math.sqrt(JK),
+        ry: Math.sqrt(JK),
+        ax: 0,
+        isDegenerate: false
+      }
+    }
+
+    let L = ma[0]*ma[1] + ma[2]*ma[3]
+    D = Math.sqrt(D)
+
+    let l1 = JK + D/2,
+      l2 = JK - D/2
+
+    let newAx, newRx, newRy
+    newAx = (Math.abs(L) < epsilon && Math.abs(l1 - K) < epsilon) ? 90
+      : Math.atan(Math.abs(L) > Math.abs(l1 - K) ? (l1 - J) / L : L / (l1 - K)) * 180 / Math.PI
+
+    if (newAx >= 0) {
+      newRx = Math.sqrt(l1)
+      newRy = Math.sqrt(l2)
+    } else {
+      newAx += 90;
+      newRx = Math.sqrt(l2)
+      newRy = Math.sqrt(l1)
+    }
+
+    return {
+      rx: newRx,
+      ry: newRy,
+      ax: newAx,
+      isDegenerate: (newRx < epsilon * newRy || newRy < epsilon * newRx)
+    }
+  }
+
+  let transformParams = (instruction, matrix, prev) => {
+    let p = instruction.params
+
+    let transformer = {
+      'V': function (instruction, matrix, prev) {
+        let pts = [{x: prev[0], y: p[1]}]
+        let newPts = matrixTransform(pts, matrix)
+        if (newPts[0].x === matrixTransform([{x: prev[0], y: prev[1]}])[0].x) {
+          return {
+            command: 'V',
+            params: [newPts[0].y]
+          }
+        } else {
+          return {
+            command: 'L',
+            params: [newPts[0].x, newPts[0].y]
+          }
+        }
+      },
+      'H': function (instruction, matrix, prev) {
+        let pts = [{x: p[0], y: prev[1]}]
+        let newPts = matrixTransform(pts, matrix)
+        if (newPts[0].y === matrixTransform([{x: prev[0], y: prev[1]}])[0].y) {
+          return {
+            command: 'H',
+            params: [newPts[0].x]
+          }
+        } else {
+          return {
+            command: 'L',
+            params: [newPts[0].x, newPts[0].y]
+          }
+        }
+      },
+      'A': function (instruction, matrix, prev) {
+        // transform rx, ry, and x-axis rotation
+        let r = transformEllipse(p[0], p[1], p[2], matrix)
+
+        let sweepFlag = p[4]
+        if (matrix[0] * matrix[3] - matrix[1] * matrix[2] < 0) {
+          sweepFlag = sweepFlag ? '0' : '1'
+        }
+
+        // transform endpoint
+        let pts = [{x: p[5], y: p[6]}]
+        let newPts = matrixTransform(pts, matrix)
+
+        if (r.isDegenerate) {
+          return {
+            command: 'L',
+            params: [newPts[0].x, newPts[0].y]
+          }
+        } else {
+          return {
+            command: 'A',
+            params: [r.rx, r.ry, r.ax, p[3], sweepFlag, newPts[0].x, newPts[0].y]
+          }
+        }
+      },
+      'C': function (instruction, matrix, prev) {
+        let pts = [
+          {x: p[0], y: p[1]},
+          {x: p[2], y: p[3]},
+          {x: p[4], y: p[5]}
+        ]
+        let newPts = matrixTransform(pts, matrix)
+        return {
+          command: 'C',
+          params: [newPts[0].x, newPts[0].y, newPts[1].x, newPts[1].y, newPts[2].x, newPts[2].y]
+        }
+      },
+      'Z': function (instruction, matrix, prev) {
+        return {
+          command: 'Z',
+          params: []
+        }
+      },
+      'default': function (instruction, matrix, prev) {
+        let pts = [{x: p[0], y: p[1]}]
+        let newPts = matrixTransform(pts, matrix)
+        let newParams = instruction.params.slice(0, instruction.params.length)
+        newParams.splice(0, 2, newPts[0].x, newPts[0].y)
+        return {
+          command: instruction.command,
+          params: newParams
+        }
+      }
+    }
+
+    if (transformer[instruction.command]) {
+      return transformer[instruction.command](instruction, matrix, prev)
+    } else {
+      return transformer['default'](instruction, matrix, prev)
+    }
+  }
+
   let verbosify = (keys, f) =>
     function(a) {
       let args = (typeof a === 'object') ? keys.map((k) => a[k]) : arguments
@@ -126,6 +287,59 @@ let Path = (init) => {
         params: [rx, ry, xrot, largeArcFlag, sweepFlag, x, y]
       })
     ),
+    translate: verbosify(['dx', 'dy'], (dx, dy) => {
+      let prev = [0, 0]
+      let newInstructions = instructions.map(instruction => {
+        let matrix = [1, 0, 0, 1, dx, dy]
+        let p = transformParams(instruction, matrix, prev)
+        prev = point(instruction, prev)
+        return p
+      })
+      return Path(newInstructions)
+    }),
+    rotate: verbosify(['angle', 'rx', 'ry'], (angle, rx, ry) => {
+      if (angle !== 0) {
+        let prev
+        let matrix
+        let newInstructions = instructions
+
+        if (rx !== 0 && ry !== 0) {
+          prev = [0, 0]
+          matrix = [1, 0, 0, 1, -rx, -ry]
+          newInstructions = newInstructions.map(instruction => {
+            let p = transformParams(instruction, matrix, prev)
+            prev = point(instruction, prev)
+            return p
+          })
+        }
+
+        let rad = angle * Math.PI / 180
+        let cos = Math.cos(rad)
+        let sin = Math.sin(rad)
+
+        prev = [0, 0]
+        matrix = [cos, sin, -sin, cos, 0, 0]
+        newInstructions = newInstructions.map(instruction => {
+          let p = transformParams(instruction, matrix, prev)
+          prev = point(instruction, prev)
+          return p
+        })
+
+        if (rx !== 0 && ry !== 0) {
+          prev = [0, 0]
+          matrix = [1, 0, 0, 1, rx, ry]
+          newInstructions = newInstructions.map(instruction => {
+            let p = transformParams(instruction, matrix, prev)
+            prev = point(instruction, prev)
+            return p
+          })
+        }
+
+        return Path(newInstructions)
+      } else {
+        return Path(instructions)
+      }
+    }),
     print: () =>
       instructions.map(printInstrunction).join(' '),
     toString: () =>
