@@ -1,6 +1,7 @@
 {
   "name": "paths-js",
   "version": "0.4.5",
+  "main": "dist/es6/path.js",
   "author": {
     "name": "Andrea Ferretti"
   },
@@ -29,7 +30,8 @@
     "build-node": "babel src --out-dir dist/node && cp README.md dist/node && cp package.json dist/node",
     "build-global": "mkdir -p dist/global && browserify dist/node/all.js -d -p [minifyify --map dist/global/paths.js.map --output dist/global/paths.js.map] -o dist/global/paths.js",
     "watch": "babel src --watch --out-dir dist/node",
-    "test": "mocha --reporter nyan --compilers js:babel/register --recursive test"
+    "test": "mocha --reporter nyan --compilers js:babel/register --recursive test",
+    "test:watch": "mocha --reporter min --compilers js:babel/register --recursive -w test"
   },
   "devDependencies": {
     "babel": "^5.8.34",
