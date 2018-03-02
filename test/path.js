@@ -34,6 +34,11 @@ describe('path', () => {
     expect(path).to.have.property('smoothqcurveto')
     expect(path).to.have.property('arc')
     expect(path).to.have.property('points')
+    expect(path).to.have.property('translate')
+    expect(path).to.have.property('rotate')
+    expect(path).to.have.property('scale')
+    expect(path).to.have.property('shearX')
+    expect(path).to.have.property('shearY')
   })
 
   it('should ignore constructor arguments', () => {
