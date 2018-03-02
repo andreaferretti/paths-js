@@ -288,14 +288,18 @@ let Path = (init) => {
       })
     ),
     translate: verbosify(['dx', 'dy'], (dx = 0, dy = 0) => {
-      let prev = [0, 0]
-      let newInstructions = instructions.map(instruction => {
+      if (dx !== 0 || dx !== 0) {
+        let prev = [0, 0]
         let matrix = [1, 0, 0, 1, dx, dy]
-        let p = transformParams(instruction, matrix, prev)
-        prev = point(instruction, prev)
-        return p
-      })
-      return Path(newInstructions)
+        let newInstructions = instructions.map(instruction => {
+          let p = transformParams(instruction, matrix, prev)
+          prev = point(instruction, prev)
+          return p
+        })
+        return Path(newInstructions)
+      } else {
+        return Path(instructions)
+      }
     }),
     rotate: verbosify(['angle', 'rx', 'ry'], (angle, rx = 0, ry = 0) => {
       if (angle !== 0) {
@@ -335,6 +339,48 @@ let Path = (init) => {
           })
         }
 
+        return Path(newInstructions)
+      } else {
+        return Path(instructions)
+      }
+    }),
+    scale: verbosify(['sx', 'sy'], (sx = 1, sy = 1) => {
+      if (sx !== 1 || sy !== 1) {
+        let prev = [0, 0]
+        let matrix = [sx, 0, 0, sy, 0, 0]
+        let newInstructions = instructions.map(instruction => {
+          let p = transformParams(instruction, matrix, prev)
+          prev = point(instruction, prev)
+          return p
+        })
+        return Path(newInstructions)
+      } else {
+        return Path(instructions)
+      }
+    }),
+    shearX: verbosify(['angle'], (angle = 0) => {
+      if (angle !== 0) {
+        let prev = [0, 0]
+        let matrix = [1, 0, Math.tan(angle * Math.PI / 180), 1, 0, 0]
+        let newInstructions = instructions.map(instruction => {
+          let p = transformParams(instruction, matrix, prev)
+          prev = point(instruction, prev)
+          return p
+        })
+        return Path(newInstructions)
+      } else {
+        return Path(instructions)
+      }
+    }),
+    shearY: verbosify(['angle'], (angle = 0) => {
+      if (angle !== 0) {
+        let prev = [0, 0]
+        let matrix = [1, Math.tan(angle * Math.PI / 180), 0, 1, 0, 0]
+        let newInstructions = instructions.map(instruction => {
+          let p = transformParams(instruction, matrix, prev)
+          prev = point(instruction, prev)
+          return p
+        })
         return Path(newInstructions)
       } else {
         return Path(instructions)

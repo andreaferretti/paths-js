@@ -111,6 +111,27 @@ describe('points method', () => {
     expect(path2Points).to.eql([[-36.6025, 63.3975], [19.3782, 100.3590], [60.3590, 111.3397], [13.3975, 150.0000]])
   })
 
+  it ('should report the expected points for the scale command', () => {
+    let path = Path().moveto(0, 0).lineto(0, 1).curveto(1, 1, 2, 5, 3, 1).arc(1, 1, 0, 0, 1, 1, 0).closepath()
+    let path2 = path.scale(3, 5)
+    expect(path2.points()).to.eql([[0, 0], [0, 5], [9, 5], [3, 0]])
+  })
+
+  it ('should report the expected points for the shearX command', () => {
+    let path = Path().moveto(0, 0).lineto(0, 1).curveto(1, 1, 2, 5, 3, 1).arc(1, 1, 0, 0, 1, 1, 0).closepath()
+    let path2 = path.shearX(30)
+    let path2Points = path2.points().map(point => [point[0].toFixed(4), point[1].toFixed(4)])
+    expect(path2Points).to.eql([[0, 0], [0.5774, 1], [3.5774, 1], [1, 0]])
+  })
+
+  it ('should report the expected points for the shearY command', () => {
+    let path = Path().moveto(0, 0).lineto(0, 1).curveto(1, 1, 2, 5, 3, 1).arc(1, 1, 0, 0, 1, 1, 0).closepath()
+    let path2 = path.shearY(30)
+    let path2Points = path2.points().map(point => [point[0].toFixed(4), point[1].toFixed(4)])
+
+    expect(path2Points).to.eql([[0, 0], [0, 1], [3, 2.7321], [1, 0.5774]])
+  })
+
   it('should allow multiple subpaths within the same path', () => {
     let path = Path().moveto(0,0).lineto(100,0).lineto(100,100).closepath().moveto(10,70).lineto(30,40).lineto(30,70).closepath()
     expect(path.points()).to.eql([[0, 0], [100, 0], [100, 100], [10, 70], [30, 40], [30, 70]])

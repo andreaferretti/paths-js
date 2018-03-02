@@ -313,21 +313,31 @@ var Path = function Path(init) {
       var dx = arguments.length <= 0 || arguments[0] === undefined ? 0 : arguments[0];
       var dy = arguments.length <= 1 || arguments[1] === undefined ? 0 : arguments[1];
 
-      var prev = [0, 0];
-      var newInstructions = _instructions.map(function (instruction) {
-        var matrix = [1, 0, 0, 1, dx, dy];
-        var p = transformParams(instruction, matrix, prev);
-        prev = point(instruction, prev);
-        return p;
-      });
-      return Path(newInstructions);
+      if (dx !== 0 || dx !== 0) {
+        var _ret = (function () {
+          var prev = [0, 0];
+          var matrix = [1, 0, 0, 1, dx, dy];
+          var newInstructions = _instructions.map(function (instruction) {
+            var p = transformParams(instruction, matrix, prev);
+            prev = point(instruction, prev);
+            return p;
+          });
+          return {
+            v: Path(newInstructions)
+          };
+        })();
+
+        if (typeof _ret === 'object') return _ret.v;
+      } else {
+        return Path(_instructions);
+      }
     }),
     rotate: verbosify(['angle', 'rx', 'ry'], function (angle) {
       var rx = arguments.length <= 1 || arguments[1] === undefined ? 0 : arguments[1];
       var ry = arguments.length <= 2 || arguments[2] === undefined ? 0 : arguments[2];
 
       if (angle !== 0) {
-        var _ret = (function () {
+        var _ret2 = (function () {
           var prev = undefined;
           var matrix = undefined;
           var newInstructions = _instructions;
@@ -369,7 +379,74 @@ var Path = function Path(init) {
           };
         })();
 
-        if (typeof _ret === 'object') return _ret.v;
+        if (typeof _ret2 === 'object') return _ret2.v;
+      } else {
+        return Path(_instructions);
+      }
+    }),
+    scale: verbosify(['sx', 'sy'], function () {
+      var sx = arguments.length <= 0 || arguments[0] === undefined ? 1 : arguments[0];
+      var sy = arguments.length <= 1 || arguments[1] === undefined ? 1 : arguments[1];
+
+      if (sx !== 1 || sy !== 1) {
+        var _ret3 = (function () {
+          var prev = [0, 0];
+          var matrix = [sx, 0, 0, sy, 0, 0];
+          var newInstructions = _instructions.map(function (instruction) {
+            var p = transformParams(instruction, matrix, prev);
+            prev = point(instruction, prev);
+            return p;
+          });
+          return {
+            v: Path(newInstructions)
+          };
+        })();
+
+        if (typeof _ret3 === 'object') return _ret3.v;
+      } else {
+        return Path(_instructions);
+      }
+    }),
+    shearX: verbosify(['angle'], function () {
+      var angle = arguments.length <= 0 || arguments[0] === undefined ? 0 : arguments[0];
+
+      if (angle !== 0) {
+        var _ret4 = (function () {
+          var prev = [0, 0];
+          var matrix = [1, 0, Math.tan(angle * Math.PI / 180), 1, 0, 0];
+          var newInstructions = _instructions.map(function (instruction) {
+            var p = transformParams(instruction, matrix, prev);
+            prev = point(instruction, prev);
+            return p;
+          });
+          return {
+            v: Path(newInstructions)
+          };
+        })();
+
+        if (typeof _ret4 === 'object') return _ret4.v;
+      } else {
+        return Path(_instructions);
+      }
+    }),
+    shearY: verbosify(['angle'], function () {
+      var angle = arguments.length <= 0 || arguments[0] === undefined ? 0 : arguments[0];
+
+      if (angle !== 0) {
+        var _ret5 = (function () {
+          var prev = [0, 0];
+          var matrix = [1, Math.tan(angle * Math.PI / 180), 0, 1, 0, 0];
+          var newInstructions = _instructions.map(function (instruction) {
+            var p = transformParams(instruction, matrix, prev);
+            prev = point(instruction, prev);
+            return p;
+          });
+          return {
+            v: Path(newInstructions)
+          };
+        })();
+
+        if (typeof _ret5 === 'object') return _ret5.v;
       } else {
         return Path(_instructions);
       }
