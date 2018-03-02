@@ -309,7 +309,10 @@ var Path = function Path(init) {
         params: [rx, ry, xrot, largeArcFlag, sweepFlag, x, y]
       });
     }),
-    translate: verbosify(['dx', 'dy'], function (dx, dy) {
+    translate: verbosify(['dx', 'dy'], function () {
+      var dx = arguments.length <= 0 || arguments[0] === undefined ? 0 : arguments[0];
+      var dy = arguments.length <= 1 || arguments[1] === undefined ? 0 : arguments[1];
+
       var prev = [0, 0];
       var newInstructions = _instructions.map(function (instruction) {
         var matrix = [1, 0, 0, 1, dx, dy];
@@ -319,7 +322,10 @@ var Path = function Path(init) {
       });
       return Path(newInstructions);
     }),
-    rotate: verbosify(['angle', 'rx', 'ry'], function (angle, rx, ry) {
+    rotate: verbosify(['angle', 'rx', 'ry'], function (angle) {
+      var rx = arguments.length <= 1 || arguments[1] === undefined ? 0 : arguments[1];
+      var ry = arguments.length <= 2 || arguments[2] === undefined ? 0 : arguments[2];
+
       if (angle !== 0) {
         var _ret = (function () {
           var prev = undefined;

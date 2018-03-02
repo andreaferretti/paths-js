@@ -287,7 +287,7 @@ let Path = (init) => {
         params: [rx, ry, xrot, largeArcFlag, sweepFlag, x, y]
       })
     ),
-    translate: verbosify(['dx', 'dy'], (dx, dy) => {
+    translate: verbosify(['dx', 'dy'], (dx = 0, dy = 0) => {
       let prev = [0, 0]
       let newInstructions = instructions.map(instruction => {
         let matrix = [1, 0, 0, 1, dx, dy]
@@ -297,7 +297,7 @@ let Path = (init) => {
       })
       return Path(newInstructions)
     }),
-    rotate: verbosify(['angle', 'rx', 'ry'], (angle, rx, ry) => {
+    rotate: verbosify(['angle', 'rx', 'ry'], (angle, rx = 0, ry = 0) => {
       if (angle !== 0) {
         let prev
         let matrix
