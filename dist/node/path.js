@@ -6,6 +6,8 @@ Object.defineProperty(exports, '__esModule', {
 
 var _slicedToArray = (function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i['return']) _i['return'](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError('Invalid attempt to destructure non-iterable instance'); } }; })();
 
+var _geom = require('./geom');
+
 var Path = function Path(init) {
   var _instructions = init || [];
 
@@ -82,75 +84,14 @@ var Path = function Path(init) {
     }
   };
 
-  var matrixTransform = function matrixTransform(points, m) {
-    return points.map(function (point) {
-      return {
-        x: point.x * m[0] + point.y * m[2] + m[4],
-        y: point.x * m[1] + point.y * m[3] + m[5]
-      };
-    });
-  };
-
-  var transformEllipse = function transformEllipse(rx, ry, ax, m) {
-    var torad = Math.PI / 180;
-    var epsilon = 0.0000000001;
-
-    var c = Math.cos(ax * torad),
-        s = Math.sin(ax * torad);
-    var ma = [rx * (m[0] * c + m[2] * s), rx * (m[1] * c + m[3] * s), ry * (-m[0] * s + m[2] * c), ry * (-m[1] * s + m[3] * c)];
-
-    var J = ma[0] * ma[0] + ma[2] * ma[2],
-        K = ma[1] * ma[1] + ma[3] * ma[3];
-
-    var D = ((ma[0] - ma[3]) * (ma[0] - ma[3]) + (ma[2] + ma[1]) * (ma[2] + ma[1])) * ((ma[0] + ma[3]) * (ma[0] + ma[3]) + (ma[2] - ma[1]) * (ma[2] - ma[1]));
-
-    var JK = (J + K) / 2;
-
-    if (D < epsilon * JK) {
-      return {
-        rx: Math.sqrt(JK),
-        ry: Math.sqrt(JK),
-        ax: 0,
-        isDegenerate: false
-      };
-    }
-
-    var L = ma[0] * ma[1] + ma[2] * ma[3];
-    D = Math.sqrt(D);
-
-    var l1 = JK + D / 2,
-        l2 = JK - D / 2;
-
-    var newAx = undefined,
-        newRx = undefined,
-        newRy = undefined;
-    newAx = Math.abs(L) < epsilon && Math.abs(l1 - K) < epsilon ? 90 : Math.atan(Math.abs(L) > Math.abs(l1 - K) ? (l1 - J) / L : L / (l1 - K)) * 180 / Math.PI;
-
-    if (newAx >= 0) {
-      newRx = Math.sqrt(l1);
-      newRy = Math.sqrt(l2);
-    } else {
-      newAx += 90;
-      newRx = Math.sqrt(l2);
-      newRy = Math.sqrt(l1);
-    }
-
-    return {
-      rx: newRx,
-      ry: newRy,
-      ax: newAx,
-      isDegenerate: newRx < epsilon * newRy || newRy < epsilon * newRx
-    };
-  };
-
   var transformParams = function transformParams(instruction, matrix, prev) {
     var p = instruction.params;
 
     var transformer = {
       'V': function V(instruction, matrix, prev) {
         var pts = [{ x: prev[0], y: p[1] }];
-        var newPts = matrixTransform(pts, matrix);
-        if (newPts[0].x === matrixTransform([{ x: prev[0], y: prev[1] }])[0].x) {
+        var newPts = (0, _geom.matrixTransform)(pts, matrix);
+        if (newPts[0].x === (0, _geom.matrixTransform)([{ x: prev[0], y: prev[1] }])[0].x) {
           return {
             command: 'V',
             params: [newPts[0].y]
@@ -164,8 +105,8 @@ var Path = function Path(init) {
       },
       'H': function H(instruction, matrix, prev) {
         var pts = [{ x: p[0], y: prev[1] }];
-        var newPts = matrixTransform(pts, matrix);
-        if (newPts[0].y === matrixTransform([{ x: prev[0], y: prev[1] }])[0].y) {
+        var newPts = (0, _geom.matrixTransform)(pts, matrix);
+        if (newPts[0].y === (0, _geom.matrixTransform)([{ x: prev[0], y: prev[1] }])[0].y) {
           return {
             command: 'H',
             params: [newPts[0].x]
@@ -179,7 +120,7 @@ var Path = function Path(init) {
       },
       'A': function A(instruction, matrix, prev) {
         // transform rx, ry, and x-axis rotation
-        var r = transformEllipse(p[0], p[1], p[2], matrix);
+        var r = (0, _geom.transformEllipse)(p[0], p[1], p[2], matrix);
 
         var sweepFlag = p[4];
         if (matrix[0] * matrix[3] - matrix[1] * matrix[2] < 0) {
@@ -188,7 +129,7 @@ var Path = function Path(init) {
 
         // transform endpoint
         var pts = [{ x: p[5], y: p[6] }];
-        var newPts = matrixTransform(pts, matrix);
+        var newPts = (0, _geom.matrixTransform)(pts, matrix);
 
         if (r.isDegenerate) {
           return {
@@ -204,7 +145,7 @@ var Path = function Path(init) {
       },
       'C': function C(instruction, matrix, prev) {
         var pts = [{ x: p[0], y: p[1] }, { x: p[2], y: p[3] }, { x: p[4], y: p[5] }];
-        var newPts = matrixTransform(pts, matrix);
+        var newPts = (0, _geom.matrixTransform)(pts, matrix);
         return {
           command: 'C',
           params: [newPts[0].x, newPts[0].y, newPts[1].x, newPts[1].y, newPts[2].x, newPts[2].y]
@@ -218,7 +159,7 @@ var Path = function Path(init) {
       },
       'default': function _default(instruction, matrix, prev) {
         var pts = [{ x: p[0], y: p[1] }];
-        var newPts = matrixTransform(pts, matrix);
+        var newPts = (0, _geom.matrixTransform)(pts, matrix);
         var newParams = instruction.params.slice(0, instruction.params.length);
         newParams.splice(0, 2, newPts[0].x, newPts[0].y);
         return {

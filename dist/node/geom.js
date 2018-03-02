@@ -67,6 +67,67 @@ var doHalflinesCross = function doHalflinesCross(sa, sb) {
   return u >= -approx && v >= approx || u >= approx && v >= -approx;
 };
 
+var matrixTransform = function matrixTransform(points, matrix) {
+  return points.map(function (point) {
+    return {
+      x: point.x * matrix[0] + point.y * matrix[2] + matrix[4],
+      y: point.x * matrix[1] + point.y * matrix[3] + matrix[5]
+    };
+  });
+};
+
+var transformEllipse = function transformEllipse(rx, ry, ax, m) {
+  var torad = Math.PI / 180;
+  var epsilon = 0.0000000001;
+
+  var c = Math.cos(ax * torad),
+      s = Math.sin(ax * torad);
+  var ma = [rx * (m[0] * c + m[2] * s), rx * (m[1] * c + m[3] * s), ry * (-m[0] * s + m[2] * c), ry * (-m[1] * s + m[3] * c)];
+
+  var J = ma[0] * ma[0] + ma[2] * ma[2],
+      K = ma[1] * ma[1] + ma[3] * ma[3];
+
+  var D = ((ma[0] - ma[3]) * (ma[0] - ma[3]) + (ma[2] + ma[1]) * (ma[2] + ma[1])) * ((ma[0] + ma[3]) * (ma[0] + ma[3]) + (ma[2] - ma[1]) * (ma[2] - ma[1]));
+
+  var JK = (J + K) / 2;
+
+  if (D < epsilon * JK) {
+    return {
+      rx: Math.sqrt(JK),
+      ry: Math.sqrt(JK),
+      ax: 0,
+      isDegenerate: false
+    };
+  }
+
+  var L = ma[0] * ma[1] + ma[2] * ma[3];
+  D = Math.sqrt(D);
+
+  var l1 = JK + D / 2,
+      l2 = JK - D / 2;
+
+  var newAx = undefined,
+      newRx = undefined,
+      newRy = undefined;
+  newAx = Math.abs(L) < epsilon && Math.abs(l1 - K) < epsilon ? 90 : Math.atan(Math.abs(L) > Math.abs(l1 - K) ? (l1 - J) / L : L / (l1 - K)) * 180 / Math.PI;
+
+  if (newAx >= 0) {
+    newRx = Math.sqrt(l1);
+    newRy = Math.sqrt(l2);
+  } else {
+    newAx += 90;
+    newRx = Math.sqrt(l2);
+    newRy = Math.sqrt(l1);
+  }
+
+  return {
+    rx: newRx,
+    ry: newRy,
+    ax: newAx,
+    isDegenerate: newRx < epsilon * newRy || newRy < epsilon * newRx
+  };
+};
+
 exports["default"] = { distPointToPoint: distPointToPoint, distPointToParabol: distPointToParabol, circumCenter: circumCenter,
-  parabolsCrossX: parabolsCrossX, doHalflinesCross: doHalflinesCross };
+  parabolsCrossX: parabolsCrossX, doHalflinesCross: doHalflinesCross, matrixTransform: matrixTransform, transformEllipse: transformEllipse };
 module.exports = exports["default"];
