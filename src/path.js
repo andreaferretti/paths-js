@@ -281,7 +281,7 @@ let Path = (init) => {
         return Path(instructions)
       }
     }),
-    scale: verbosify(['sx', 'sy'], (sx = 1, sy = 1) => {
+    scale: verbosify(['sx', 'sy'], (sx = 1, sy = sx) => {
       if (sx !== 1 || sy !== 1) {
         let prev = [0, 0]
         let matrix = [sx, 0, 0, sy, 0, 0]

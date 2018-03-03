@@ -327,26 +327,27 @@ var Path = function Path(init) {
     }),
     scale: verbosify(['sx', 'sy'], function () {
       var sx = arguments.length <= 0 || arguments[0] === undefined ? 1 : arguments[0];
-      var sy = arguments.length <= 1 || arguments[1] === undefined ? 1 : arguments[1];
+      var sy = arguments.length <= 1 || arguments[1] === undefined ? sx : arguments[1];
+      return (function () {
+        if (sx !== 1 || sy !== 1) {
+          var _ret3 = (function () {
+            var prev = [0, 0];
+            var matrix = [sx, 0, 0, sy, 0, 0];
+            var newInstructions = _instructions.map(function (instruction) {
+              var p = transformParams(instruction, matrix, prev);
+              prev = point(instruction, prev);
+              return p;
+            });
+            return {
+              v: Path(newInstructions)
+            };
+          })();
 
-      if (sx !== 1 || sy !== 1) {
-        var _ret3 = (function () {
-          var prev = [0, 0];
-          var matrix = [sx, 0, 0, sy, 0, 0];
-          var newInstructions = _instructions.map(function (instruction) {
-            var p = transformParams(instruction, matrix, prev);
-            prev = point(instruction, prev);
-            return p;
-          });
-          return {
-            v: Path(newInstructions)
-          };
-        })();
-
-        if (typeof _ret3 === 'object') return _ret3.v;
-      } else {
-        return Path(_instructions);
-      }
+          if (typeof _ret3 === 'object') return _ret3.v;
+        } else {
+          return Path(_instructions);
+        }
+      })();
     }),
     shearX: verbosify(['angle'], function () {
       var angle = arguments.length <= 0 || arguments[0] === undefined ? 0 : arguments[0];
