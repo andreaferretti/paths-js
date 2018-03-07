@@ -46,5 +46,70 @@ let doHalflinesCross = (sa, sb, approx = 1e-10) => { //sa, sb are Segment instan
   return (u>=-approx && v>=approx) || (u>=approx && v>=-approx)
 }
 
+let matrixTransform = (points, matrix) => {
+  return points.map(point => {
+    return {
+      x: point.x * matrix[0] + point.y * matrix[2] + matrix[4],
+      y: point.x * matrix[1] + point.y * matrix[3] + matrix[5]
+    }
+  })
+}
+
+let transformEllipse = (rx, ry, ax, m) => {
+  const torad = Math.PI / 180
+  const epsilon = 0.0000000001
+
+  let c = Math.cos(ax * torad), s = Math.sin(ax * torad)
+  let ma = [
+    rx * (m[0]*c + m[2]*s),
+    rx * (m[1]*c + m[3]*s),
+    ry * (-m[0]*s + m[2]*c),
+    ry * (-m[1]*s + m[3]*c)
+  ]
+
+  let J = ma[0]*ma[0] + ma[2]*ma[2],
+    K = ma[1]*ma[1] + ma[3]*ma[3]
+  
+  let D = ((ma[0]-ma[3])*(ma[0]-ma[3]) + (ma[2]+ma[1])*(ma[2]+ma[1])) *
+    ((ma[0]+ma[3])*(ma[0]+ma[3]) + (ma[2]-ma[1])*(ma[2]-ma[1]))
+
+  let JK = (J + K) / 2
+  
+  if (D < epsilon * JK) {
+    return {
+      rx: Math.sqrt(JK),
+      ry: Math.sqrt(JK),
+      ax: 0,
+      isDegenerate: false
+    }
+  }
+
+  let L = ma[0]*ma[1] + ma[2]*ma[3]
+  D = Math.sqrt(D)
+
+  let l1 = JK + D/2,
+    l2 = JK - D/2
+
+  let newAx, newRx, newRy
+  newAx = (Math.abs(L) < epsilon && Math.abs(l1 - K) < epsilon) ? 90
+    : Math.atan(Math.abs(L) > Math.abs(l1 - K) ? (l1 - J) / L : L / (l1 - K)) * 180 / Math.PI
+
+  if (newAx >= 0) {
+    newRx = Math.sqrt(l1)
+    newRy = Math.sqrt(l2)
+  } else {
+    newAx += 90;
+    newRx = Math.sqrt(l2)
+    newRy = Math.sqrt(l1)
+  }
+
+  return {
+    rx: newRx,
+    ry: newRy,
+    ax: newAx,
+    isDegenerate: (newRx < epsilon * newRy || newRy < epsilon * newRx)
+  }
+}
+
 export default { distPointToPoint, distPointToParabol, circumCenter,
-  parabolsCrossX, doHalflinesCross }
+  parabolsCrossX, doHalflinesCross, matrixTransform, transformEllipse }
