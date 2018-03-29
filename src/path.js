@@ -225,7 +225,7 @@ let Path = (init) => {
       })
     ),
     translate: verbosify(['dx', 'dy'], (dx = 0, dy = 0) => {
-      if (dx !== 0 || dx !== 0) {
+      if (dx !== 0 || dy !== 0) {
         let prev = [0, 0]
         let matrix = [1, 0, 0, 1, dx, dy]
         let newInstructions = instructions.map(instruction => {
