@@ -69,4 +69,15 @@ describe('sector function', () => {
     })
     expect(sector.path.print()).to.match(/A 3 3 0 1 1 -3/)
   })
+
+  it('should be slightly smaller than a full circle when the angle is 2pi (issue #47)', () => {
+    let sector = Sector({
+      r: 0,
+      R: 3,
+      center: [0, 0],
+      start: 0,
+      end: 2 * Math.PI
+    })
+    expect(sector.path.print()).to.equal('M 0 -3 A 3 3 0 1 1 -0.0003 -3 L 0 0 A 0 0 0 1 0 0 0 Z ')
+  })
 })

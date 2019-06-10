@@ -23,6 +23,11 @@ exports['default'] = function (_ref) {
   var start = _ref.start;
   var end = _ref.end;
 
+  var epsilon = 10e-5;
+  if (Math.abs(end - 2 * Math.PI) < epsilon) {
+    end = 2 * Math.PI - epsilon;
+  }
+
   var a = (0, _ops.plus)(center, (0, _ops.onCircle)(R, start));
   var b = (0, _ops.plus)(center, (0, _ops.onCircle)(R, end));
   var c = (0, _ops.plus)(center, (0, _ops.onCircle)(r, end));

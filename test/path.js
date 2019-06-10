@@ -199,7 +199,7 @@ describe('print method', () => {
     expect(path.print()).to.eql('M 4 5 Q 0 1 0.142857 0.333333 C 2 1 0 -1 -1 17')
   })
 
-  it('should pass the example in https://github.com/andreaferretti/paths-js/issues/55', () => {
+  it('should allow to translate hlines and vlines (issue #55)', () => {
     let path = Path()
       .moveto(10, 20)
       .vlineto(30)

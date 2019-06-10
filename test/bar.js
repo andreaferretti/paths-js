@@ -49,6 +49,16 @@ describe('bar chart', () => {
     expect(bar1.curves[14].myitem).to.be(bar1.curves[14].item)
     expect(bar1.curves[14].myindex).to.be(bar1.curves[14].index)
   })
+
+  it('should allow degenerate values (issue #50)', () => {
+    let bar = Bar({
+      data: [[0, 0], [0, 0], [0, 0]],
+      width: 300,
+      height: 400,
+      gutter: 15
+    })
+    expect(bar.curves).to.have.length(6)
+  })
 })
 
 describe('bar chart scale', () => {

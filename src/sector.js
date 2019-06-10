@@ -2,6 +2,11 @@ import Path from './path'
 import { plus, onCircle } from './ops'
 
 export default function({center, r, R, start, end}) {
+  const epsilon = 10e-5
+  if (Math.abs(end - 2 * Math.PI) < epsilon) {
+    end = 2 * Math.PI - epsilon
+  }
+
   let a = plus(center, onCircle(R, start))
   let b = plus(center, onCircle(R, end))
   let c = plus(center, onCircle(r, end))

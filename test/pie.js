@@ -52,4 +52,15 @@ describe('pie chart', () => {
     expect(pie1.curves[2].myitem).to.be(pie1.curves[2].item)
     expect(pie1.curves[2].myindex).to.be(pie1.curves[2].index)
   })
+
+  it('should allow pies with only one slice (issue #47)', () => {
+    let pie = Pie({
+      data: [data[0]],
+      accessor: (x) => x.hp,
+      center: [1, 1],
+      r: 10,
+      R: 20
+    })
+    expect(pie.curves[0].sector.path.print()).to.equal('M 1 -19 A 20 20 0 1 1 0.998 -19 L 0.999 -9 A 10 10 0 1 0 1 -9 Z ')
+  })
 })
