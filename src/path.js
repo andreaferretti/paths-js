@@ -63,9 +63,9 @@ let Path = (init) => {
 
     let transformer = {
       'V': function (instruction, matrix, prev) {
-        let pts = [{x: prev[0], y: p[1]}]
+        let pts = [{x: prev[0], y: p[0]}]
         let newPts = matrixTransform(pts, matrix)
-        if (newPts[0].x === matrixTransform([{x: prev[0], y: prev[1]}])[0].x) {
+        if (newPts[0].x === matrixTransform([{x: prev[0], y: prev[1]}], matrix)[0].x) {
           return {
             command: 'V',
             params: [newPts[0].y]
@@ -80,7 +80,7 @@ let Path = (init) => {
       'H': function (instruction, matrix, prev) {
         let pts = [{x: p[0], y: prev[1]}]
         let newPts = matrixTransform(pts, matrix)
-        if (newPts[0].y === matrixTransform([{x: prev[0], y: prev[1]}])[0].y) {
+        if (newPts[0].y === matrixTransform([{ x: prev[0], y: prev[1] }], matrix)[0].y) {
           return {
             command: 'H',
             params: [newPts[0].x]

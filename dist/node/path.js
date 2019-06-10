@@ -89,9 +89,9 @@ var Path = function Path(init) {
 
     var transformer = {
       'V': function V(instruction, matrix, prev) {
-        var pts = [{ x: prev[0], y: p[1] }];
+        var pts = [{ x: prev[0], y: p[0] }];
         var newPts = (0, _geom.matrixTransform)(pts, matrix);
-        if (newPts[0].x === (0, _geom.matrixTransform)([{ x: prev[0], y: prev[1] }])[0].x) {
+        if (newPts[0].x === (0, _geom.matrixTransform)([{ x: prev[0], y: prev[1] }], matrix)[0].x) {
           return {
             command: 'V',
             params: [newPts[0].y]
@@ -106,7 +106,7 @@ var Path = function Path(init) {
       'H': function H(instruction, matrix, prev) {
         var pts = [{ x: p[0], y: prev[1] }];
         var newPts = (0, _geom.matrixTransform)(pts, matrix);
-        if (newPts[0].y === (0, _geom.matrixTransform)([{ x: prev[0], y: prev[1] }])[0].y) {
+        if (newPts[0].y === (0, _geom.matrixTransform)([{ x: prev[0], y: prev[1] }], matrix)[0].y) {
           return {
             command: 'H',
             params: [newPts[0].x]
@@ -254,7 +254,7 @@ var Path = function Path(init) {
       var dx = arguments.length <= 0 || arguments[0] === undefined ? 0 : arguments[0];
       var dy = arguments.length <= 1 || arguments[1] === undefined ? 0 : arguments[1];
 
-      if (dx !== 0 || dx !== 0) {
+      if (dx !== 0 || dy !== 0) {
         var _ret = (function () {
           var prev = [0, 0];
           var matrix = [1, 0, 0, 1, dx, dy];

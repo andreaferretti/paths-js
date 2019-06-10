@@ -198,6 +198,17 @@ describe('print method', () => {
     let path = Path().moveto(4, 5).qcurveto(0, 1, 1/7, 1/3).curveto(2, 1, 0, -1, -1, 17)
     expect(path.print()).to.eql('M 4 5 Q 0 1 0.142857 0.333333 C 2 1 0 -1 -1 17')
   })
+
+  it('should pass the example in https://github.com/andreaferretti/paths-js/issues/55', () => {
+    let path = Path()
+      .moveto(10, 20)
+      .vlineto(30)
+      .hlineto(25)
+      .qcurveto(27, 30, 32, 27)
+      .translate(10, 10)
+      .closepath();
+    expect(path.print()).to.equal('M 20 30 V 40 H 35 Q 37 40 32 27 Z ')
+  })
 })
 
 describe('connect method', () => {
