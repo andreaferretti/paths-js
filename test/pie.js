@@ -12,6 +12,17 @@ let data = [
   { hp: 60, attack: 45, defense: 50, sp_attack: 90, sp_defense: 80, speed: 70 }
 ]
 
+let data_empty = [
+  { hp: 0, attack: 49, defense: 49, sp_attack: 65, sp_defense: 65, speed: 45 },
+  { hp: 0, attack: 62, defense: 63, sp_attack: 80, sp_defense: 80, speed: 60 },
+  { hp: 0, attack: 82, defense: 83, sp_attack: 100, sp_defense: 100, speed: 80 },
+  { hp: 0, attack: 25, defense: 50, sp_attack: 25, sp_defense: 25, speed: 35 },
+  { hp: 0, attack: 64, defense: 58, sp_attack: 80, sp_defense: 65, speed: 80 },
+  { hp: 0, attack: 48, defense: 65, sp_attack: 50, sp_defense: 64, speed: 43 },
+  { hp: 0, attack: 83, defense: 100, sp_attack: 85, sp_defense: 105, speed: 78 },
+  { hp: 0, attack: 45, defense: 50, sp_attack: 90, sp_defense: 80, speed: 70 }
+]
+
 let pie = Pie({
   data: data,
   accessor: (x) => x.hp,
@@ -62,5 +73,17 @@ describe('pie chart', () => {
       R: 20
     })
     expect(pie.curves[0].sector.path.print()).to.equal('M 1 -19 A 20 20 0 1 1 0.998 -19 L 0.999 -9 A 10 10 0 1 0 1 -9 Z ')
+  })
+
+  it('should allow pies with empty data', () => {
+    let empty_pie = Pie({
+      data: data_empty,
+      accessor: (x) => x.hp,
+      center: [1, 1],
+      r: 10,
+      R: 20
+    })
+    // console.log('pie',empty_pie.curves[0].sector.path.print());
+    expect(empty_pie.curves[0].sector.path.print()).to.equal('M 1 -19 A 20 20 0 0 1 1 -19 L 1 -9 A 10 10 0 0 0 1 -9 Z ')
   })
 })
