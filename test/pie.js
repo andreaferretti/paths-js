@@ -83,7 +83,6 @@ describe('pie chart', () => {
       r: 10,
       R: 20
     })
-    // console.log('pie',empty_pie.curves[0].sector.path.print());
     expect(empty_pie.curves[0].sector.path.print()).to.equal('M 1 -19 A 20 20 0 0 1 1 -19 L 1 -9 A 10 10 0 0 0 1 -9 Z ')
   })
 })
