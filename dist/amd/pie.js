@@ -19,6 +19,7 @@ define(['exports', 'module', './linear', './sector', './ops'], function (exports
 
     var values = data.map(accessor);
     var s = (0, _ops.sum)(values);
+    s = s === 0 ? 1 : s;
     var scale = (0, _Linear['default'])([0, s], [0, 2 * Math.PI]);
     var curves = [];
     var t = 0;
