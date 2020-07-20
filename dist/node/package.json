@@ -1,6 +1,6 @@
 {
   "name": "paths-js",
-  "version": "0.4.10",
+  "version": "0.4.11",
   "author": {
     "name": "Andrea Ferretti"
   },
@@ -42,5 +42,6 @@
   },
   "engines": {
     "node": ">=0.11.0"
-  }
+  },
+  "main": "./all.js"
 }
